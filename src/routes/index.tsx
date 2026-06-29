@@ -423,10 +423,13 @@ function Index() {
                 </div>
 
                 <div className="md:col-span-2 mt-3">
-                  <Button type="submit" size="lg" className="w-full text-base h-13 py-4 rounded-2xl shadow-soft">
-                    اعرف التراخيص
-                    <ArrowLeft className="w-4 h-4" />
+                  <Button type="submit" size="lg" disabled={loading} className="w-full text-base h-13 py-4 rounded-2xl shadow-soft">
+                    {loading ? "جاري البحث..." : "اعرف التراخيص"}
+                    {!loading && <ArrowLeft className="w-4 h-4" />}
                   </Button>
+                  {error && (
+                    <p className="text-center text-xs text-destructive mt-3">{error}</p>
+                  )}
                   <p className="text-center text-xs text-muted-foreground mt-3">
                     ما يحتاج تحتار — بنطلع لك كل اللي تحتاجه.
                   </p>
