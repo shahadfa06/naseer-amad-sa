@@ -34,8 +34,9 @@
   --color-sky-soft: var(--sky-soft);
   --color-beige: var(--beige);
   --color-gold: var(--gold);
-  --font-display: "Plus Jakarta Sans", sans-serif;
-  --font-sans: "Inter", sans-serif;
+  --font-display: "Tajawal", "Plus Jakarta Sans", sans-serif;
+  --font-sans: "IBM Plex Sans Arabic", "Inter", system-ui, sans-serif;
+
   --shadow-soft: 0 1px 2px rgb(0 0 0 / 0.04), 0 8px 24px -8px color-mix(in oklab, var(--saudi) 12%, transparent);
   --shadow-card: 0 1px 2px rgb(0 0 0 / 0.03), 0 12px 40px -16px color-mix(in oklab, var(--saudi-deep) 18%, transparent);
 }
@@ -50,10 +51,11 @@
   --popover-foreground: oklch(0.20 0.03 160);
 
   /* Saudi green */
-  --primary: oklch(0.42 0.13 155);
+  --primary: #006C35;
   --primary-foreground: oklch(0.99 0.005 95);
-  --saudi: oklch(0.42 0.13 155);
-  --saudi-deep: oklch(0.30 0.10 155);
+  --saudi: #006C35;
+  --saudi-deep: #004d24;
+
 
   --secondary: oklch(0.96 0.02 220);
   --secondary-foreground: oklch(0.25 0.05 160);
