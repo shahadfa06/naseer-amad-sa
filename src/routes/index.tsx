@@ -172,15 +172,43 @@ function Index() {
   const [activity, setActivity] = useState("");
   const [city, setCity] = useState("");
   const [results, setResults] = useState<License[] | null>(null);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
   const [chatOpen, setChatOpen] = useState(false);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!activity || !city) return;
-    setResults(generateLicenses(activity));
-    setTimeout(() => {
-      document.getElementById("results")?.scrollIntoView({ behavior: "smooth" });
-    }, 60);
+    setLoading(true);
+    setError(null);
+    try {
+      const res = await fetch("http://127.0.0.1:5000/api/licenses", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ name: fullName, email, activity, city }),
+      });
+      if (!res.ok) throw new Error(`HTTP ${res.status}`);
+      const data = await res.json();
+      const mapped: License[] = (Array.isArray(data) ? data : []).map((r: any) => ({
+        name: r.license_name ?? r.name ?? "",
+        authority: r.authority ?? "",
+        cost: r.cost ?? "",
+        duration: r.duration ?? "",
+      }));
+      setResults(mapped);
+      setTimeout(() => {
+        document.getElementById("results")?.scrollIntoView({ behavior: "smooth" });
+      }, 60);
+    } catch (err) {
+      console.error(err);
+      setError("ما قدرنا نوصل للخادم. تأكد إن الـ API يشتغل على http://127.0.0.1:5000");
+      setResults(generateLicenses(activity));
+      setTimeout(() => {
+        document.getElementById("results")?.scrollIntoView({ behavior: "smooth" });
+      }, 60);
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -395,10 +423,13 @@ function Index() {
                 </div>
 
                 <div className="md:col-span-2 mt-3">
-                  <Button type="submit" size="lg" className="w-full text-base h-13 py-4 rounded-2xl shadow-soft">
-                    اعرف التراخيص
-                    <ArrowLeft className="w-4 h-4" />
+                  <Button type="submit" size="lg" disabled={loading} className="w-full text-base h-13 py-4 rounded-2xl shadow-soft">
+                    {loading ? "جاري البحث..." : "اعرف التراخيص"}
+                    {!loading && <ArrowLeft className="w-4 h-4" />}
                   </Button>
+                  {error && (
+                    <p className="text-center text-xs text-destructive mt-3">{error}</p>
+                  )}
                   <p className="text-center text-xs text-muted-foreground mt-3">
                     ما يحتاج تحتار — بنطلع لك كل اللي تحتاجه.
                   </p>
