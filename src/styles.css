@@ -34,8 +34,9 @@
   --color-sky-soft: var(--sky-soft);
   --color-beige: var(--beige);
   --color-gold: var(--gold);
-  --font-display: "Plus Jakarta Sans", sans-serif;
-  --font-sans: "Inter", sans-serif;
+  --font-display: "Tajawal", "Plus Jakarta Sans", sans-serif;
+  --font-sans: "IBM Plex Sans Arabic", "Inter", system-ui, sans-serif;
+
   --shadow-soft: 0 1px 2px rgb(0 0 0 / 0.04), 0 8px 24px -8px color-mix(in oklab, var(--saudi) 12%, transparent);
   --shadow-card: 0 1px 2px rgb(0 0 0 / 0.03), 0 12px 40px -16px color-mix(in oklab, var(--saudi-deep) 18%, transparent);
 }
