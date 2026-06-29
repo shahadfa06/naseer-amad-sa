@@ -98,7 +98,8 @@
 }
 
 @utility pattern-bg {
-  background-image: url("/src/assets/pattern.png");
+  background-image: var(--pattern-url);
   background-size: 420px 420px;
   background-repeat: repeat;
 }
+

@@ -197,7 +197,11 @@ function Index() {
   };
 
   return (
-    <div className="min-h-screen bg-background">
+    <div
+      className="min-h-screen bg-background"
+      style={{ ["--pattern-url" as string]: `url(${patternUrl})` } as React.CSSProperties}
+    >
+
       {/* Nav */}
       <header className="sticky top-0 z-30 backdrop-blur-md bg-background/80 border-b border-border">
         <div className="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
