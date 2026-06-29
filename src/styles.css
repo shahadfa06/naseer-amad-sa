@@ -51,10 +51,11 @@
   --popover-foreground: oklch(0.20 0.03 160);
 
   /* Saudi green */
-  --primary: oklch(0.42 0.13 155);
+  --primary: #006C35;
   --primary-foreground: oklch(0.99 0.005 95);
-  --saudi: oklch(0.42 0.13 155);
-  --saudi-deep: oklch(0.30 0.10 155);
+  --saudi: #006C35;
+  --saudi-deep: #004d24;
+
 
   --secondary: oklch(0.96 0.02 220);
   --secondary-foreground: oklch(0.25 0.05 160);
