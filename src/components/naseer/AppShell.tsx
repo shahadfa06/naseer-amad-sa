@@ -1,14 +1,31 @@
 import { Link, useRouterState } from "@tanstack/react-router";
 import { Bell, Bot, FileText, Globe, Heart, Home, LayoutGrid, Newspaper, ScrollText, ShieldCheck } from "lucide-react";
-import type { ReactNode } from "react";
+import { useEffect, useState, type ReactNode } from "react";
 import { Logo } from "./brand";
 import { ChatWidget } from "./ChatWidget";
 import patternUrl from "@/assets/pattern.png";
 import { useLang } from "@/lib/i18n";
+import { store } from "@/lib/naseer-data";
 
 export function AppShell({ children }: { children: ReactNode }) {
   const pathname = useRouterState({ select: (s) => s.location.pathname });
   const { lang, setLang, tr } = useLang();
+  const [unread, setUnread] = useState(0);
+
+  useEffect(() => {
+    const refresh = () => setUnread(store.getUnreadCount());
+    refresh();
+    const onStorage = () => refresh();
+    window.addEventListener("storage", onStorage);
+    window.addEventListener("naseer:updated", onStorage);
+    const t = setInterval(refresh, 4000);
+    return () => {
+      window.removeEventListener("storage", onStorage);
+      window.removeEventListener("naseer:updated", onStorage);
+      clearInterval(t);
+    };
+  }, [pathname]);
+
 
   const NAV = [
     { to: "/", label: tr("الرئيسية", "Home"), icon: Home },
@@ -127,8 +144,13 @@ export function AppShell({ children }: { children: ReactNode }) {
               aria-label={tr("الإشعارات", "Notifications")}
             >
               <Bell className="w-4 h-4" />
-              <span className="absolute top-1.5 start-1.5 w-2 h-2 rounded-full bg-primary ring-2 ring-background" />
+              {unread > 0 && (
+                <span className="absolute -top-1 -start-1 min-w-[18px] h-[18px] px-1 rounded-full bg-red-500 text-white text-[10px] font-bold flex items-center justify-center ring-2 ring-background">
+                  {unread > 9 ? "9+" : unread}
+                </span>
+              )}
             </Link>
+
             <Link
               to="/register"
               className="hidden sm:inline-flex items-center gap-1.5 h-10 px-5 rounded-full bg-primary text-primary-foreground text-sm font-semibold hover:opacity-90 hover:shadow-soft transition"

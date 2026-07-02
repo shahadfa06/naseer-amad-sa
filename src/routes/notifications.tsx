@@ -1,8 +1,8 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import { AppShell } from "@/components/naseer/AppShell";
-import { store, type Notification } from "@/lib/naseer-data";
-import { Bell, Check } from "lucide-react";
+import { store, type Notification, type NotificationKind } from "@/lib/naseer-data";
+import { Bell, Check, CheckCircle2, Clock, Lightbulb, AlertTriangle, Info } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { localize, useLang } from "@/lib/i18n";
 
@@ -10,21 +10,74 @@ export const Route = createFileRoute("/notifications")({
   head: () => ({
     meta: [
       { title: "الإشعارات | Notifications · نسير" },
-      { name: "description", content: "كل تحديثات طلباتك وإشعاراتك في مكان واحد." },
+      { name: "description", content: "مركز الإشعارات الذكي — تحديثات مخصّصة حسب تقدّم رحلتك." },
     ],
   }),
   component: NotificationsPage,
 });
 
+const KIND_STYLES: Record<
+  NotificationKind,
+  { wrap: string; icon: string; iconBg: string; Icon: React.ComponentType<{ className?: string }>; badgeAr: string; badgeEn: string }
+> = {
+  success: {
+    wrap: "bg-emerald-50 border-emerald-200",
+    icon: "text-emerald-700",
+    iconBg: "bg-emerald-100",
+    Icon: CheckCircle2,
+    badgeAr: "مُنجز",
+    badgeEn: "Completed",
+  },
+  reminder: {
+    wrap: "bg-orange-50 border-orange-200",
+    icon: "text-orange-700",
+    iconBg: "bg-orange-100",
+    Icon: Clock,
+    badgeAr: "تذكير",
+    badgeEn: "Reminder",
+  },
+  urgent: {
+    wrap: "bg-red-50 border-red-200",
+    icon: "text-red-700",
+    iconBg: "bg-red-100",
+    Icon: AlertTriangle,
+    badgeAr: "عاجل",
+    badgeEn: "Urgent",
+  },
+  ai: {
+    wrap: "bg-blue-50 border-blue-200",
+    icon: "text-blue-700",
+    iconBg: "bg-blue-100",
+    Icon: Lightbulb,
+    badgeAr: "توصية ذكية",
+    badgeEn: "AI Suggestion",
+  },
+  info: {
+    wrap: "bg-card border-border",
+    icon: "text-muted-foreground",
+    iconBg: "bg-muted",
+    Icon: Info,
+    badgeAr: "معلومة",
+    badgeEn: "Info",
+  },
+};
+
 function NotificationsPage() {
   const { lang, tr } = useLang();
   const [items, setItems] = useState<Notification[]>([]);
-  useEffect(() => setItems(store.getNotifications()), []);
+
+  const refresh = () => setItems(store.getSmartNotifications());
+  useEffect(() => {
+    refresh();
+  }, []);
 
   const markAll = () => {
     store.markAllRead();
-    setItems(store.getNotifications());
+    refresh();
+    window.dispatchEvent(new Event("naseer:updated"));
   };
+
+  const unread = items.filter((n) => !n.read).length;
 
   return (
     <AppShell>
@@ -33,10 +86,18 @@ function NotificationsPage() {
           <div>
             <h1 className="text-3xl md:text-4xl font-bold flex items-center gap-3">
               <Bell className="w-7 h-7 text-primary" />
-              {tr("الإشعارات", "Notifications")}
+              {tr("مركز الإشعارات الذكي", "Smart Notifications Center")}
+              {unread > 0 && (
+                <span className="text-xs font-bold bg-red-500 text-white rounded-full px-2.5 py-1">
+                  {unread}
+                </span>
+              )}
             </h1>
             <p className="mt-2 text-muted-foreground text-sm">
-              {tr("كل التحديثات من الجهات ومن نسير.", "All updates from authorities and from Naseer.")}
+              {tr(
+                "تحديثات مخصّصة تظهر تلقائياً حسب تقدّمك في رحلة التراخيص.",
+                "Personalized updates generated automatically from your licensing journey.",
+              )}
             </p>
           </div>
           <Button variant="outline" size="sm" onClick={markAll} className="rounded-full">
@@ -46,31 +107,56 @@ function NotificationsPage() {
         </div>
 
         <div className="space-y-3">
-          {items.map((n, i) => (
-            <div
-              key={n.id}
-              className={`p-5 rounded-2xl border shadow-soft animate-fade-in ${
-                n.read ? "bg-card border-border" : "bg-primary/5 border-primary/20"
-              }`}
-              style={{ animationDelay: `${i * 50}ms`, animationFillMode: "backwards" }}
-            >
-              <div className="flex items-start gap-3">
-                <div className="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center shrink-0">
-                  <Bell className="w-4 h-4 text-primary" />
-                </div>
-                <div className="flex-1">
-                  <div className="flex items-center justify-between gap-2">
-                    <div className="font-display font-bold">{localize(lang, n.title)}</div>
-                    {!n.read && <span className="w-2 h-2 rounded-full bg-primary" />}
+          {items.length === 0 && (
+            <div className="text-center py-14 border border-dashed border-border rounded-3xl bg-card">
+              <div className="text-4xl mb-2">🔔</div>
+              <div className="font-display font-bold">
+                {tr("لا توجد إشعارات حالياً", "No notifications yet")}
+              </div>
+            </div>
+          )}
+
+          {items.map((n, i) => {
+            const style = KIND_STYLES[n.kind ?? "info"];
+            const Icon = style.Icon;
+            return (
+              <div
+                key={n.id}
+                className={`p-5 rounded-2xl border shadow-soft animate-fade-in ${style.wrap} ${
+                  !n.read ? "ring-1 ring-primary/10" : "opacity-90"
+                }`}
+                style={{ animationDelay: `${i * 40}ms`, animationFillMode: "backwards" }}
+              >
+                <div className="flex items-start gap-3">
+                  <div className={`w-11 h-11 rounded-2xl flex items-center justify-center shrink-0 text-xl ${style.iconBg}`}>
+                    {n.emoji ? <span>{n.emoji}</span> : <Icon className={`w-5 h-5 ${style.icon}`} />}
                   </div>
-                  <p className="text-sm text-muted-foreground mt-1">{localize(lang, n.body)}</p>
-                  <div className="text-[11px] text-muted-foreground mt-2">
-                    {new Date(n.at).toLocaleString(lang === "ar" ? "ar-SA" : "en-GB")}
+                  <div className="flex-1 min-w-0">
+                    <div className="flex items-center justify-between gap-2 flex-wrap">
+                      <div className="font-display font-bold text-[15px]">
+                        {localize(lang, n.title)}
+                      </div>
+                      <div className="flex items-center gap-2">
+                        <span
+                          className={`text-[10px] font-bold tracking-wide uppercase rounded-full px-2 py-0.5 ${style.iconBg} ${style.icon}`}
+                        >
+                          {tr(style.badgeAr, style.badgeEn)}
+                        </span>
+                        {!n.read && <span className="w-2 h-2 rounded-full bg-red-500" />}
+                      </div>
+                    </div>
+                    <p className="text-sm text-foreground/80 mt-1 leading-relaxed">
+                      {localize(lang, n.body)}
+                    </p>
+                    <div className="text-[11px] text-muted-foreground mt-2 flex items-center gap-1.5">
+                      <Clock className="w-3 h-3" />
+                      {new Date(n.at).toLocaleString(lang === "ar" ? "ar-SA" : "en-GB")}
+                    </div>
                   </div>
                 </div>
               </div>
-            </div>
-          ))}
+            );
+          })}
         </div>
       </section>
     </AppShell>
