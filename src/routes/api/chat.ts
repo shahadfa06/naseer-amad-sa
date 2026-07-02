@@ -1,14 +1,10 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { convertToModelMessages, streamText, type UIMessage } from "ai";
+import { generateText } from "ai";
 import { createLovableAiGatewayProvider } from "@/lib/ai-gateway.server";
 
 const SYSTEM_PROMPT = `# SYSTEM ROLE
 
-You are BusinessFlow AI, an enterprise-grade AI assistant specializing exclusively in commercial transactions, government business procedures, business licensing, company registration, document guidance, and business workflow management.
-
-Your primary mission is to simplify commercial procedures while maintaining maximum accuracy, privacy, professionalism, and security.
-
-You are NOT a general-purpose chatbot. Never leave your specialization.
+You are BusinessFlow AI, an enterprise-grade AI assistant specializing exclusively in commercial transactions, government business procedures, business licensing, company registration, document guidance, and business workflow management. Your primary mission is to simplify commercial procedures while maintaining maximum accuracy, privacy, professionalism, and security. You are NOT a general-purpose chatbot. Never leave your specialization.
 
 MISSION
 Guide business owners from the beginning of their commercial journey until the successful completion of their transaction. Do not simply answer questions — actively guide the user through every required step.
@@ -23,12 +19,7 @@ If the user provides only a goal (e.g. "I want to open a restaurant"), do NOT im
 
 INTERACTIVE CONVERSATION
 Act like a business consultant. Never dump all information.
-1. Understand the user's goal.
-2. Ask only the required questions.
-3. Determine the transaction.
-4. Build a personalized roadmap.
-5. Explain one step at a time.
-6. Continuously guide the user.
+1. Understand the user's goal. 2. Ask only the required questions. 3. Determine the transaction. 4. Build a personalized roadmap. 5. Explain one step at a time. 6. Continuously guide the user.
 
 KNOWLEDGE — Always prioritize verified knowledge, official regulations, and internal data. Never invent or guess.
 
@@ -42,29 +33,41 @@ PRIVACY — Never expose user data, uploaded documents, business information, in
 
 FINAL OBJECTIVE — Become the user's commercial assistant from start to finish while maintaining complete privacy, professionalism, and accuracy. Reply in the user's language (Arabic or English) matching their message.`;
 
-type ChatBody = { messages?: unknown };
+type Msg = { role: "user" | "assistant" | "system"; content: string };
+type ChatBody = { messages?: Msg[] };
 
 export const Route = createFileRoute("/api/chat")({
   server: {
     handlers: {
       POST: async ({ request }) => {
-        const { messages } = (await request.json()) as ChatBody;
-        if (!Array.isArray(messages)) {
-          return new Response("Messages are required", { status: 400 });
+        let body: ChatBody;
+        try {
+          body = (await request.json()) as ChatBody;
+        } catch {
+          return Response.json({ error: "Invalid JSON" }, { status: 400 });
+        }
+        const messages = Array.isArray(body.messages) ? body.messages : [];
+        if (messages.length === 0) {
+          return Response.json({ error: "messages required" }, { status: 400 });
         }
         const key = process.env.LOVABLE_API_KEY;
-        if (!key) return new Response("Missing LOVABLE_API_KEY", { status: 500 });
+        if (!key) return Response.json({ error: "Missing LOVABLE_API_KEY" }, { status: 500 });
 
-        const gateway = createLovableAiGatewayProvider(key);
-        const result = streamText({
-          model: gateway("openai/gpt-5.5"),
-          system: SYSTEM_PROMPT,
-          messages: await convertToModelMessages(messages as UIMessage[]),
-        });
-
-        return result.toUIMessageStreamResponse({
-          originalMessages: messages as UIMessage[],
-        });
+        try {
+          const gateway = createLovableAiGatewayProvider(key);
+          const { text } = await generateText({
+            model: gateway("openai/gpt-5.5"),
+            system: SYSTEM_PROMPT,
+            messages: messages
+              .filter((m) => m && (m.role === "user" || m.role === "assistant"))
+              .map((m) => ({ role: m.role, content: String(m.content ?? "") })),
+          });
+          return Response.json({ reply: text });
+        } catch (e) {
+          const msg = e instanceof Error ? e.message : "AI error";
+          const status = /rate|429/i.test(msg) ? 429 : /402|credit/i.test(msg) ? 402 : 500;
+          return Response.json({ error: msg }, { status });
+        }
       },
     },
   },
