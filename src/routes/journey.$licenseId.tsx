@@ -517,8 +517,8 @@ function SyncBanner({ sync, meta }: { sync: SyncSnapshot | null; meta: LicenseMe
       verified ? "bg-emerald-50/60 dark:bg-emerald-950/30 border-emerald-200 dark:border-emerald-800" : "bg-amber-50/60 dark:bg-amber-950/30 border-amber-200 dark:border-amber-800"
     }`}>
       <div className="flex items-center gap-2">
-        <div className={`w-9 h-9 rounded-full flex items-center justify-center ${verified ? "bg-emerald-100" : "bg-amber-100"}`}>
-          <RefreshCw className={`w-4 h-4 ${verified ? "text-emerald-700" : "text-amber-700"}`} />
+        <div className={`w-9 h-9 rounded-full flex items-center justify-center ${verified ? "bg-emerald-100 dark:bg-emerald-900/40" : "bg-amber-100 dark:bg-amber-900/40"}`}>
+          <RefreshCw className={`w-4 h-4 ${verified ? "text-emerald-700 dark:text-emerald-400" : "text-amber-700 dark:text-amber-400"}`} />
         </div>
         <div>
           <div className="text-sm font-bold">
