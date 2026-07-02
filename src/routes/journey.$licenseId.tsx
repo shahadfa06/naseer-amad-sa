@@ -292,7 +292,6 @@ function JourneyPage() {
                   size="lg"
                   onClick={submit}
                   className="w-full rounded-full h-11"
-                  style={{ background: "var(--saudi-deep)" }}
                   disabled={readiness.score < 70}
                 >
                   <Send className={`w-4 h-4 ${dir === "rtl" ? "rotate-180" : ""}`} />
