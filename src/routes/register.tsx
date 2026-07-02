@@ -97,7 +97,7 @@ function RegisterPage() {
         <div className="max-w-2xl mx-auto px-6">
           <div className="text-center mb-8">
             <div className="flex justify-center mb-5">
-              <Logo size={80} />
+              <Logo size={112} />
             </div>
             <div className="inline-flex items-center gap-2 text-xs font-semibold text-primary mb-3">
               <ShieldCheck className="w-4 h-4" />
