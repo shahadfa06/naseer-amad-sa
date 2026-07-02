@@ -114,7 +114,6 @@ function LicensesPage() {
                     size="sm"
                     asChild
                     className="rounded-full"
-                    style={{ background: "var(--saudi-deep)" }}
                   >
                     <Link
                       to="/journey/$licenseId"
