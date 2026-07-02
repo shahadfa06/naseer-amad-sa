@@ -1,3 +1,5 @@
+import logoUrl from "@/assets/naseer-logo.png";
+
 export function Ornament({ className }: { className?: string }) {
   return (
     <svg viewBox="0 0 64 64" fill="none" className={className} aria-hidden>
@@ -15,11 +17,15 @@ export function Ornament({ className }: { className?: string }) {
 
 export function Logo({ size = 40 }: { size?: number }) {
   return (
-    <div
-      className="relative rounded-2xl bg-gradient-to-br from-primary to-[var(--saudi-deep)] flex items-center justify-center shadow-soft"
+    <img
+      src={logoUrl}
+      alt="نسير | Naseer"
+      width={size}
+      height={size}
       style={{ width: size, height: size }}
-    >
-      <Ornament className="w-2/3 h-2/3 text-white" />
-    </div>
+      className="object-contain shrink-0"
+    />
   );
 }
+
+export { logoUrl };
