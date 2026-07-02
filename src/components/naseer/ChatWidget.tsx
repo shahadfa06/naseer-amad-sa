@@ -14,10 +14,6 @@ export function ChatWidget() {
     "حيّاك الله 👋 أنا مساعد نسير. إذا عندك أي استفسار عن مشروعك أو التراخيص أو الإجراءات الحكومية، أنا حاضر وبنمشي معك خطوة بخطوة.",
     "Hello 👋 I'm the Naseer Assistant. Ask me anything about your business, licenses, or government procedures — I'll walk you through it step by step.",
   );
-  const botReply = tr(
-    "تمام 👌 خلّ الباقي علينا — نجيبك خطوة خطوة. (هذي إجابة تجريبية، في النسخة الكاملة بنوصلك بمساعد ذكي.)",
-    "Got it 👌 leave the rest to us — we'll guide you step by step. (This is a demo reply; the full version connects to an AI assistant.)",
-  );
   const suggestions =
     lang === "en"
       ? [
@@ -35,17 +31,45 @@ export function ChatWidget() {
 
   const [messages, setMessages] = useState<ChatMessage[]>([{ role: "bot", text: greeting }]);
   const [input, setInput] = useState("");
+  const [sending, setSending] = useState(false);
 
   // Refresh greeting when language changes (only if no user interaction yet)
   if (messages.length === 1 && messages[0].role === "bot" && messages[0].text !== greeting) {
     setMessages([{ role: "bot", text: greeting }]);
   }
 
-  const send = (text: string) => {
+  const WEBHOOK_URL = "https://hook.eu1.make.com/rm4e4ae74g81fy8x211viwkrd8udbenm";
+
+  const send = async (text: string) => {
     const v = text.trim();
-    if (!v) return;
-    setMessages((m) => [...m, { role: "user", text: v }, { role: "bot", text: botReply }]);
+    if (!v || sending) return;
+    setMessages((m) => [...m, { role: "user", text: v }]);
     setInput("");
+    setSending(true);
+    try {
+      const res = await fetch(WEBHOOK_URL, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ message: v }),
+      });
+      const raw = await res.text();
+      let reply: string = raw;
+      try {
+        const j = JSON.parse(raw);
+        const cand = j.reply ?? j.response ?? j.message ?? j.text ?? j.output ?? raw;
+        reply = typeof cand === "string" ? cand : JSON.stringify(cand);
+      } catch {
+        /* plain text */
+      }
+      setMessages((m) => [...m, { role: "bot", text: reply || tr("تم الاستلام.", "Received.") }]);
+    } catch {
+      setMessages((m) => [
+        ...m,
+        { role: "bot", text: tr("تعذّر الاتصال بالمساعد. حاول مرة ثانية.", "Couldn't reach the assistant. Please try again.") },
+      ]);
+    } finally {
+      setSending(false);
+    }
   };
 
   const posClass = lang === "en" ? "right-6" : "left-6";
@@ -100,6 +124,15 @@ export function ChatWidget() {
                   </div>
                 </div>
               ))}
+              {sending && (
+                <div className="flex justify-end">
+                  <div className="bg-white border border-border rounded-2xl rounded-br-sm px-4 py-2.5 text-sm text-muted-foreground inline-flex gap-1">
+                    <span className="w-1.5 h-1.5 rounded-full bg-primary/60 animate-bounce" />
+                    <span className="w-1.5 h-1.5 rounded-full bg-primary/60 animate-bounce [animation-delay:120ms]" />
+                    <span className="w-1.5 h-1.5 rounded-full bg-primary/60 animate-bounce [animation-delay:240ms]" />
+                  </div>
+                </div>
+              )}
 
               {messages.length <= 1 && (
                 <div className="pt-2 space-y-2">
@@ -132,7 +165,7 @@ export function ChatWidget() {
                 placeholder={tr("اكتب سؤالك…", "Type your question…")}
                 className="h-10 rounded-xl text-start"
               />
-              <Button type="submit" size="icon" className="h-10 w-10 rounded-xl shrink-0">
+              <Button type="submit" size="icon" disabled={sending || !input.trim()} className="h-10 w-10 rounded-xl shrink-0">
                 <Send className={`w-4 h-4 ${lang === "ar" ? "rotate-180" : ""}`} />
               </Button>
             </form>
