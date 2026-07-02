@@ -86,7 +86,7 @@ export function AppShell({ children }: { children: ReactNode }) {
       <header className="sticky top-0 z-30 backdrop-blur-xl bg-background/80 border-b border-border">
         <div className="max-w-7xl mx-auto px-5 py-3.5 flex items-center gap-4">
           <Link to="/" className="flex items-center gap-3 shrink-0 group">
-            <Logo size={40} withRing />
+<Logo size={40} />
             <div className="leading-tight">
               <div className="font-display font-extrabold text-lg" style={{ color: "var(--saudi-ink)" }}>
                 {tr("نسير", "Naseer")}
@@ -177,7 +177,7 @@ export function AppShell({ children }: { children: ReactNode }) {
         <div className="relative max-w-7xl mx-auto px-6 py-12 grid gap-8 md:grid-cols-[1.4fr_1fr_1fr]">
           <div>
             <div className="flex items-center gap-3 mb-4">
-              <Logo size={40} withRing />
+              <Logo size={40} />
               <div>
                 <div className="font-display font-bold text-lg">{tr("نسير · Naseer", "Naseer · نسير")}</div>
                 <div className="text-xs text-muted-foreground">

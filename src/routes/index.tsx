@@ -87,7 +87,7 @@ function HomePage() {
         <div className="max-w-6xl mx-auto px-6 pt-16 pb-24 md:pt-24 md:pb-32">
           <div className="max-w-3xl">
             <div className="mb-8 flex justify-start">
-              <Logo size={104} withRing />
+              <Logo size={104} />
             </div>
 
             <div

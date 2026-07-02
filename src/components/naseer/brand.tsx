@@ -17,24 +17,7 @@ export function Ornament({ className }: { className?: string }) {
   );
 }
 
-export function Logo({ size = 40, withRing = false }: { size?: number; withRing?: boolean }) {
-  if (withRing) {
-    return (
-      <span
-        className="inline-flex items-center justify-center rounded-2xl bg-white hairline"
-        style={{ width: size + 14, height: size + 14 }}
-      >
-        <img
-          src={logoUrl}
-          alt="نسير | Naseer"
-          width={size}
-          height={size}
-          style={{ width: size, height: size }}
-          className="object-contain shrink-0"
-        />
-      </span>
-    );
-  }
+export function Logo({ size = 40 }: { size?: number }) {
   return (
     <img
       src={logoUrl}
