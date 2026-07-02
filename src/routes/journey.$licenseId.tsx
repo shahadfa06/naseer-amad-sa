@@ -418,7 +418,7 @@ function DocumentAssistant({
       <input ref={fileRef} type="file" hidden onChange={(e) => e.target.files?.[0] && upload(e.target.files[0])} />
 
       {error && (
-        <div className="text-xs text-red-800 bg-red-50 border border-red-200 rounded-xl p-3">{error}</div>
+        <div className="text-xs text-red-800 dark:text-red-400 bg-red-50 dark:bg-red-950/30 border border-red-200 dark:border-red-800 rounded-xl p-3">{error}</div>
       )}
 
       {/* Draft */}
