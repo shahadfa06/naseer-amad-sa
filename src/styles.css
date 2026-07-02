@@ -46,40 +46,42 @@
 :root {
   --radius: 1.15rem;
 
-  /* Base cream palette — matches logo background #FCFBF9 */
-  --background: #FBFAF6;
-  --foreground: #0B2A22;
+  /* Base — official brand white #F5F6F7 */
+  --background: #F5F6F7;
+  --foreground: #0A241A;
 
   --card: #FFFFFF;
-  --card-foreground: #0B2A22;
+  --card-foreground: #0A241A;
   --popover: #FFFFFF;
-  --popover-foreground: #0B2A22;
+  --popover-foreground: #0A241A;
 
-  /* Brand — deep forest green from logo #013F30 */
-  --saudi: #013F30;
-  --saudi-deep: #002A20;
-  --saudi-ink: #011E17;
-  --primary: #013F30;
-  --primary-foreground: #FBFAF6;
+  /* Brand — official Saudi Green #006C35, Emerald #1FA463 */
+  --saudi: #006C35;
+  --saudi-deep: #024E27;
+  --saudi-ink: #013319;
+  --emerald: #1FA463;
+  --primary: #006C35;
+  --primary-foreground: #FFFFFF;
 
-  --secondary: #EFEBE0;         /* warm sand */
-  --secondary-foreground: #0B2A22;
-  --muted: #F3F0E7;
+  --secondary: #F1EADB;          /* warm beige */
+  --secondary-foreground: #0A241A;
+  --muted: #EEF1EE;
   --muted-foreground: #5A6B63;
-  --accent: #E9E3D2;             /* cream accent */
-  --accent-foreground: #0B2A22;
+  --accent: #EAD8B0;              /* official warm beige */
+  --accent-foreground: #0A241A;
 
-  --sand: #EFE9D9;
+  --sand: #F1E4C4;
   --cream: #FBF7EC;
-  --gold: #B8935A;
+  --gold: #EAD8B0;
 
   --destructive: #B33A2A;
-  --destructive-foreground: #FBFAF6;
+  --destructive-foreground: #FFFFFF;
 
-  --border: #E7E1D1;
-  --input: #EFEAD9;
-  --ring: #013F30;
+  --border: #E4E7E3;
+  --input: #ECEFEB;
+  --ring: #006C35;
 }
+
 
 .dark {
   --background: #071916;
