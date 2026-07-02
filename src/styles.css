@@ -90,11 +90,24 @@
   --foreground: #EFEBE0;
   --card: #0B231D;
   --card-foreground: #EFEBE0;
+  --popover: #0B231D;
+  --popover-foreground: #EFEBE0;
   --primary: #6FBF9A;
   --primary-foreground: #071916;
+  --secondary: #14312A;
+  --secondary-foreground: #EFEBE0;
+  --muted: #12291F;
+  --muted-foreground: #9BB0A6;
+  --accent: #1B3A2E;
+  --accent-foreground: #EFEBE0;
+  --saudi: #1FA463;
+  --saudi-deep: #006C35;
+  --saudi-ink: #EFEBE0;
   --border: rgb(255 255 255 / 8%);
   --input: rgb(255 255 255 / 12%);
+  --ring: #6FBF9A;
 }
+
 
 @layer base {
   * { border-color: var(--color-border); }
