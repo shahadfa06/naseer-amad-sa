@@ -272,10 +272,9 @@ function HomePage() {
                 className="group rounded-2xl border border-border p-4 flex flex-col items-center gap-2 hover:border-primary/40 hover:-translate-y-1 hover:shadow-soft transition-all bg-background/50"
               >
                 <div
-                  className="w-12 h-12 rounded-2xl flex items-center justify-center group-hover:scale-110 transition-transform"
-                  style={{ background: a.tint }}
+                  className={`w-12 h-12 rounded-2xl flex items-center justify-center group-hover:scale-110 transition-transform ${a.cls}`}
                 >
-                  <a.icon className="w-5 h-5" style={{ color: "var(--saudi-ink)" }} />
+                  <a.icon className="w-5 h-5 text-saudi-ink" />
                 </div>
                 <div className="text-sm font-semibold">{a.label}</div>
               </Link>
