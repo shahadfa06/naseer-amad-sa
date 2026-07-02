@@ -241,7 +241,7 @@ function JourneyPage() {
                         </div>
                         {typeof s.compliance === "number" && (
                           <span className={`text-[11px] font-bold px-2 py-1 rounded-full ${
-                            s.compliance >= 70 ? "bg-emerald-50 text-emerald-800" : "bg-amber-50 text-amber-800"
+                            s.compliance >= 70 ? "bg-emerald-50 dark:bg-emerald-950/30 text-emerald-800 dark:text-emerald-400" : "bg-amber-50 dark:bg-amber-950/30 text-amber-800 dark:text-amber-400"
                           }`}>
                             {s.compliance}%
                           </span>
@@ -402,7 +402,7 @@ function DocumentAssistant({
         <span className={`text-[11px] font-bold px-2 py-1 rounded-full ${
           doc.status === "missing" ? "bg-muted text-muted-foreground"
             : doc.status === "validated" ? "bg-emerald-50 text-emerald-800 border border-emerald-200"
-            : "bg-blue-50 text-blue-800 border border-blue-200"
+            : "bg-blue-50 dark:bg-blue-950/30 text-blue-800 dark:text-blue-400 border border-blue-200 dark:border-blue-800"
         }`}>
           {statusLabel(doc.status, tr)}
         </span>
@@ -515,7 +515,7 @@ function SyncBanner({ sync, meta }: { sync: SyncSnapshot | null; meta: LicenseMe
   const verified = sync ? sync.verified : meta.verified && !meta.stale;
   return (
     <div className={`rounded-2xl border p-4 flex flex-col md:flex-row md:items-center gap-3 ${
-      verified ? "bg-emerald-50/60 border-emerald-200" : "bg-amber-50/60 border-amber-200"
+      verified ? "bg-emerald-50/60 dark:bg-emerald-950/30 border-emerald-200 dark:border-emerald-800" : "bg-amber-50/60 dark:bg-amber-950/30 border-amber-200 dark:border-amber-800"
     }`}>
       <div className="flex items-center gap-2">
         <div className={`w-9 h-9 rounded-full flex items-center justify-center ${verified ? "bg-emerald-100" : "bg-amber-100"}`}>

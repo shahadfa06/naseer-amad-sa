@@ -195,7 +195,7 @@ function SyncStrip({ meta }: { meta: LicenseMeta }) {
         </a>
       </div>
       {meta.stale && (
-        <div className="flex items-start gap-1.5 text-amber-800 bg-amber-50 border border-amber-200 rounded-lg px-2 py-1.5 mt-1">
+        <div className="flex items-start gap-1.5 text-amber-800 bg-amber-50 dark:bg-amber-950/30 border border-amber-200 dark:border-amber-800 rounded-lg px-2 py-1.5 mt-1">
           <AlertTriangle className="w-3 h-3 mt-0.5 shrink-0" />
           <span className="leading-relaxed">
             {tr(
