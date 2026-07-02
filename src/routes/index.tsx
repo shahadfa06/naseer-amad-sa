@@ -65,13 +65,20 @@ function HomePage() {
           }}
         />
 
-        {/* Ornaments */}
-        <div className="pointer-events-none absolute top-16 left-6 hidden md:block">
-          <Ornament className="w-28 h-28 text-primary/20 [animation:float-slow_8s_ease-in-out_infinite]" />
-        </div>
-        <div className="pointer-events-none absolute bottom-10 right-10 hidden lg:block">
-          <Ornament className="w-40 h-40 text-primary/10" />
-        </div>
+        {/* Brand watermark */}
+        <div
+          className="pointer-events-none absolute top-10 -left-6 hidden lg:block -z-10"
+          aria-hidden
+          style={{
+            width: '420px',
+            height: '530px',
+            opacity: 0.06,
+            backgroundImage: `url(${logoUrl})`,
+            backgroundSize: 'contain',
+            backgroundRepeat: 'no-repeat',
+            backgroundPosition: 'center',
+          }}
+        />
 
         <div className="max-w-6xl mx-auto px-6 pt-16 pb-24 md:pt-24 md:pb-32">
           <div className="max-w-3xl">
