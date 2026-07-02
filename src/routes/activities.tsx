@@ -1,12 +1,13 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { ArrowLeft } from "lucide-react";
+import { ArrowLeft, ArrowRight } from "lucide-react";
 import { AppShell } from "@/components/naseer/AppShell";
 import { ACTIVITIES } from "@/lib/naseer-data";
+import { localize, useLang } from "@/lib/i18n";
 
 export const Route = createFileRoute("/activities")({
   head: () => ({
     meta: [
-      { title: "الأنشطة | نسير" },
+      { title: "الأنشطة | Activities · نسير" },
       { name: "description", content: "اختر نوع مشروعك وشوف التراخيص المطلوبة." },
     ],
   }),
@@ -14,13 +15,21 @@ export const Route = createFileRoute("/activities")({
 });
 
 function ActivitiesPage() {
+  const { lang, tr } = useLang();
+  const Arrow = lang === "ar" ? ArrowLeft : ArrowRight;
+
   return (
     <AppShell>
       <section className="max-w-6xl mx-auto px-6 py-14">
         <div className="text-center mb-10">
-          <h1 className="text-3xl md:text-4xl font-bold">وش نوع مشروعك؟</h1>
+          <h1 className="text-3xl md:text-4xl font-bold">
+            {tr("وش نوع مشروعك؟", "What kind of business?")}
+          </h1>
           <p className="mt-3 text-muted-foreground">
-            اختر النشاط، ونسير يطلع لك كل التراخيص المطلوبة.
+            {tr(
+              "اختر النشاط، ونسير يطلع لك كل التراخيص المطلوبة.",
+              "Pick an activity and Naseer will list every required license.",
+            )}
           </p>
         </div>
 
@@ -36,10 +45,10 @@ function ActivitiesPage() {
               <div className="absolute -top-10 -left-10 w-32 h-32 pattern-bg opacity-[0.08]" aria-hidden />
               <div className="relative flex items-start justify-between">
                 <div className="text-5xl">{a.emoji}</div>
-                <ArrowLeft className="w-4 h-4 text-primary opacity-0 group-hover:opacity-100 transition" />
+                <Arrow className="w-4 h-4 text-primary opacity-0 group-hover:opacity-100 transition" />
               </div>
-              <div className="relative mt-5 font-display font-bold text-xl">{a.name}</div>
-              <div className="relative mt-1 text-sm text-muted-foreground">{a.desc}</div>
+              <div className="relative mt-5 font-display font-bold text-xl">{localize(lang, a.name)}</div>
+              <div className="relative mt-1 text-sm text-muted-foreground">{localize(lang, a.desc)}</div>
             </Link>
           ))}
         </div>

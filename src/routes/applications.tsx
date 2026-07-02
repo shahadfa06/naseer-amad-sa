@@ -4,11 +4,12 @@ import { AppShell } from "@/components/naseer/AppShell";
 import { STATUS_META, store, type Application } from "@/lib/naseer-data";
 import { Building2, Calendar, FileText, Hash } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { localize, useLang } from "@/lib/i18n";
 
 export const Route = createFileRoute("/applications")({
   head: () => ({
     meta: [
-      { title: "طلباتي | نسير" },
+      { title: "طلباتي | My Applications · نسير" },
       { name: "description", content: "تابع كل طلباتك وحالتها من جهة واحدة." },
     ],
   }),
@@ -16,6 +17,7 @@ export const Route = createFileRoute("/applications")({
 });
 
 function ApplicationsPage() {
+  const { lang, tr } = useLang();
   const [apps, setApps] = useState<Application[]>([]);
   useEffect(() => setApps(store.getApplications()), []);
 
@@ -23,19 +25,23 @@ function ApplicationsPage() {
     <AppShell>
       <section className="max-w-6xl mx-auto px-6 py-14">
         <div className="mb-10">
-          <h1 className="text-3xl md:text-4xl font-bold">طلباتي</h1>
-          <p className="mt-3 text-muted-foreground">تابع حالة طلباتك خطوة بخطوة.</p>
+          <h1 className="text-3xl md:text-4xl font-bold">{tr("طلباتي", "My Applications")}</h1>
+          <p className="mt-3 text-muted-foreground">
+            {tr("تابع حالة طلباتك خطوة بخطوة.", "Follow your applications step by step.")}
+          </p>
         </div>
 
         {apps.length === 0 ? (
           <div className="text-center py-16 border border-dashed border-border rounded-3xl bg-card">
             <div className="text-5xl mb-4">🗂️</div>
-            <div className="font-display font-bold text-lg">ما عندك طلبات لحد الحين</div>
+            <div className="font-display font-bold text-lg">
+              {tr("ما عندك طلبات لحد الحين", "You don't have any applications yet")}
+            </div>
             <p className="text-sm text-muted-foreground mt-2">
-              اختر نشاطك وقدّم أول طلب في ثواني.
+              {tr("اختر نشاطك وقدّم أول طلب في ثواني.", "Pick an activity and submit your first application in seconds.")}
             </p>
             <Button asChild className="mt-5 rounded-full">
-              <Link to="/activities">ابدأ الآن</Link>
+              <Link to="/activities">{tr("ابدأ الآن", "Start now")}</Link>
             </Button>
           </div>
         ) : (
@@ -54,25 +60,25 @@ function ApplicationsPage() {
                         <FileText className="w-5 h-5 text-primary" />
                       </div>
                       <div>
-                        <div className="text-xs text-muted-foreground">اسم الترخيص</div>
-                        <div className="font-display font-bold text-lg">{a.licenseName}</div>
+                        <div className="text-xs text-muted-foreground">{tr("اسم الترخيص", "License name")}</div>
+                        <div className="font-display font-bold text-lg">{localize(lang, a.licenseName)}</div>
                       </div>
                     </div>
                     <div
                       className={`inline-flex items-center gap-2 rounded-full px-3 py-1.5 text-xs font-semibold ${meta.color}`}
                     >
                       <span className={`w-2 h-2 rounded-full ${meta.dot}`} />
-                      {meta.label}
+                      {localize(lang, meta.label)}
                     </div>
                   </div>
 
                   <div className="grid sm:grid-cols-3 gap-4 text-sm mb-6">
-                    <Field icon={Hash} label="رقم الطلب" value={a.id} />
-                    <Field icon={Building2} label="الجهة" value={a.authority} />
+                    <Field icon={Hash} label={tr("رقم الطلب", "Application #")} value={a.id} />
+                    <Field icon={Building2} label={tr("الجهة", "Authority")} value={localize(lang, a.authority)} />
                     <Field
                       icon={Calendar}
-                      label="تاريخ التقديم"
-                      value={new Date(a.submittedAt).toLocaleDateString("ar-SA")}
+                      label={tr("تاريخ التقديم", "Submitted on")}
+                      value={new Date(a.submittedAt).toLocaleDateString(lang === "ar" ? "ar-SA" : "en-GB")}
                     />
                   </div>
 
@@ -107,9 +113,14 @@ function Field({
   );
 }
 
-const STEPS = ["تم الاستلام", "قيد المعالجة", "استكمال / موافقة", "تم الإصدار"];
-
 function Timeline({ step, rejected }: { step: number; rejected: boolean }) {
+  const { tr, dir } = useLang();
+  const STEPS = [
+    tr("تم الاستلام", "Received"),
+    tr("قيد المعالجة", "Processing"),
+    tr("استكمال / موافقة", "Review / Approval"),
+    tr("تم الإصدار", "Issued"),
+  ];
   return (
     <div className="relative">
       <div className="grid grid-cols-4 gap-2">
@@ -135,7 +146,11 @@ function Timeline({ step, rejected }: { step: number; rejected: boolean }) {
           );
         })}
       </div>
-      <div className="absolute top-4 right-[12%] left-[12%] h-0.5 bg-border -z-10" />
+      <div
+        className={`absolute top-4 h-0.5 bg-border -z-10 ${
+          dir === "rtl" ? "right-[12%] left-[12%]" : "left-[12%] right-[12%]"
+        }`}
+      />
     </div>
   );
 }

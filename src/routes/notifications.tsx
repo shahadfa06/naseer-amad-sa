@@ -4,11 +4,12 @@ import { AppShell } from "@/components/naseer/AppShell";
 import { store, type Notification } from "@/lib/naseer-data";
 import { Bell, Check } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { localize, useLang } from "@/lib/i18n";
 
 export const Route = createFileRoute("/notifications")({
   head: () => ({
     meta: [
-      { title: "الإشعارات | نسير" },
+      { title: "الإشعارات | Notifications · نسير" },
       { name: "description", content: "كل تحديثات طلباتك وإشعاراتك في مكان واحد." },
     ],
   }),
@@ -16,6 +17,7 @@ export const Route = createFileRoute("/notifications")({
 });
 
 function NotificationsPage() {
+  const { lang, tr } = useLang();
   const [items, setItems] = useState<Notification[]>([]);
   useEffect(() => setItems(store.getNotifications()), []);
 
@@ -27,17 +29,19 @@ function NotificationsPage() {
   return (
     <AppShell>
       <section className="max-w-3xl mx-auto px-6 py-14">
-        <div className="flex items-center justify-between mb-8">
+        <div className="flex items-center justify-between mb-8 gap-4 flex-wrap">
           <div>
             <h1 className="text-3xl md:text-4xl font-bold flex items-center gap-3">
               <Bell className="w-7 h-7 text-primary" />
-              الإشعارات
+              {tr("الإشعارات", "Notifications")}
             </h1>
-            <p className="mt-2 text-muted-foreground text-sm">كل التحديثات من الجهات ومن نسير.</p>
+            <p className="mt-2 text-muted-foreground text-sm">
+              {tr("كل التحديثات من الجهات ومن نسير.", "All updates from authorities and from Naseer.")}
+            </p>
           </div>
           <Button variant="outline" size="sm" onClick={markAll} className="rounded-full">
             <Check className="w-3.5 h-3.5" />
-            تحديد الكل كمقروء
+            {tr("تحديد الكل كمقروء", "Mark all as read")}
           </Button>
         </div>
 
@@ -56,12 +60,12 @@ function NotificationsPage() {
                 </div>
                 <div className="flex-1">
                   <div className="flex items-center justify-between gap-2">
-                    <div className="font-display font-bold">{n.title}</div>
+                    <div className="font-display font-bold">{localize(lang, n.title)}</div>
                     {!n.read && <span className="w-2 h-2 rounded-full bg-primary" />}
                   </div>
-                  <p className="text-sm text-muted-foreground mt-1">{n.body}</p>
+                  <p className="text-sm text-muted-foreground mt-1">{localize(lang, n.body)}</p>
                   <div className="text-[11px] text-muted-foreground mt-2">
-                    {new Date(n.at).toLocaleString("ar-SA")}
+                    {new Date(n.at).toLocaleString(lang === "ar" ? "ar-SA" : "en-GB")}
                   </div>
                 </div>
               </div>
