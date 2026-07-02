@@ -49,12 +49,6 @@ const ACTIVITIES = [
   { icon: Building2, label: "مقاولات", tint: "#EAE3CE" },
 ];
 
-const STATS = [
-  { k: "+٢٥٠", v: "نشاط تجاري" },
-  { k: "+٤٠", v: "جهة حكومية" },
-  { k: "٩٨٪", v: "نسبة رضا" },
-  { k: "٢٤/٧", v: "مساعد ذكي" },
-];
 
 function HomePage() {
   return (
