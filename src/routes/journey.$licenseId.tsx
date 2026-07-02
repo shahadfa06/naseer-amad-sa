@@ -625,7 +625,6 @@ function AiBtn({ onClick, loading, icon: Icon, label, primary, disabled }: {
       disabled={disabled || loading}
       className="rounded-full h-9"
       variant={primary ? "default" : "outline"}
-      style={primary ? { background: "var(--saudi-deep)" } : undefined}
     >
       {loading ? <Loader2 className="w-3.5 h-3.5 animate-spin" /> : <Icon className="w-3.5 h-3.5" />}
       {label}
