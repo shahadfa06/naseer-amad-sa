@@ -17,7 +17,7 @@ export function Ornament({ className }: { className?: string }) {
   );
 }
 
-export function Logo({ size = 32 }: { size?: number }) {
+export function Logo({ size = 45 }: { size?: number }) {
   return (
     <img
       src={logoUrl}
