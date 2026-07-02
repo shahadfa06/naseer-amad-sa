@@ -77,16 +77,16 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "نُيسّر | Nuysir — طريقك ميسّر لتراخيص الأعمال" },
+      { title: "نسير | Naseer — مع نسير… طريقك يسير" },
       {
         name: "description",
         content:
-          "مع نُيسّر اكتشف كل التراخيص والمتطلبات الحكومية اللي تحتاجها لمشروعك في السعودية خلال ثوانٍ.",
+          "منصة نسير — من أول خطوة لين إصدار آخر ترخيص، نسير معك ونسهّل عليك كل إجراءات مشروعك في مكان واحد.",
       },
-      { property: "og:title", content: "نُيسّر — طريقك ميسّر" },
+      { property: "og:title", content: "نسير — طريقك يسير" },
       {
         property: "og:description",
-        content: "دليلك الذكي لتراخيص الأعمال في المملكة العربية السعودية.",
+        content: "منصة سعودية لإجراءات وتراخيص الأعمال.",
       },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },
