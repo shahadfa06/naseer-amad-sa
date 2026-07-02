@@ -165,7 +165,7 @@ export function ChatWidget() {
                 placeholder={tr("اكتب سؤالك…", "Type your question…")}
                 className="h-10 rounded-xl text-start"
               />
-              <Button type="submit" size="icon" className="h-10 w-10 rounded-xl shrink-0">
+              <Button type="submit" size="icon" disabled={sending || !input.trim()} className="h-10 w-10 rounded-xl shrink-0">
                 <Send className={`w-4 h-4 ${lang === "ar" ? "rotate-180" : ""}`} />
               </Button>
             </form>
