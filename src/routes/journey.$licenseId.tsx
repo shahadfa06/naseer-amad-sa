@@ -582,8 +582,8 @@ function ReadinessCard({ readiness, lang }: { readiness: { score: number; parts:
       {readiness.reasons.length > 0 && (
         <ul className="mt-3 space-y-1.5 text-xs">
           {readiness.reasons.map((r, i) => (
-            <li key={i} className="flex items-start gap-1.5 text-amber-900">
-              <AlertTriangle className="w-3.5 h-3.5 mt-0.5 shrink-0 text-amber-600" />
+            <li key={i} className="flex items-start gap-1.5 text-amber-900 dark:text-amber-300">
+              <AlertTriangle className="w-3.5 h-3.5 mt-0.5 shrink-0 text-amber-600 dark:text-amber-400" />
               <span>{r}</span>
             </li>
           ))}
