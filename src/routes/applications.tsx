@@ -325,9 +325,9 @@ function Stat({
 }) {
   const toneClass =
     tone === "green"
-      ? "text-emerald-700"
+      ? "text-emerald-700 dark:text-emerald-400"
       : tone === "red"
-      ? "text-red-700"
+      ? "text-red-700 dark:text-red-400"
       : "text-foreground";
   return (
     <div className="p-3 rounded-2xl bg-background border border-border">
