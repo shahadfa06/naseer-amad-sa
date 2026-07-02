@@ -31,6 +31,9 @@ function ApplicationsPage() {
           </p>
         </div>
 
+        <ReadinessCard apps={apps} />
+
+
         {apps.length === 0 ? (
           <div className="text-center py-16 border border-dashed border-border rounded-3xl bg-card">
             <div className="text-5xl mb-4">🗂️</div>
