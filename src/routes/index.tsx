@@ -19,7 +19,7 @@ import {
   UtensilsCrossed,
 } from "lucide-react";
 import { AppShell } from "@/components/naseer/AppShell";
-import { Logo, Ornament } from "@/components/naseer/brand";
+import { Logo, logoUrl } from "@/components/naseer/brand";
 import { Button } from "@/components/ui/button";
 
 export const Route = createFileRoute("/")({
