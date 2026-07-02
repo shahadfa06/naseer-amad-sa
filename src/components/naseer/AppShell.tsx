@@ -151,6 +151,14 @@ export function AppShell({ children }: { children: ReactNode }) {
             <div className="hidden md:block">
               <LangSwitcher />
             </div>
+            <button
+              onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
+              className="w-10 h-10 rounded-full border border-border bg-card flex items-center justify-center hover:border-primary/40 hover:shadow-soft transition"
+              aria-label={tr("تبديل الوضع", "Toggle theme")}
+              title={theme === "dark" ? tr("الوضع النهاري", "Light mode") : tr("الوضع الليلي", "Dark mode")}
+            >
+              {theme === "dark" ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4" />}
+            </button>
             <Link
               to="/notifications"
               className="relative w-10 h-10 rounded-full border border-border bg-card flex items-center justify-center hover:border-primary/40 hover:shadow-soft transition"
@@ -163,6 +171,7 @@ export function AppShell({ children }: { children: ReactNode }) {
                 </span>
               )}
             </Link>
+
 
             <Link
               to="/register"
