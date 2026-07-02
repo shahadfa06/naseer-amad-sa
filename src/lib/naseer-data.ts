@@ -23,13 +23,18 @@ export type Application = {
   status: "processing" | "awaiting" | "approved" | "issued" | "rejected";
 };
 
+export type NotificationKind = "success" | "reminder" | "urgent" | "ai" | "info";
+
 export type Notification = {
   id: string;
   title: string;
   body: string;
   at: string;
   read: boolean;
+  kind?: NotificationKind;
+  emoji?: string;
 };
+
 
 export type Regulation = {
   id: string;
