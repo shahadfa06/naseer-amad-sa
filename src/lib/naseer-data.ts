@@ -36,12 +36,30 @@ export type Notification = {
 };
 
 
+export type RegulationCategory =
+  | "new_regulation"
+  | "fees_update"
+  | "requirements_update"
+  | "new_service"
+  | "service_modification"
+  | "form_update"
+  | "procedure_update"
+  | "circular"
+  | "announcement";
+
 export type Regulation = {
   id: string;
   title: string;
   authority: string;
+  authorityUrl: string;
+  category: RegulationCategory;
   date: string;
+  publicationDate: string;
+  effectiveDate: string;
+  lastSyncAt: string;
+  verified: boolean;
   summary: string;
+  fullAnnouncement: string;
   url: string;
 };
 
@@ -149,29 +167,84 @@ export const REGULATIONS: Regulation[] = [
     id: "1",
     title: "تحديث نظام السجل التجاري لعام 2026",
     authority: "وزارة التجارة",
+    authorityUrl: "https://mc.gov.sa",
+    category: "new_regulation",
     date: "٢٠٢٦/٠٥/١٤",
+    publicationDate: "٢٠٢٦/٠٥/١٤",
+    effectiveDate: "٢٠٢٦/٠٧/٠١",
+    lastSyncAt: "٢٠٢٦/٠٦/٢٩ ١٠:١٢",
+    verified: true,
     summary:
       "توحيد السجل التجاري لكل الأنشطة تحت رقم واحد، مع إلغاء الحاجة لتجديد الفروع بشكل منفصل.",
+    fullAnnouncement:
+      "أعلنت وزارة التجارة عن تحديث نظام السجل التجاري ليصبح موحداً لجميع الأنشطة تحت رقم واحد، مع إلغاء إجراء تجديد الفروع بشكل منفصل. يسري النظام على جميع المنشآت القائمة والجديدة اعتباراً من ١ يوليو ٢٠٢٦، ويشمل ربط السجل بالعنوان الوطني الموحد وتحديث بيانات المالك تلقائياً من مصادرها الرسمية.",
     url: "https://mc.gov.sa",
   },
   {
     id: "2",
     title: "تسهيلات جديدة لتراخيص المنشآت الغذائية",
     authority: "هيئة الغذاء والدواء",
+    authorityUrl: "https://sfda.gov.sa",
+    category: "procedure_update",
     date: "٢٠٢٦/٠٤/٠٢",
+    publicationDate: "٢٠٢٦/٠٤/٠٢",
+    effectiveDate: "٢٠٢٦/٠٤/١٥",
+    lastSyncAt: "٢٠٢٦/٠٦/٢٩ ١٠:١٢",
+    verified: true,
     summary: "تقليل مدة إصدار ترخيص سلامة الغذاء إلى ٧ أيام عمل، مع منصة رقمية موحدة.",
+    fullAnnouncement:
+      "أطلقت الهيئة العامة للغذاء والدواء منصة رقمية موحّدة لإصدار تراخيص المنشآت الغذائية، مع تقليص مدة الإصدار إلى ٧ أيام عمل بدلاً من ١٥ يوماً. تشمل التسهيلات قبول التقارير المخبرية المعتمدة إلكترونياً، وربط الطلب مباشرة برخصة الدفاع المدني.",
     url: "https://sfda.gov.sa",
   },
   {
     id: "3",
     title: "منصة بلدي: خدمات جديدة للرخص البلدية",
     authority: "وزارة الشؤون البلدية والقروية",
+    authorityUrl: "https://balady.gov.sa",
+    category: "new_service",
     date: "٢٠٢٦/٠٣/١٨",
+    publicationDate: "٢٠٢٦/٠٣/١٨",
+    effectiveDate: "٢٠٢٦/٠٣/١٨",
+    lastSyncAt: "٢٠٢٦/٠٦/٢٩ ١٠:١٢",
+    verified: true,
     summary:
       "إطلاق مسار سريع لإصدار الرخص البلدية للمنشآت الصغيرة، مع دفع إلكتروني مباشر.",
+    fullAnnouncement:
+      "أطلقت منصة بلدي مساراً سريعاً لإصدار الرخص البلدية للمنشآت الصغيرة والمتوسطة، مع إمكانية الدفع الإلكتروني المباشر وربط الرخصة تلقائياً بالسجل التجاري. يشمل المسار جميع أنواع الأنشطة التجارية والخدمية منخفضة المخاطر، ولا يتطلب زيارة ميدانية مسبقة قبل الإصدار.",
     url: "https://balady.gov.sa",
   },
+  {
+    id: "4",
+    title: "تحديث رسوم عضوية الغرف التجارية",
+    authority: "اتحاد الغرف السعودية",
+    authorityUrl: "https://fsc.org.sa",
+    category: "fees_update",
+    date: "٢٠٢٦/٠٦/١٠",
+    publicationDate: "٢٠٢٦/٠٦/١٠",
+    effectiveDate: "٢٠٢٦/٠٧/٠١",
+    lastSyncAt: "٢٠٢٦/٠٦/٢٩ ١٠:١٢",
+    verified: false,
+    summary: "مراجعة شرائح رسوم اشتراك الغرف التجارية للمنشآت حسب رأس المال.",
+    fullAnnouncement:
+      "يجري اتحاد الغرف السعودية حالياً اعتماد تحديث لشرائح رسوم الاشتراك السنوي بناءً على رأس مال المنشأة وحجم النشاط. سيتم نشر الجدول الرسمي بعد اعتماده، ويرجى الرجوع للمصدر الرسمي للتحقق.",
+    url: "https://fsc.org.sa",
+  },
 ];
+
+export const CATEGORY_META: Record<
+  RegulationCategory,
+  { ar: string; en: string; badge: string }
+> = {
+  new_regulation: { ar: "نظام جديد", en: "New Regulation", badge: "bg-emerald-50 text-emerald-800 border-emerald-200" },
+  fees_update: { ar: "تحديث رسوم", en: "Fees Update", badge: "bg-amber-50 text-amber-800 border-amber-200" },
+  requirements_update: { ar: "تحديث متطلبات", en: "Requirements Update", badge: "bg-orange-50 text-orange-800 border-orange-200" },
+  new_service: { ar: "خدمة جديدة", en: "New Service", badge: "bg-sky-50 text-sky-800 border-sky-200" },
+  service_modification: { ar: "تعديل خدمة", en: "Service Modification", badge: "bg-indigo-50 text-indigo-800 border-indigo-200" },
+  form_update: { ar: "تحديث نموذج رسمي", en: "Official Form Update", badge: "bg-purple-50 text-purple-800 border-purple-200" },
+  procedure_update: { ar: "تحديث إجراء", en: "Procedure Update", badge: "bg-teal-50 text-teal-800 border-teal-200" },
+  circular: { ar: "تعميم رسمي", en: "Circular", badge: "bg-slate-50 text-slate-800 border-slate-200" },
+  announcement: { ar: "إعلان", en: "Announcement", badge: "bg-rose-50 text-rose-800 border-rose-200" },
+};
 
 // ------- localStorage-backed demo store -------
 

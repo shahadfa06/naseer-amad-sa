@@ -16,6 +16,7 @@ import { Route as LicensesRouteImport } from './routes/licenses'
 import { Route as ApplicationsRouteImport } from './routes/applications'
 import { Route as ActivitiesRouteImport } from './routes/activities'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as RegulationsIdRouteImport } from './routes/regulations.$id'
 import { Route as JourneyLicenseIdRouteImport } from './routes/journey.$licenseId'
 import { Route as ApiSyncCheckRouteImport } from './routes/api/sync-check'
 import { Route as ApiDocAssistantRouteImport } from './routes/api/doc-assistant'
@@ -56,6 +57,11 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const RegulationsIdRoute = RegulationsIdRouteImport.update({
+  id: '/$id',
+  path: '/$id',
+  getParentRoute: () => RegulationsRoute,
+} as any)
 const JourneyLicenseIdRoute = JourneyLicenseIdRouteImport.update({
   id: '/journey/$licenseId',
   path: '/journey/$licenseId',
@@ -84,11 +90,12 @@ export interface FileRoutesByFullPath {
   '/licenses': typeof LicensesRoute
   '/notifications': typeof NotificationsRoute
   '/register': typeof RegisterRoute
-  '/regulations': typeof RegulationsRoute
+  '/regulations': typeof RegulationsRouteWithChildren
   '/api/chat': typeof ApiChatRoute
   '/api/doc-assistant': typeof ApiDocAssistantRoute
   '/api/sync-check': typeof ApiSyncCheckRoute
   '/journey/$licenseId': typeof JourneyLicenseIdRoute
+  '/regulations/$id': typeof RegulationsIdRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -97,11 +104,12 @@ export interface FileRoutesByTo {
   '/licenses': typeof LicensesRoute
   '/notifications': typeof NotificationsRoute
   '/register': typeof RegisterRoute
-  '/regulations': typeof RegulationsRoute
+  '/regulations': typeof RegulationsRouteWithChildren
   '/api/chat': typeof ApiChatRoute
   '/api/doc-assistant': typeof ApiDocAssistantRoute
   '/api/sync-check': typeof ApiSyncCheckRoute
   '/journey/$licenseId': typeof JourneyLicenseIdRoute
+  '/regulations/$id': typeof RegulationsIdRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -111,11 +119,12 @@ export interface FileRoutesById {
   '/licenses': typeof LicensesRoute
   '/notifications': typeof NotificationsRoute
   '/register': typeof RegisterRoute
-  '/regulations': typeof RegulationsRoute
+  '/regulations': typeof RegulationsRouteWithChildren
   '/api/chat': typeof ApiChatRoute
   '/api/doc-assistant': typeof ApiDocAssistantRoute
   '/api/sync-check': typeof ApiSyncCheckRoute
   '/journey/$licenseId': typeof JourneyLicenseIdRoute
+  '/regulations/$id': typeof RegulationsIdRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -131,6 +140,7 @@ export interface FileRouteTypes {
     | '/api/doc-assistant'
     | '/api/sync-check'
     | '/journey/$licenseId'
+    | '/regulations/$id'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -144,6 +154,7 @@ export interface FileRouteTypes {
     | '/api/doc-assistant'
     | '/api/sync-check'
     | '/journey/$licenseId'
+    | '/regulations/$id'
   id:
     | '__root__'
     | '/'
@@ -157,6 +168,7 @@ export interface FileRouteTypes {
     | '/api/doc-assistant'
     | '/api/sync-check'
     | '/journey/$licenseId'
+    | '/regulations/$id'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -166,7 +178,7 @@ export interface RootRouteChildren {
   LicensesRoute: typeof LicensesRoute
   NotificationsRoute: typeof NotificationsRoute
   RegisterRoute: typeof RegisterRoute
-  RegulationsRoute: typeof RegulationsRoute
+  RegulationsRoute: typeof RegulationsRouteWithChildren
   ApiChatRoute: typeof ApiChatRoute
   ApiDocAssistantRoute: typeof ApiDocAssistantRoute
   ApiSyncCheckRoute: typeof ApiSyncCheckRoute
@@ -224,6 +236,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/regulations/$id': {
+      id: '/regulations/$id'
+      path: '/$id'
+      fullPath: '/regulations/$id'
+      preLoaderRoute: typeof RegulationsIdRouteImport
+      parentRoute: typeof RegulationsRoute
+    }
     '/journey/$licenseId': {
       id: '/journey/$licenseId'
       path: '/journey/$licenseId'
@@ -255,6 +274,18 @@ declare module '@tanstack/react-router' {
   }
 }
 
+interface RegulationsRouteChildren {
+  RegulationsIdRoute: typeof RegulationsIdRoute
+}
+
+const RegulationsRouteChildren: RegulationsRouteChildren = {
+  RegulationsIdRoute: RegulationsIdRoute,
+}
+
+const RegulationsRouteWithChildren = RegulationsRoute._addFileChildren(
+  RegulationsRouteChildren,
+)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   ActivitiesRoute: ActivitiesRoute,
@@ -262,7 +293,7 @@ const rootRouteChildren: RootRouteChildren = {
   LicensesRoute: LicensesRoute,
   NotificationsRoute: NotificationsRoute,
   RegisterRoute: RegisterRoute,
-  RegulationsRoute: RegulationsRoute,
+  RegulationsRoute: RegulationsRouteWithChildren,
   ApiChatRoute: ApiChatRoute,
   ApiDocAssistantRoute: ApiDocAssistantRoute,
   ApiSyncCheckRoute: ApiSyncCheckRoute,
@@ -271,13 +302,3 @@ const rootRouteChildren: RootRouteChildren = {
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
-
-import type { getRouter } from './router.tsx'
-import type { startInstance } from './start.ts'
-declare module '@tanstack/react-start' {
-  interface Register {
-    ssr: true
-    router: Awaited<ReturnType<typeof getRouter>>
-    config: Awaited<ReturnType<typeof startInstance.getOptions>>
-  }
-}

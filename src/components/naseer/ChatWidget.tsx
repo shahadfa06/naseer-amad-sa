@@ -1,8 +1,10 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Bot, MessageCircle, Send, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useLang } from "@/lib/i18n";
+
+export type ChatOpenDetail = { contextText?: string; autoPrompt?: string };
 
 type ChatMessage = { role: "user" | "bot"; text: string };
 
@@ -38,10 +40,14 @@ export function ChatWidget() {
     setMessages([{ role: "bot", text: greeting }]);
   }
 
-  const send = async (text: string) => {
+  const messagesRef = useRef(messages);
+  messagesRef.current = messages;
+
+  const send = async (text: string, baseMessages?: ChatMessage[]) => {
     const v = text.trim();
     if (!v || sending) return;
-    const next: ChatMessage[] = [...messages, { role: "user", text: v }];
+    const base = baseMessages ?? messagesRef.current;
+    const next: ChatMessage[] = [...base, { role: "user", text: v }];
     setMessages(next);
     setInput("");
     setSending(true);
@@ -68,6 +74,28 @@ export function ChatWidget() {
       setSending(false);
     }
   };
+
+  // Programmatic open with an update-context prefill.
+  useEffect(() => {
+    const handler = (e: Event) => {
+      const detail = (e as CustomEvent<ChatOpenDetail>).detail || {};
+      setOpen(true);
+      const base = messagesRef.current;
+      let next = base;
+      if (detail.contextText) {
+        next = [...base, { role: "bot", text: detail.contextText }];
+        setMessages(next);
+      }
+      if (detail.autoPrompt) {
+        setTimeout(() => {
+          void send(detail.autoPrompt!, next);
+        }, 60);
+      }
+    };
+    window.addEventListener("naseer:chat-open", handler as EventListener);
+    return () => window.removeEventListener("naseer:chat-open", handler as EventListener);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const posClass = lang === "en" ? "right-6" : "left-6";
   const panelPos = lang === "en" ? "right-6 left-6 sm:left-auto sm:w-[380px]" : "left-6 right-6 sm:right-auto sm:w-[380px]";
