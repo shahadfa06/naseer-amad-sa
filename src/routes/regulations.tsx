@@ -76,12 +76,12 @@ function RegulationsPage() {
                     {lang === "ar" ? meta.ar : meta.en}
                   </span>
                   {r.verified ? (
-                    <span className="inline-flex items-center gap-1 text-[11px] text-emerald-700">
+                    <span className="inline-flex items-center gap-1 text-[11px] text-emerald-700 dark:text-emerald-400">
                       <ShieldCheck className="w-3.5 h-3.5" />
                       {tr("موثّق", "Verified")}
                     </span>
                   ) : (
-                    <span className="inline-flex items-center gap-1 text-[11px] text-amber-700">
+                    <span className="inline-flex items-center gap-1 text-[11px] text-amber-700 dark:text-amber-400">
                       <ShieldAlert className="w-3.5 h-3.5" />
                       {tr("قيد التحقق", "Verifying")}
                     </span>
