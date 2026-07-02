@@ -275,7 +275,7 @@ function JourneyPage() {
                 {tr("عندما تصل جاهزيتك إلى ٧٠٪ سنمكّنك من إرسال الطلب رسمياً للجهة المختصة.", "Once readiness reaches 70% you can submit officially to the authority.")}
               </div>
               {submittedId ? (
-                <div className="rounded-2xl border border-emerald-200 bg-emerald-50 p-4 text-emerald-900">
+                <div className="rounded-2xl border border-emerald-200 dark:border-emerald-800 bg-emerald-50 dark:bg-emerald-950/30 p-4 text-emerald-900 dark:text-emerald-300">
                   <div className="flex items-center gap-2 font-bold mb-1">
                     <CheckCircle2 className="w-5 h-5" />
                     {tr("تم إرسال طلبك", "Application submitted")}
