@@ -47,12 +47,12 @@ function HomePage() {
   const Arrow = lang === "ar" ? ArrowLeft : ArrowRight;
 
   const ACTIVITIES = [
-    { icon: Coffee, label: tr("كوفي شوب", "Coffee Shop"), tint: "#EFE9D9" },
-    { icon: UtensilsCrossed, label: tr("مطعم", "Restaurant"), tint: "#E9E3D2" },
-    { icon: Scissors, label: tr("صالون", "Salon"), tint: "#EFEBE0" },
-    { icon: Store, label: tr("بيع تجزئة", "Retail"), tint: "#E7E1D1" },
-    { icon: Stethoscope, label: tr("عيادة", "Clinic"), tint: "#EEE7D2" },
-    { icon: Building2, label: tr("مقاولات", "Contracting"), tint: "#EAE3CE" },
+    { icon: Coffee, label: tr("كوفي شوب", "Coffee Shop"), cls: "bg-[#EFE9D9] dark:bg-secondary" },
+    { icon: UtensilsCrossed, label: tr("مطعم", "Restaurant"), cls: "bg-[#E9E3D2] dark:bg-secondary" },
+    { icon: Scissors, label: tr("صالون", "Salon"), cls: "bg-[#EFEBE0] dark:bg-secondary" },
+    { icon: Store, label: tr("بيع تجزئة", "Retail"), cls: "bg-[#E7E1D1] dark:bg-secondary" },
+    { icon: Stethoscope, label: tr("عيادة", "Clinic"), cls: "bg-[#EEE7D2] dark:bg-secondary" },
+    { icon: Building2, label: tr("مقاولات", "Contracting"), cls: "bg-[#EAE3CE] dark:bg-secondary" },
   ];
 
   return (
