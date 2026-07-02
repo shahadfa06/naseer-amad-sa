@@ -75,6 +75,28 @@ export function ChatWidget() {
     }
   };
 
+  // Programmatic open with an update-context prefill.
+  useEffect(() => {
+    const handler = (e: Event) => {
+      const detail = (e as CustomEvent<ChatOpenDetail>).detail || {};
+      setOpen(true);
+      const base = messagesRef.current;
+      let next = base;
+      if (detail.contextText) {
+        next = [...base, { role: "bot", text: detail.contextText }];
+        setMessages(next);
+      }
+      if (detail.autoPrompt) {
+        setTimeout(() => {
+          void send(detail.autoPrompt!, next);
+        }, 60);
+      }
+    };
+    window.addEventListener("naseer:chat-open", handler as EventListener);
+    return () => window.removeEventListener("naseer:chat-open", handler as EventListener);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   const posClass = lang === "en" ? "right-6" : "left-6";
   const panelPos = lang === "en" ? "right-6 left-6 sm:left-auto sm:w-[380px]" : "left-6 right-6 sm:right-auto sm:w-[380px]";
 
