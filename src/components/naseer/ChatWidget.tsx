@@ -38,30 +38,27 @@ export function ChatWidget() {
     setMessages([{ role: "bot", text: greeting }]);
   }
 
-  const WEBHOOK_URL = "https://hook.eu1.make.com/rm4e4ae74g81fy8x211viwkrd8udbenm";
-
   const send = async (text: string) => {
     const v = text.trim();
     if (!v || sending) return;
-    setMessages((m) => [...m, { role: "user", text: v }]);
+    const next: ChatMessage[] = [...messages, { role: "user", text: v }];
+    setMessages(next);
     setInput("");
     setSending(true);
     try {
-      const res = await fetch(WEBHOOK_URL, {
+      const history = next.map((m) => ({
+        role: m.role === "bot" ? ("assistant" as const) : ("user" as const),
+        content: m.text,
+      }));
+      const res = await fetch("/api/chat", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ message: v }),
+        body: JSON.stringify({ messages: history }),
       });
-      const raw = await res.text();
-      let reply: string = raw;
-      try {
-        const j = JSON.parse(raw);
-        const cand = j.reply ?? j.response ?? j.message ?? j.text ?? j.output ?? raw;
-        reply = typeof cand === "string" ? cand : JSON.stringify(cand);
-      } catch {
-        /* plain text */
-      }
-      setMessages((m) => [...m, { role: "bot", text: reply || tr("تم الاستلام.", "Received.") }]);
+      const data = (await res.json().catch(() => ({}))) as { reply?: string; error?: string };
+      if (!res.ok) throw new Error(data.error || `HTTP ${res.status}`);
+      const reply = (data.reply || "").trim() || tr("تم الاستلام.", "Received.");
+      setMessages((m) => [...m, { role: "bot", text: reply }]);
     } catch {
       setMessages((m) => [
         ...m,
