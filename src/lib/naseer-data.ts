@@ -236,6 +236,8 @@ export const store = {
         body: "جاهزين نسير معك خطوة بخطوة في مشروعك.",
         at: new Date().toISOString(),
         read: false,
+        kind: "info",
+        emoji: "👋",
       },
     ]),
   addNotification: (n: Omit<Notification, "id" | "at" | "read">) => {
@@ -252,8 +254,162 @@ export const store = {
   markAllRead: () => {
     const list = store.getNotifications().map((n) => ({ ...n, read: true }));
     safeWrite(NOTIFS_KEY, list);
+    // also mark all smart notifications read
+    const smart = generateSmartNotifications();
+    const readIds = new Set(safeRead<string[]>(SMART_READ_KEY, []));
+    smart.forEach((n) => readIds.add(n.id));
+    safeWrite(SMART_READ_KEY, Array.from(readIds));
   },
+
+  getSmartNotifications: (): Notification[] => {
+    const smart = generateSmartNotifications();
+    const readIds = new Set(safeRead<string[]>(SMART_READ_KEY, []));
+    const marked = smart.map((n) => ({ ...n, read: readIds.has(n.id) }));
+    return [...marked, ...store.getNotifications()].sort(
+      (a, b) => new Date(b.at).getTime() - new Date(a.at).getTime(),
+    );
+  },
+  getUnreadCount: (): number => store.getSmartNotifications().filter((n) => !n.read).length,
 };
+
+const SMART_READ_KEY = "naseer.smartRead";
+
+function generateSmartNotifications(): Notification[] {
+  const apps = safeRead<Application[]>(APPS_KEY, []);
+  const user = safeRead<NaseerUser | null>(USER_KEY, null);
+  const out: Notification[] = [];
+  const now = new Date().toISOString();
+
+  if (apps.length === 0) {
+    out.push({
+      id: "smart-start",
+      title: "ابدأ رحلتك التجارية",
+      body: "اختر نشاطك التجاري وقدّم أول طلب ترخيص خلال دقائق.",
+      at: now,
+      read: false,
+      kind: "reminder",
+      emoji: "🚀",
+    });
+    if (!user) {
+      out.push({
+        id: "smart-register",
+        title: "أكمل تسجيل حسابك",
+        body: "سجّل بياناتك الشخصية عشان نقدر نجهّز طلباتك بشكل أسرع.",
+        at: now,
+        read: false,
+        kind: "urgent",
+        emoji: "⚠️",
+      });
+    }
+    return out;
+  }
+
+  const total = apps.length;
+  const issued = apps.filter((a) => a.status === "issued" || a.status === "approved").length;
+  const awaiting = apps.filter((a) => a.status === "awaiting");
+  const processing = apps.filter((a) => a.status === "processing");
+  const rejected = apps.filter((a) => a.status === "rejected");
+  const progress = total > 0 ? Math.round((issued / total) * 100) : 0;
+
+  // Missing CR
+  const hasCR = apps.some((a) => a.licenseId === "cr");
+  if (!hasCR) {
+    out.push({
+      id: "smart-cr",
+      title: "لا تنسَ السجل التجاري",
+      body: "لا زلت تحتاج إلى تحميل / تقديم السجل التجاري لإكمال ملف مشروعك.",
+      at: now,
+      read: false,
+      kind: "urgent",
+      emoji: "📄",
+    });
+  }
+
+  // Awaiting docs
+  awaiting.forEach((a) => {
+    out.push({
+      id: `smart-await-${a.id}`,
+      title: `متطلبات ${a.licenseName} غير مكتملة`,
+      body: `طلب "${a.licenseName}" ينتظر استكمال البيانات من طرفك.`,
+      at: a.submittedAt,
+      read: false,
+      kind: "reminder",
+      emoji: "📑",
+    });
+  });
+
+  // Rejected
+  rejected.forEach((a) => {
+    out.push({
+      id: `smart-rej-${a.id}`,
+      title: `طلب ${a.licenseName} مرفوض`,
+      body: `تم رفض الطلب. يرجى مراجعة المتطلبات وإعادة التقديم.`,
+      at: a.submittedAt,
+      read: false,
+      kind: "urgent",
+      emoji: "⚠️",
+    });
+  });
+
+  // Progress
+  out.push({
+    id: `smart-progress-${progress}`,
+    title: `أنجزت ${progress}% من رحلتك التجارية`,
+    body:
+      progress >= 80
+        ? "ممتاز! قربت تخلّص كل التراخيص المطلوبة."
+        : `أكملت ${issued} من أصل ${total} تراخيص. كمل طريقك مع نسير.`,
+    at: now,
+    read: false,
+    kind: progress >= 80 ? "success" : "info",
+    emoji: progress >= 80 ? "✅" : "📊",
+  });
+
+  // Next step recommendation
+  const next = processing[0] || awaiting[0];
+  if (next) {
+    out.push({
+      id: `smart-next-${next.id}`,
+      title: `الخطوة الموصى بها: ${next.licenseName}`,
+      body: `تابع طلب "${next.licenseName}" مع ${next.authority} لإنهاء الإجراء.`,
+      at: now,
+      read: false,
+      kind: "ai",
+      emoji: "🚀",
+    });
+  }
+
+  // Estimated time
+  if (processing.length > 0) {
+    const days = Math.min(14, 3 + processing.length * 2);
+    out.push({
+      id: `smart-eta-${processing.length}`,
+      title: `المدة المتوقعة لإنهاء طلباتك`,
+      body: `على حسب حالة طلباتك، المتوقع تخلّص خلال ${days} أيام تقريباً.`,
+      at: now,
+      read: false,
+      kind: "info",
+      emoji: "⏳",
+    });
+  }
+
+  // AI recommendation based on activity types
+  const hasFood = apps.some((a) => ["health", "food", "civil"].includes(a.licenseId));
+  if (hasFood) {
+    out.push({
+      id: "smart-ai-safety",
+      title: "توصية ذكية من مساعد نسير",
+      body: "أغلب المتقدمين لنشاطك ينسون رفع شهادة السلامة — تأكد من إرفاقها لتجنّب التأخير.",
+      at: now,
+      read: false,
+      kind: "ai",
+      emoji: "💡",
+    });
+  }
+
+  return out;
+}
+
 
 export const STATUS_META: Record<
   Application["status"],
