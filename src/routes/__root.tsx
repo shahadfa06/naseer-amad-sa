@@ -84,13 +84,19 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
         content:
           "منصة نسير — من أول خطوة لين إصدار آخر ترخيص، نسير معك ونسهّل عليك كل إجراءات مشروعك في مكان واحد.",
       },
-      { property: "og:title", content: "نسير — طريقك يسير" },
+      { property: "og:title", content: "نسير | Naseer — مع نسير… طريقك يسير" },
       {
         property: "og:description",
         content: "منصة سعودية لإجراءات وتراخيص الأعمال.",
       },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },
+      { name: "twitter:title", content: "نسير | Naseer — مع نسير… طريقك يسير" },
+      { name: "description", content: "Nuysir Business Guide simplifies business licensing for Saudi Arabian entrepreneurs." },
+      { property: "og:description", content: "Nuysir Business Guide simplifies business licensing for Saudi Arabian entrepreneurs." },
+      { name: "twitter:description", content: "Nuysir Business Guide simplifies business licensing for Saudi Arabian entrepreneurs." },
+      { property: "og:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/083f6d73-4945-472e-a581-91faa93be666/id-preview-ad3e646e--0ab474da-096b-4c22-a93d-69bd385aacb2.lovable.app-1783010422368.png" },
+      { name: "twitter:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/083f6d73-4945-472e-a581-91faa93be666/id-preview-ad3e646e--0ab474da-096b-4c22-a93d-69bd385aacb2.lovable.app-1783010422368.png" },
     ],
     links: [
       { rel: "stylesheet", href: appCss },
