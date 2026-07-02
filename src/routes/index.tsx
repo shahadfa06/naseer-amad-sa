@@ -1,6 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import {
   ArrowLeft,
+  ArrowRight,
   Bot,
   CheckCircle2,
   ClipboardList,
@@ -21,6 +22,7 @@ import {
 import { AppShell } from "@/components/naseer/AppShell";
 import { Logo, logoUrl } from "@/components/naseer/brand";
 import { Button } from "@/components/ui/button";
+import { useLang } from "@/lib/i18n";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -40,17 +42,19 @@ export const Route = createFileRoute("/")({
   component: HomePage,
 });
 
-const ACTIVITIES = [
-  { icon: Coffee, label: "كوفي شوب", tint: "#EFE9D9" },
-  { icon: UtensilsCrossed, label: "مطعم", tint: "#E9E3D2" },
-  { icon: Scissors, label: "صالون", tint: "#EFEBE0" },
-  { icon: Store, label: "بيع تجزئة", tint: "#E7E1D1" },
-  { icon: Stethoscope, label: "عيادة", tint: "#EEE7D2" },
-  { icon: Building2, label: "مقاولات", tint: "#EAE3CE" },
-];
-
-
 function HomePage() {
+  const { lang, tr } = useLang();
+  const Arrow = lang === "ar" ? ArrowLeft : ArrowRight;
+
+  const ACTIVITIES = [
+    { icon: Coffee, label: tr("كوفي شوب", "Coffee Shop"), tint: "#EFE9D9" },
+    { icon: UtensilsCrossed, label: tr("مطعم", "Restaurant"), tint: "#E9E3D2" },
+    { icon: Scissors, label: tr("صالون", "Salon"), tint: "#EFEBE0" },
+    { icon: Store, label: tr("بيع تجزئة", "Retail"), tint: "#E7E1D1" },
+    { icon: Stethoscope, label: tr("عيادة", "Clinic"), tint: "#EEE7D2" },
+    { icon: Building2, label: tr("مقاولات", "Contracting"), tint: "#EAE3CE" },
+  ];
+
   return (
     <AppShell>
       {/* Hero */}
@@ -70,13 +74,13 @@ function HomePage() {
           className="pointer-events-none absolute top-10 -left-6 hidden lg:block -z-10"
           aria-hidden
           style={{
-            width: '420px',
-            height: '530px',
+            width: "420px",
+            height: "530px",
             opacity: 0.06,
             backgroundImage: `url(${logoUrl})`,
-            backgroundSize: 'contain',
-            backgroundRepeat: 'no-repeat',
-            backgroundPosition: 'center',
+            backgroundSize: "contain",
+            backgroundRepeat: "no-repeat",
+            backgroundPosition: "center",
           }}
         />
 
@@ -91,11 +95,14 @@ function HomePage() {
               style={{ color: "var(--saudi-deep)" }}
             >
               <Flag className="w-3.5 h-3.5" />
-              حيّاكم الله في نسير 🇸🇦 — مستوحى من رؤية 2030
+              {tr(
+                "حيّاكم الله في نسير 🇸🇦 — مستوحى من رؤية 2030",
+                "Welcome to Naseer 🇸🇦 — Inspired by Vision 2030",
+              )}
             </div>
 
             <h1 className="font-display text-5xl md:text-7xl font-black tracking-tight leading-[1.02]">
-              مع نسير…
+              {tr("مع نسير…", "With Naseer…")}
               <br />
               <span
                 className="bg-clip-text text-transparent"
@@ -104,21 +111,27 @@ function HomePage() {
                     "linear-gradient(120deg, var(--saudi) 0%, var(--saudi-ink) 55%, var(--gold) 120%)",
                 }}
               >
-                طريقك يسير.
+                {tr("طريقك يسير.", "your path is smooth.")}
               </span>
             </h1>
 
             <p className="mt-7 text-base md:text-lg text-muted-foreground max-w-2xl leading-loose">
-              من أول خطوة… لين إصدار آخر ترخيص،
+              {tr(
+                "من أول خطوة… لين إصدار آخر ترخيص،",
+                "From your very first step… to issuing your last license,",
+              )}
               <br className="hidden md:block" />
-              نسير معك ونسهّل عليك كل إجراءات مشروعك في مكان واحد.
+              {tr(
+                "نسير معك ونسهّل عليك كل إجراءات مشروعك في مكان واحد.",
+                "we walk with you and simplify every business procedure in one place.",
+              )}
             </p>
 
             <div className="mt-9 flex flex-wrap gap-3">
               <Button size="lg" asChild className="text-base h-13 px-8 rounded-full shadow-soft">
                 <Link to="/register">
                   <Rocket className="w-4 h-4" />
-                  ابدأ رحلتك الآن
+                  {tr("ابدأ رحلتك الآن", "Start your journey")}
                 </Link>
               </Button>
               <Button
@@ -129,7 +142,7 @@ function HomePage() {
               >
                 <a href="#assistant">
                   <MessageCircle className="w-4 h-4" />
-                  اسأل مساعد نسير
+                  {tr("اسأل مساعد نسير", "Ask Naseer Assistant")}
                 </a>
               </Button>
             </div>
@@ -137,17 +150,22 @@ function HomePage() {
             {/* Trust badges */}
             <div className="mt-10 flex flex-wrap items-center gap-x-6 gap-y-3 text-xs text-muted-foreground">
               <div className="flex items-center gap-1.5">
-                <ShieldCheck className="w-4 h-4 text-primary" /> ربط آمن بالهوية الوطنية
+                <ShieldCheck className="w-4 h-4 text-primary" />
+                {tr("ربط آمن بالهوية الوطنية", "Secure National ID integration")}
               </div>
               <div className="flex items-center gap-1.5">
-                <CheckCircle2 className="w-4 h-4 text-primary" /> معتمد على بيانات المركز السعودي للأعمال
+                <CheckCircle2 className="w-4 h-4 text-primary" />
+                {tr(
+                  "معتمد على بيانات المركز السعودي للأعمال",
+                  "Backed by Saudi Business Center data",
+                )}
               </div>
               <div className="flex items-center gap-1.5">
-                <Sparkles className="w-4 h-4 text-primary" /> مساعد ذكي بلهجتك
+                <Sparkles className="w-4 h-4 text-primary" />
+                {tr("مساعد ذكي بلهجتك", "Smart assistant in your language")}
               </div>
             </div>
           </div>
-
         </div>
       </section>
 
@@ -156,19 +174,45 @@ function HomePage() {
         <div className="text-center max-w-2xl mx-auto mb-12">
           <div className="inline-flex items-center gap-3 text-xs tracking-[0.24em] text-primary font-bold mb-4">
             <span className="w-8 h-px bg-primary/60" />
-            كيف نسير معك؟
+            {tr("كيف نسير معك؟", "How Naseer works")}
             <span className="w-8 h-px bg-primary/60" />
           </div>
-          <h2 className="text-3xl md:text-5xl font-bold">خلّ الباقي علينا</h2>
-          <p className="mt-3 text-muted-foreground">أربع خطوات… ومشروعك على الطريق.</p>
+          <h2 className="text-3xl md:text-5xl font-bold">{tr("خلّ الباقي علينا", "Leave the rest to us")}</h2>
+          <p className="mt-3 text-muted-foreground">
+            {tr("أربع خطوات… ومشروعك على الطريق.", "Four steps — and your business is on the way.")}
+          </p>
         </div>
 
         <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-4">
           {[
-            { icon: ShieldCheck, t: "سجّل بأمان", d: "أنشئ حسابك وربطه بهويتك الوطنية بشكل آمن.", href: "/register", n: "٠١" },
-            { icon: LayoutGrid, t: "اختر نشاطك", d: "من كوفي شوب لصيدلية — نعرف اللي يناسبك.", href: "/activities", n: "٠٢" },
-            { icon: ScrollText, t: "شوف التراخيص", d: "كل التراخيص المطلوبة بجهاتها ورسومها.", href: "/licenses", n: "٠٣" },
-            { icon: ClipboardList, t: "تابع طلباتك", d: "من التقديم لين الإصدار في لوحة واحدة.", href: "/applications", n: "٠٤" },
+            {
+              icon: ShieldCheck,
+              t: tr("سجّل بأمان", "Sign up securely"),
+              d: tr("أنشئ حسابك وربطه بهويتك الوطنية بشكل آمن.", "Create your account and link it securely to your National ID."),
+              href: "/register",
+              n: tr("٠١", "01"),
+            },
+            {
+              icon: LayoutGrid,
+              t: tr("اختر نشاطك", "Choose your activity"),
+              d: tr("من كوفي شوب لصيدلية — نعرف اللي يناسبك.", "From coffee shops to pharmacies — we know what fits."),
+              href: "/activities",
+              n: tr("٠٢", "02"),
+            },
+            {
+              icon: ScrollText,
+              t: tr("شوف التراخيص", "See required licenses"),
+              d: tr("كل التراخيص المطلوبة بجهاتها ورسومها.", "All required licenses with their authorities and fees."),
+              href: "/licenses",
+              n: tr("٠٣", "03"),
+            },
+            {
+              icon: ClipboardList,
+              t: tr("تابع طلباتك", "Track your applications"),
+              d: tr("من التقديم لين الإصدار في لوحة واحدة.", "From submission to issuance in a single dashboard."),
+              href: "/applications",
+              n: tr("٠٤", "04"),
+            },
           ].map((s, i) => (
             <Link
               key={i}
@@ -190,7 +234,7 @@ function HomePage() {
               </div>
               <div className="relative font-display font-bold text-lg mb-2 flex items-center gap-2">
                 {s.t}
-                <ArrowLeft className="w-4 h-4 opacity-0 -translate-x-1 group-hover:opacity-100 group-hover:translate-x-0 transition-all text-primary" />
+                <Arrow className="w-4 h-4 opacity-0 -translate-x-1 group-hover:opacity-100 group-hover:translate-x-0 transition-all text-primary" />
               </div>
               <div className="relative text-sm text-muted-foreground leading-relaxed">{s.d}</div>
             </Link>
@@ -204,14 +248,18 @@ function HomePage() {
           <div className="absolute inset-0 pattern-bg opacity-[0.05]" aria-hidden />
           <div className="relative flex flex-col md:flex-row md:items-end md:justify-between gap-4 mb-8">
             <div>
-              <div className="text-xs tracking-[0.2em] text-primary font-bold mb-2">الأنشطة الشائعة</div>
-              <h3 className="text-2xl md:text-3xl font-bold">وش نوع مشروعك؟</h3>
-              <p className="mt-2 text-sm text-muted-foreground">اختر النشاط وتعرّف على تراخيصه.</p>
+              <div className="text-xs tracking-[0.2em] text-primary font-bold mb-2">
+                {tr("الأنشطة الشائعة", "Popular activities")}
+              </div>
+              <h3 className="text-2xl md:text-3xl font-bold">{tr("وش نوع مشروعك؟", "What kind of business?")}</h3>
+              <p className="mt-2 text-sm text-muted-foreground">
+                {tr("اختر النشاط وتعرّف على تراخيصه.", "Pick an activity and view its licenses.")}
+              </p>
             </div>
             <Button asChild variant="outline" className="rounded-full self-start md:self-end">
               <Link to="/activities">
-                عرض الكل
-                <ArrowLeft className="w-4 h-4" />
+                {tr("عرض الكل", "View all")}
+                <Arrow className="w-4 h-4" />
               </Link>
             </Button>
           </div>
@@ -260,15 +308,20 @@ function HomePage() {
           <div className="relative grid md:grid-cols-[1fr_auto] gap-8 items-center">
             <div>
               <div className="inline-flex items-center gap-2 text-xs font-semibold px-3 py-1 rounded-full bg-white/15 backdrop-blur mb-4">
-                <Bot className="w-4 h-4" /> مساعد نسير الذكي
+                <Bot className="w-4 h-4" /> {tr("مساعد نسير الذكي", "Naseer Smart Assistant")}
               </div>
               <h3 className="text-3xl md:text-5xl font-bold mb-4 leading-tight">
-                حاير من وين تبدأ؟
+                {tr("حاير من وين تبدأ؟", "Not sure where to start?")}
                 <br />
-                <span style={{ color: "var(--gold)" }}>اسأل مساعد نسير.</span>
+                <span style={{ color: "var(--gold)" }}>
+                  {tr("اسأل مساعد نسير.", "Ask Naseer Assistant.")}
+                </span>
               </h3>
               <p className="opacity-85 max-w-xl leading-loose">
-                جاوبك عن أي استفسار يخص مشروعك، التراخيص، الجهات الحكومية، والرسوم — بلهجتك، وعلى مدار الساعة.
+                {tr(
+                  "جاوبك عن أي استفسار يخص مشروعك، التراخيص، الجهات الحكومية، والرسوم — بلهجتك، وعلى مدار الساعة.",
+                  "Answers anything about your business, licenses, government authorities, and fees — in your language, 24/7.",
+                )}
               </p>
             </div>
             <Button
@@ -278,7 +331,7 @@ function HomePage() {
             >
               <a href="#">
                 <MessageCircle className="w-5 h-5" />
-                افتح المساعد الآن
+                {tr("افتح المساعد الآن", "Open the assistant")}
               </a>
             </Button>
           </div>
