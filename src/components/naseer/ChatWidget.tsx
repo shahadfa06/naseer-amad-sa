@@ -124,6 +124,15 @@ export function ChatWidget() {
                   </div>
                 </div>
               ))}
+              {sending && (
+                <div className="flex justify-end">
+                  <div className="bg-white border border-border rounded-2xl rounded-br-sm px-4 py-2.5 text-sm text-muted-foreground inline-flex gap-1">
+                    <span className="w-1.5 h-1.5 rounded-full bg-primary/60 animate-bounce" />
+                    <span className="w-1.5 h-1.5 rounded-full bg-primary/60 animate-bounce [animation-delay:120ms]" />
+                    <span className="w-1.5 h-1.5 rounded-full bg-primary/60 animate-bounce [animation-delay:240ms]" />
+                  </div>
+                </div>
+              )}
 
               {messages.length <= 1 && (
                 <div className="pt-2 space-y-2">
