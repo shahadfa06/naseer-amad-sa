@@ -61,6 +61,7 @@ export const Route = createFileRoute("/api/chat")({
             messages: messages
               .filter((m) => m && (m.role === "user" || m.role === "assistant"))
               .map((m) => ({ role: m.role, content: String(m.content ?? "") })),
+            providerOptions: { lovable: { service_tier: "priority" } },
           });
           return Response.json({ reply: text });
         } catch (e) {
