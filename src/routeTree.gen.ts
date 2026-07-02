@@ -16,6 +16,7 @@ import { Route as LicensesRouteImport } from './routes/licenses'
 import { Route as ApplicationsRouteImport } from './routes/applications'
 import { Route as ActivitiesRouteImport } from './routes/activities'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as JourneyLicenseIdRouteImport } from './routes/journey.$licenseId'
 import { Route as ApiChatRouteImport } from './routes/api/chat'
 
 const RegulationsRoute = RegulationsRouteImport.update({
@@ -53,6 +54,11 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const JourneyLicenseIdRoute = JourneyLicenseIdRouteImport.update({
+  id: '/journey/$licenseId',
+  path: '/journey/$licenseId',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ApiChatRoute = ApiChatRouteImport.update({
   id: '/api/chat',
   path: '/api/chat',
@@ -68,6 +74,7 @@ export interface FileRoutesByFullPath {
   '/register': typeof RegisterRoute
   '/regulations': typeof RegulationsRoute
   '/api/chat': typeof ApiChatRoute
+  '/journey/$licenseId': typeof JourneyLicenseIdRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -78,6 +85,7 @@ export interface FileRoutesByTo {
   '/register': typeof RegisterRoute
   '/regulations': typeof RegulationsRoute
   '/api/chat': typeof ApiChatRoute
+  '/journey/$licenseId': typeof JourneyLicenseIdRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -89,6 +97,7 @@ export interface FileRoutesById {
   '/register': typeof RegisterRoute
   '/regulations': typeof RegulationsRoute
   '/api/chat': typeof ApiChatRoute
+  '/journey/$licenseId': typeof JourneyLicenseIdRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -101,6 +110,7 @@ export interface FileRouteTypes {
     | '/register'
     | '/regulations'
     | '/api/chat'
+    | '/journey/$licenseId'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -111,6 +121,7 @@ export interface FileRouteTypes {
     | '/register'
     | '/regulations'
     | '/api/chat'
+    | '/journey/$licenseId'
   id:
     | '__root__'
     | '/'
@@ -121,6 +132,7 @@ export interface FileRouteTypes {
     | '/register'
     | '/regulations'
     | '/api/chat'
+    | '/journey/$licenseId'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -132,6 +144,7 @@ export interface RootRouteChildren {
   RegisterRoute: typeof RegisterRoute
   RegulationsRoute: typeof RegulationsRoute
   ApiChatRoute: typeof ApiChatRoute
+  JourneyLicenseIdRoute: typeof JourneyLicenseIdRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -185,6 +198,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/journey/$licenseId': {
+      id: '/journey/$licenseId'
+      path: '/journey/$licenseId'
+      fullPath: '/journey/$licenseId'
+      preLoaderRoute: typeof JourneyLicenseIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/api/chat': {
       id: '/api/chat'
       path: '/api/chat'
@@ -204,6 +224,7 @@ const rootRouteChildren: RootRouteChildren = {
   RegisterRoute: RegisterRoute,
   RegulationsRoute: RegulationsRoute,
   ApiChatRoute: ApiChatRoute,
+  JourneyLicenseIdRoute: JourneyLicenseIdRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
