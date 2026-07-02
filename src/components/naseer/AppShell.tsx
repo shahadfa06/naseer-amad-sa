@@ -1,21 +1,56 @@
 import { Link, useRouterState } from "@tanstack/react-router";
-import { Bell, Bot, FileText, Heart, Home, LayoutGrid, Newspaper, ScrollText, ShieldCheck } from "lucide-react";
+import { Bell, Bot, FileText, Globe, Heart, Home, LayoutGrid, Newspaper, ScrollText, ShieldCheck } from "lucide-react";
 import type { ReactNode } from "react";
 import { Logo } from "./brand";
 import { ChatWidget } from "./ChatWidget";
 import patternUrl from "@/assets/pattern.png";
-
-const NAV = [
-  { to: "/", label: "الرئيسية", icon: Home },
-  { to: "/activities", label: "الأنشطة", icon: LayoutGrid },
-  { to: "/licenses", label: "التراخيص", icon: ScrollText },
-  { to: "/applications", label: "طلباتي", icon: FileText },
-  { to: "/notifications", label: "الإشعارات", icon: Bell },
-  { to: "/regulations", label: "الأنظمة", icon: Newspaper },
-];
+import { useLang } from "@/lib/i18n";
 
 export function AppShell({ children }: { children: ReactNode }) {
   const pathname = useRouterState({ select: (s) => s.location.pathname });
+  const { lang, setLang, tr } = useLang();
+
+  const NAV = [
+    { to: "/", label: tr("الرئيسية", "Home"), icon: Home },
+    { to: "/activities", label: tr("الأنشطة", "Activities"), icon: LayoutGrid },
+    { to: "/licenses", label: tr("التراخيص", "Licenses"), icon: ScrollText },
+    { to: "/applications", label: tr("طلباتي", "My Applications"), icon: FileText },
+    { to: "/notifications", label: tr("الإشعارات", "Notifications"), icon: Bell },
+    { to: "/regulations", label: tr("الأنظمة", "Regulations"), icon: Newspaper },
+  ] as const;
+
+  const LangSwitcher = ({ compact = false }: { compact?: boolean }) => (
+    <div
+      className={`inline-flex items-center gap-1 rounded-full border border-border bg-card ${
+        compact ? "p-0.5" : "p-1"
+      } shadow-soft`}
+      role="group"
+      aria-label={tr("تبديل اللغة", "Language switcher")}
+    >
+      <Globe className={`${compact ? "w-3.5 h-3.5 mx-1.5" : "w-4 h-4 mx-2"} text-muted-foreground`} />
+      <button
+        onClick={() => setLang("ar")}
+        className={`px-2.5 ${compact ? "py-0.5 text-[11px]" : "py-1 text-xs"} rounded-full font-semibold transition ${
+          lang === "ar" ? "bg-primary text-primary-foreground shadow-soft" : "text-muted-foreground hover:text-foreground"
+        }`}
+        aria-pressed={lang === "ar"}
+        lang="ar"
+      >
+        العربية
+      </button>
+      <span className="text-muted-foreground/50 text-xs" aria-hidden>|</span>
+      <button
+        onClick={() => setLang("en")}
+        className={`px-2.5 ${compact ? "py-0.5 text-[11px]" : "py-1 text-xs"} rounded-full font-semibold transition ${
+          lang === "en" ? "bg-primary text-primary-foreground shadow-soft" : "text-muted-foreground hover:text-foreground"
+        }`}
+        aria-pressed={lang === "en"}
+        lang="en"
+      >
+        English
+      </button>
+    </div>
+  );
 
   return (
     <div
@@ -33,12 +68,17 @@ export function AppShell({ children }: { children: ReactNode }) {
         <div className="max-w-7xl mx-auto px-5 h-8 flex items-center justify-between">
           <div className="flex items-center gap-2 opacity-90">
             <ShieldCheck className="w-3 h-3" />
-            <span>منصة رقمية سعودية • مستوحاة من رؤية 2030</span>
+            <span>
+              {tr(
+                "منصة رقمية سعودية • مستوحاة من رؤية 2030",
+                "A Saudi digital platform • Inspired by Vision 2030",
+              )}
+            </span>
           </div>
           <div className="hidden sm:flex items-center gap-4 opacity-80">
-            <span>الدعم 920000000</span>
+            <span>{tr("الدعم 920000000", "Support 920000000")}</span>
             <span aria-hidden>·</span>
-            <span>AR</span>
+            <span>{lang === "ar" ? "AR" : "EN"}</span>
           </div>
         </div>
       </div>
@@ -49,10 +89,10 @@ export function AppShell({ children }: { children: ReactNode }) {
             <Logo size={40} withRing />
             <div className="leading-tight">
               <div className="font-display font-extrabold text-lg" style={{ color: "var(--saudi-ink)" }}>
-                نسير
+                {tr("نسير", "Naseer")}
               </div>
               <div className="text-[10px] tracking-[0.28em] text-muted-foreground font-semibold">
-                NASEER
+                {tr("NASEER", "نسير")}
               </div>
             </div>
           </Link>
@@ -77,20 +117,23 @@ export function AppShell({ children }: { children: ReactNode }) {
             })}
           </nav>
 
-          <div className="mr-auto lg:mr-0 flex items-center gap-2">
+          <div className="ms-auto lg:ms-0 flex items-center gap-2">
+            <div className="hidden md:block">
+              <LangSwitcher />
+            </div>
             <Link
               to="/notifications"
               className="relative w-10 h-10 rounded-full border border-border bg-card flex items-center justify-center hover:border-primary/40 hover:shadow-soft transition"
-              aria-label="الإشعارات"
+              aria-label={tr("الإشعارات", "Notifications")}
             >
               <Bell className="w-4 h-4" />
-              <span className="absolute top-1.5 left-1.5 w-2 h-2 rounded-full bg-primary ring-2 ring-background" />
+              <span className="absolute top-1.5 start-1.5 w-2 h-2 rounded-full bg-primary ring-2 ring-background" />
             </Link>
             <Link
               to="/register"
               className="hidden sm:inline-flex items-center gap-1.5 h-10 px-5 rounded-full bg-primary text-primary-foreground text-sm font-semibold hover:opacity-90 hover:shadow-soft transition"
             >
-              تسجيل دخول
+              {tr("تسجيل دخول", "Sign In")}
             </Link>
           </div>
         </div>
@@ -115,6 +158,9 @@ export function AppShell({ children }: { children: ReactNode }) {
                 </Link>
               );
             })}
+            <div className="ms-2 md:hidden">
+              <LangSwitcher compact />
+            </div>
           </div>
         </div>
       </header>
@@ -133,39 +179,49 @@ export function AppShell({ children }: { children: ReactNode }) {
             <div className="flex items-center gap-3 mb-4">
               <Logo size={40} withRing />
               <div>
-                <div className="font-display font-bold text-lg">نسير · Naseer</div>
-                <div className="text-xs text-muted-foreground">مع نسير… طريقك يسير</div>
+                <div className="font-display font-bold text-lg">{tr("نسير · Naseer", "Naseer · نسير")}</div>
+                <div className="text-xs text-muted-foreground">
+                  {tr("مع نسير… طريقك يسير", "With Naseer… your path is smooth")}
+                </div>
               </div>
             </div>
             <p className="text-sm text-muted-foreground max-w-sm leading-relaxed">
-              منصة رقمية سعودية توحّد رحلة رواد الأعمال — من اختيار النشاط لين إصدار
-              التراخيص، بمكان واحد وبتجربة ميسّرة.
+              {tr(
+                "منصة رقمية سعودية توحّد رحلة رواد الأعمال — من اختيار النشاط لين إصدار التراخيص، بمكان واحد وبتجربة ميسّرة.",
+                "A Saudi digital platform unifying the entrepreneur's journey — from choosing an activity to issuing licenses, in one seamless experience.",
+              )}
             </p>
           </div>
           <div>
-            <div className="text-xs font-bold tracking-widest text-muted-foreground mb-3">المنصة</div>
+            <div className="text-xs font-bold tracking-widest text-muted-foreground mb-3">
+              {tr("المنصة", "PLATFORM")}
+            </div>
             <ul className="space-y-2 text-sm">
-              <li><Link to="/activities" className="hover:text-primary transition">الأنشطة</Link></li>
-              <li><Link to="/licenses" className="hover:text-primary transition">التراخيص</Link></li>
-              <li><Link to="/applications" className="hover:text-primary transition">طلباتي</Link></li>
-              <li><Link to="/regulations" className="hover:text-primary transition">الأنظمة والتشريعات</Link></li>
+              <li><Link to="/activities" className="hover:text-primary transition">{tr("الأنشطة", "Activities")}</Link></li>
+              <li><Link to="/licenses" className="hover:text-primary transition">{tr("التراخيص", "Licenses")}</Link></li>
+              <li><Link to="/applications" className="hover:text-primary transition">{tr("طلباتي", "My Applications")}</Link></li>
+              <li><Link to="/regulations" className="hover:text-primary transition">{tr("الأنظمة والتشريعات", "Regulations & Laws")}</Link></li>
             </ul>
           </div>
           <div>
-            <div className="text-xs font-bold tracking-widest text-muted-foreground mb-3">تواصل معنا</div>
+            <div className="text-xs font-bold tracking-widest text-muted-foreground mb-3">
+              {tr("تواصل معنا", "CONTACT US")}
+            </div>
             <ul className="space-y-2 text-sm">
-              <li className="text-muted-foreground">الدعم: 920000000</li>
+              <li className="text-muted-foreground">{tr("الدعم: 920000000", "Support: 920000000")}</li>
               <li className="text-muted-foreground">care@naseer.sa</li>
-              <li className="text-muted-foreground">الرياض، المملكة العربية السعودية</li>
+              <li className="text-muted-foreground">{tr("الرياض، المملكة العربية السعودية", "Riyadh, Kingdom of Saudi Arabia")}</li>
             </ul>
           </div>
         </div>
         <div className="relative border-t border-border">
           <div className="max-w-7xl mx-auto px-6 py-4 flex flex-col md:flex-row items-center justify-between gap-2 text-xs text-muted-foreground">
-            <div>© {new Date().getFullYear()} نسير — جميع الحقوق محفوظة.</div>
+            <div>
+              © {new Date().getFullYear()} {tr("نسير — جميع الحقوق محفوظة.", "Naseer — All rights reserved.")}
+            </div>
             <div className="flex items-center gap-1.5">
               <Bot className="w-3.5 h-3.5" />
-              صنع بـ <Heart className="w-3 h-3 fill-primary text-primary" /> في المملكة
+              {tr("صنع بـ", "Made with")} <Heart className="w-3 h-3 fill-primary text-primary" /> {tr("في المملكة", "in the Kingdom")}
             </div>
           </div>
         </div>
