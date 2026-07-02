@@ -1,8 +1,10 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Bot, MessageCircle, Send, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useLang } from "@/lib/i18n";
+
+export type ChatOpenDetail = { contextText?: string; autoPrompt?: string };
 
 type ChatMessage = { role: "user" | "bot"; text: string };
 
