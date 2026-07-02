@@ -144,8 +144,13 @@ export function AppShell({ children }: { children: ReactNode }) {
               aria-label={tr("الإشعارات", "Notifications")}
             >
               <Bell className="w-4 h-4" />
-              <span className="absolute top-1.5 start-1.5 w-2 h-2 rounded-full bg-primary ring-2 ring-background" />
+              {unread > 0 && (
+                <span className="absolute -top-1 -start-1 min-w-[18px] h-[18px] px-1 rounded-full bg-red-500 text-white text-[10px] font-bold flex items-center justify-center ring-2 ring-background">
+                  {unread > 9 ? "9+" : unread}
+                </span>
+              )}
             </Link>
+
             <Link
               to="/register"
               className="hidden sm:inline-flex items-center gap-1.5 h-10 px-5 rounded-full bg-primary text-primary-foreground text-sm font-semibold hover:opacity-90 hover:shadow-soft transition"
