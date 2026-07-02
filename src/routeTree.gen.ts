@@ -17,6 +17,7 @@ import { Route as ApplicationsRouteImport } from './routes/applications'
 import { Route as ActivitiesRouteImport } from './routes/activities'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as JourneyLicenseIdRouteImport } from './routes/journey.$licenseId'
+import { Route as ApiSyncCheckRouteImport } from './routes/api/sync-check'
 import { Route as ApiDocAssistantRouteImport } from './routes/api/doc-assistant'
 import { Route as ApiChatRouteImport } from './routes/api/chat'
 
@@ -60,6 +61,11 @@ const JourneyLicenseIdRoute = JourneyLicenseIdRouteImport.update({
   path: '/journey/$licenseId',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ApiSyncCheckRoute = ApiSyncCheckRouteImport.update({
+  id: '/api/sync-check',
+  path: '/api/sync-check',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ApiDocAssistantRoute = ApiDocAssistantRouteImport.update({
   id: '/api/doc-assistant',
   path: '/api/doc-assistant',
@@ -81,6 +87,7 @@ export interface FileRoutesByFullPath {
   '/regulations': typeof RegulationsRoute
   '/api/chat': typeof ApiChatRoute
   '/api/doc-assistant': typeof ApiDocAssistantRoute
+  '/api/sync-check': typeof ApiSyncCheckRoute
   '/journey/$licenseId': typeof JourneyLicenseIdRoute
 }
 export interface FileRoutesByTo {
@@ -93,6 +100,7 @@ export interface FileRoutesByTo {
   '/regulations': typeof RegulationsRoute
   '/api/chat': typeof ApiChatRoute
   '/api/doc-assistant': typeof ApiDocAssistantRoute
+  '/api/sync-check': typeof ApiSyncCheckRoute
   '/journey/$licenseId': typeof JourneyLicenseIdRoute
 }
 export interface FileRoutesById {
@@ -106,6 +114,7 @@ export interface FileRoutesById {
   '/regulations': typeof RegulationsRoute
   '/api/chat': typeof ApiChatRoute
   '/api/doc-assistant': typeof ApiDocAssistantRoute
+  '/api/sync-check': typeof ApiSyncCheckRoute
   '/journey/$licenseId': typeof JourneyLicenseIdRoute
 }
 export interface FileRouteTypes {
@@ -120,6 +129,7 @@ export interface FileRouteTypes {
     | '/regulations'
     | '/api/chat'
     | '/api/doc-assistant'
+    | '/api/sync-check'
     | '/journey/$licenseId'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -132,6 +142,7 @@ export interface FileRouteTypes {
     | '/regulations'
     | '/api/chat'
     | '/api/doc-assistant'
+    | '/api/sync-check'
     | '/journey/$licenseId'
   id:
     | '__root__'
@@ -144,6 +155,7 @@ export interface FileRouteTypes {
     | '/regulations'
     | '/api/chat'
     | '/api/doc-assistant'
+    | '/api/sync-check'
     | '/journey/$licenseId'
   fileRoutesById: FileRoutesById
 }
@@ -157,6 +169,7 @@ export interface RootRouteChildren {
   RegulationsRoute: typeof RegulationsRoute
   ApiChatRoute: typeof ApiChatRoute
   ApiDocAssistantRoute: typeof ApiDocAssistantRoute
+  ApiSyncCheckRoute: typeof ApiSyncCheckRoute
   JourneyLicenseIdRoute: typeof JourneyLicenseIdRoute
 }
 
@@ -218,6 +231,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof JourneyLicenseIdRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/api/sync-check': {
+      id: '/api/sync-check'
+      path: '/api/sync-check'
+      fullPath: '/api/sync-check'
+      preLoaderRoute: typeof ApiSyncCheckRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/api/doc-assistant': {
       id: '/api/doc-assistant'
       path: '/api/doc-assistant'
@@ -245,6 +265,7 @@ const rootRouteChildren: RootRouteChildren = {
   RegulationsRoute: RegulationsRoute,
   ApiChatRoute: ApiChatRoute,
   ApiDocAssistantRoute: ApiDocAssistantRoute,
+  ApiSyncCheckRoute: ApiSyncCheckRoute,
   JourneyLicenseIdRoute: JourneyLicenseIdRoute,
 }
 export const routeTree = rootRouteImport
