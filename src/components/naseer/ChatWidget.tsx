@@ -40,10 +40,14 @@ export function ChatWidget() {
     setMessages([{ role: "bot", text: greeting }]);
   }
 
-  const send = async (text: string) => {
+  const messagesRef = useRef(messages);
+  messagesRef.current = messages;
+
+  const send = async (text: string, baseMessages?: ChatMessage[]) => {
     const v = text.trim();
     if (!v || sending) return;
-    const next: ChatMessage[] = [...messages, { role: "user", text: v }];
+    const base = baseMessages ?? messagesRef.current;
+    const next: ChatMessage[] = [...base, { role: "user", text: v }];
     setMessages(next);
     setInput("");
     setSending(true);
