@@ -57,12 +57,12 @@
   --popover: #FFFFFF;
   --popover-foreground: #0A241A;
 
-  /* Brand — official Saudi Green #006C35, Emerald #1FA463 */
-  --saudi: #006C35;
-  --saudi-deep: #024E27;
-  --saudi-ink: #013319;
+  /* Brand — premium Saudi Green #005128, Emerald #1FA463 */
+  --saudi: #005128;
+  --saudi-deep: #003D1E;
+  --saudi-ink: #002A14;
   --emerald: #1FA463;
-  --primary: #006C35;
+  --primary: #005128;
   --primary-foreground: #FFFFFF;
 
   --secondary: #F1EADB;          /* warm beige */
@@ -81,7 +81,7 @@
 
   --border: #E4E7E3;
   --input: #ECEFEB;
-  --ring: #006C35;
+  --ring: #005128;
 }
 
 
