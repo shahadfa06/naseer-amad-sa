@@ -147,14 +147,14 @@ function VerifyBadge({ meta }: { meta: LicenseMeta }) {
   const { tr } = useLang();
   if (meta.stale) {
     return (
-      <div className="inline-flex items-center gap-1 text-[10px] font-bold px-2 py-1 rounded-full bg-amber-50 text-amber-800 border border-amber-200">
+      <div className="inline-flex items-center gap-1 text-[10px] font-bold px-2 py-1 rounded-full bg-amber-50 dark:bg-amber-950/30 text-amber-800 dark:text-amber-400 border border-amber-200 dark:border-amber-800">
         <AlertTriangle className="w-3 h-3" />
         {tr("قد تكون قديمة", "May be outdated")}
       </div>
     );
   }
   return (
-    <div className="inline-flex items-center gap-1 text-[10px] font-bold px-2 py-1 rounded-full bg-emerald-50 text-emerald-800 border border-emerald-200">
+    <div className="inline-flex items-center gap-1 text-[10px] font-bold px-2 py-1 rounded-full bg-emerald-50 dark:bg-emerald-950/30 text-emerald-800 dark:text-emerald-400 border border-emerald-200 dark:border-emerald-800">
       <BadgeCheck className="w-3 h-3" />
       {tr("موثوق", "Verified")}
     </div>

@@ -91,7 +91,7 @@ function HomePage() {
             </div>
 
             <div
-              className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/90 backdrop-blur border border-border text-xs font-semibold mb-7 shadow-soft"
+              className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-card/90 backdrop-blur border border-border text-xs font-semibold mb-7 shadow-soft"
               style={{ color: "var(--saudi-deep)" }}
             >
               <Flag className="w-3.5 h-3.5" />
@@ -138,7 +138,7 @@ function HomePage() {
                 size="lg"
                 variant="outline"
                 asChild
-                className="text-base h-13 px-8 rounded-full bg-white/70 backdrop-blur border-border hover:bg-white"
+                className="text-base h-13 px-8 rounded-full bg-card/70 backdrop-blur border-border hover:bg-card"
               >
                 <a href="#assistant">
                   <MessageCircle className="w-4 h-4" />
@@ -290,7 +290,7 @@ function HomePage() {
           className="relative overflow-hidden rounded-[2rem] p-8 md:p-14 text-white"
           style={{
             background:
-              "linear-gradient(135deg, var(--saudi-ink) 0%, var(--saudi) 60%, var(--saudi-deep) 100%)",
+              "linear-gradient(135deg, #002A14 0%, #005128 60%, #003D1E 100%)",
           }}
         >
           <div className="absolute inset-0 pattern-bg opacity-[0.10]" aria-hidden />

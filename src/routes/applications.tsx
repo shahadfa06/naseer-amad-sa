@@ -212,12 +212,12 @@ function ReadinessCard({ apps }: { apps: Application[] }) {
         {/* Circular score */}
         <div className="relative w-40 h-40 mx-auto md:mx-0">
           <svg viewBox="0 0 120 120" className="w-full h-full -rotate-90">
-            <circle cx="60" cy="60" r={R} stroke="hsl(var(--border))" strokeWidth="10" fill="none" />
+            <circle cx="60" cy="60" r={R} stroke="var(--border)" strokeWidth="10" fill="none" />
             <circle
               cx="60"
               cy="60"
               r={R}
-              stroke="hsl(var(--primary))"
+              stroke="var(--primary)"
               strokeWidth="10"
               fill="none"
               strokeLinecap="round"
@@ -250,8 +250,8 @@ function ReadinessCard({ apps }: { apps: Application[] }) {
 
       {/* Document lists */}
       <div className="grid md:grid-cols-2 gap-4 mt-8">
-        <div className="p-5 rounded-2xl border border-emerald-200 bg-emerald-50/60">
-          <div className="text-sm font-semibold text-emerald-800 mb-3">
+        <div className="p-5 rounded-2xl border border-emerald-200 dark:border-emerald-800 bg-emerald-50/60 dark:bg-emerald-950/20">
+          <div className="text-sm font-semibold text-emerald-800 dark:text-emerald-400 mb-3">
             {tr("المستندات المرفوعة", "Uploaded documents")}
           </div>
           {uploaded.length === 0 ? (
@@ -261,7 +261,7 @@ function ReadinessCard({ apps }: { apps: Application[] }) {
           ) : (
             <ul className="space-y-2">
               {uploaded.map((d) => (
-                <li key={d.id} className="flex items-center gap-2 text-sm text-emerald-900">
+                <li key={d.id} className="flex items-center gap-2 text-sm text-emerald-900 dark:text-emerald-300">
                   <span className="text-emerald-600">✔</span>
                   {lang === "ar" ? d.ar : d.en}
                 </li>
@@ -270,8 +270,8 @@ function ReadinessCard({ apps }: { apps: Application[] }) {
           )}
         </div>
 
-        <div className="p-5 rounded-2xl border border-red-200 bg-red-50/60">
-          <div className="text-sm font-semibold text-red-800 mb-3">
+        <div className="p-5 rounded-2xl border border-red-200 dark:border-red-800 bg-red-50/60 dark:bg-red-950/20">
+          <div className="text-sm font-semibold text-red-800 dark:text-red-400 mb-3">
             {tr("المستندات الناقصة", "Missing documents")}
           </div>
           {missing.length === 0 ? (
@@ -281,7 +281,7 @@ function ReadinessCard({ apps }: { apps: Application[] }) {
           ) : (
             <ul className="space-y-2">
               {missing.map((d) => (
-                <li key={d.id} className="flex items-center gap-2 text-sm text-red-900">
+                <li key={d.id} className="flex items-center gap-2 text-sm text-red-900 dark:text-red-300">
                   <span className="text-red-600">✖</span>
                   {lang === "ar" ? d.ar : d.en}
                 </li>
@@ -293,11 +293,11 @@ function ReadinessCard({ apps }: { apps: Application[] }) {
 
       {/* Smart recommendation */}
       {nextDoc && (
-        <div className="mt-5 p-4 rounded-2xl border border-orange-200 bg-orange-50/70 flex items-start gap-3">
-          <div className="w-9 h-9 rounded-xl bg-orange-100 flex items-center justify-center shrink-0">
+        <div className="mt-5 p-4 rounded-2xl border border-orange-200 dark:border-orange-800 bg-orange-50/70 dark:bg-orange-950/20 flex items-start gap-3">
+          <div className="w-9 h-9 rounded-xl bg-orange-100 dark:bg-orange-900/40 flex items-center justify-center shrink-0">
             💡
           </div>
-          <div className="text-sm text-orange-900 leading-relaxed">
+          <div className="text-sm text-orange-900 dark:text-orange-300 leading-relaxed">
             <div className="font-semibold mb-1">
               {tr("التوصية الذكية", "Smart recommendation")}
             </div>

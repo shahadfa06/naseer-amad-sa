@@ -186,7 +186,7 @@ function JourneyPage() {
         {/* Hero */}
         <div
           className="relative rounded-3xl overflow-hidden text-white p-6 md:p-8 mb-5"
-          style={{ background: "linear-gradient(135deg, var(--saudi-ink) 0%, var(--saudi-deep) 60%, var(--saudi) 100%)" }}
+          style={{ background: "linear-gradient(135deg, #002A14 0%, #003D1E 60%, #005128 100%)" }}
         >
           <div className="absolute inset-0 pattern-bg opacity-[0.12]" aria-hidden />
           <div className="relative flex flex-col md:flex-row md:items-end md:justify-between gap-4">
@@ -694,7 +694,7 @@ function statusLabel(s: DocStatus, tr: (a: string, e: string) => string) {
 function DetectionBadge({ ok, okLabel, badLabel }: { ok: boolean; okLabel: string; badLabel: string }) {
   return (
     <span className={`inline-flex items-center gap-1 text-[10px] font-bold px-2 py-0.5 rounded-full border ${
-      ok ? "bg-emerald-50 text-emerald-800 border-emerald-200" : "bg-red-50 text-red-800 border-red-200"
+      ok ? "bg-emerald-50 dark:bg-emerald-950/30 text-emerald-800 dark:text-emerald-400 border-emerald-200 dark:border-emerald-800" : "bg-red-50 dark:bg-red-950/30 text-red-800 dark:text-red-400 border-red-200 dark:border-red-800"
     }`}>
       {ok ? <CheckCircle2 className="w-3 h-3" /> : <XCircle className="w-3 h-3" />}
       {ok ? okLabel : badLabel}
@@ -731,7 +731,7 @@ function ReadinessRing({ value }: { value: number }) {
   return (
     <div className="relative w-24 h-24 shrink-0">
       <svg viewBox="0 0 120 120" className="w-full h-full -rotate-90">
-        <circle cx="60" cy="60" r={r} stroke="hsl(var(--border))" strokeWidth="10" fill="none" />
+        <circle cx="60" cy="60" r={r} stroke="var(--border)" strokeWidth="10" fill="none" />
         <circle cx="60" cy="60" r={r} stroke={color} strokeWidth="10" fill="none" strokeLinecap="round" strokeDasharray={c} strokeDashoffset={off} className="transition-all duration-500" />
       </svg>
       <div className="absolute inset-0 flex flex-col items-center justify-center">

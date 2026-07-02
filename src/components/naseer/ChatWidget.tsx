@@ -142,7 +142,7 @@ export function ChatWidget() {
                     className={`max-w-[85%] text-sm leading-relaxed px-4 py-2.5 rounded-2xl ${
                       m.role === "user"
                         ? "bg-primary text-primary-foreground rounded-bl-sm"
-                        : "bg-white border border-border rounded-br-sm"
+                        : "bg-card border border-border rounded-br-sm"
                     }`}
                   >
                     {m.text}
@@ -151,7 +151,7 @@ export function ChatWidget() {
               ))}
               {sending && (
                 <div className="flex justify-end">
-                  <div className="bg-white border border-border rounded-2xl rounded-br-sm px-4 py-2.5 text-sm text-muted-foreground inline-flex gap-1">
+                  <div className="bg-card border border-border rounded-2xl rounded-br-sm px-4 py-2.5 text-sm text-muted-foreground inline-flex gap-1">
                     <span className="w-1.5 h-1.5 rounded-full bg-primary/60 animate-bounce" />
                     <span className="w-1.5 h-1.5 rounded-full bg-primary/60 animate-bounce [animation-delay:120ms]" />
                     <span className="w-1.5 h-1.5 rounded-full bg-primary/60 animate-bounce [animation-delay:240ms]" />
@@ -168,7 +168,7 @@ export function ChatWidget() {
                     <button
                       key={q}
                       onClick={() => send(q)}
-                      className="block w-full text-start text-xs px-3 py-2 rounded-xl border border-border bg-white hover:border-primary/40 hover:bg-primary/5 transition-colors"
+                      className="block w-full text-start text-xs px-3 py-2 rounded-xl border border-border bg-card hover:border-primary/40 hover:bg-primary/5 transition-colors"
                     >
                       {q}
                     </button>
