@@ -31,72 +31,82 @@
   --color-ring: var(--ring);
   --color-saudi: var(--saudi);
   --color-saudi-deep: var(--saudi-deep);
-  --color-sky-soft: var(--sky-soft);
-  --color-beige: var(--beige);
+  --color-saudi-ink: var(--saudi-ink);
+  --color-sand: var(--sand);
+  --color-cream: var(--cream);
   --color-gold: var(--gold);
   --font-display: "Tajawal", "Plus Jakarta Sans", sans-serif;
   --font-sans: "IBM Plex Sans Arabic", "Inter", system-ui, sans-serif;
 
-  --shadow-soft: 0 1px 2px rgb(0 0 0 / 0.04), 0 8px 24px -8px color-mix(in oklab, var(--saudi) 12%, transparent);
-  --shadow-card: 0 1px 2px rgb(0 0 0 / 0.03), 0 12px 40px -16px color-mix(in oklab, var(--saudi-deep) 18%, transparent);
+  --shadow-soft: 0 1px 2px rgb(0 0 0 / 0.03), 0 6px 20px -10px color-mix(in oklab, var(--saudi-ink) 20%, transparent);
+  --shadow-card: 0 1px 2px rgb(0 0 0 / 0.02), 0 20px 50px -24px color-mix(in oklab, var(--saudi-ink) 30%, transparent);
+  --shadow-glow: 0 0 0 1px color-mix(in oklab, var(--saudi) 20%, transparent), 0 24px 60px -20px color-mix(in oklab, var(--saudi) 35%, transparent);
 }
 
 :root {
-  --radius: 1rem;
-  --background: oklch(0.995 0.003 95);
-  --foreground: oklch(0.20 0.03 160);
-  --card: oklch(1 0 0);
-  --card-foreground: oklch(0.20 0.03 160);
-  --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.20 0.03 160);
+  --radius: 1.15rem;
 
-  /* Saudi green */
-  --primary: #006C35;
-  --primary-foreground: oklch(0.99 0.005 95);
-  --saudi: #006C35;
-  --saudi-deep: #004d24;
+  /* Base cream palette — matches logo background #FCFBF9 */
+  --background: #FBFAF6;
+  --foreground: #0B2A22;
 
+  --card: #FFFFFF;
+  --card-foreground: #0B2A22;
+  --popover: #FFFFFF;
+  --popover-foreground: #0B2A22;
 
-  --secondary: oklch(0.96 0.02 220);
-  --secondary-foreground: oklch(0.25 0.05 160);
-  --muted: oklch(0.97 0.01 90);
-  --muted-foreground: oklch(0.48 0.02 160);
-  --accent: oklch(0.93 0.04 215);
-  --accent-foreground: oklch(0.25 0.06 220);
+  /* Brand — deep forest green from logo #013F30 */
+  --saudi: #013F30;
+  --saudi-deep: #002A20;
+  --saudi-ink: #011E17;
+  --primary: #013F30;
+  --primary-foreground: #FBFAF6;
 
-  --sky-soft: oklch(0.93 0.04 220);
-  --beige: oklch(0.95 0.025 85);
-  --gold: oklch(0.78 0.10 80);
+  --secondary: #EFEBE0;         /* warm sand */
+  --secondary-foreground: #0B2A22;
+  --muted: #F3F0E7;
+  --muted-foreground: #5A6B63;
+  --accent: #E9E3D2;             /* cream accent */
+  --accent-foreground: #0B2A22;
 
-  --destructive: oklch(0.60 0.22 25);
-  --destructive-foreground: oklch(0.99 0 0);
-  --border: oklch(0.91 0.015 90);
-  --input: oklch(0.93 0.01 90);
-  --ring: oklch(0.42 0.13 155);
+  --sand: #EFE9D9;
+  --cream: #FBF7EC;
+  --gold: #B8935A;
+
+  --destructive: #B33A2A;
+  --destructive-foreground: #FBFAF6;
+
+  --border: #E7E1D1;
+  --input: #EFEAD9;
+  --ring: #013F30;
 }
 
 .dark {
-  --background: oklch(0.18 0.02 160);
-  --foreground: oklch(0.98 0 0);
-  --card: oklch(0.22 0.03 160);
-  --card-foreground: oklch(0.98 0 0);
-  --primary: oklch(0.62 0.15 155);
-  --primary-foreground: oklch(0.12 0 0);
-  --border: oklch(1 0 0 / 10%);
-  --input: oklch(1 0 0 / 15%);
+  --background: #071916;
+  --foreground: #EFEBE0;
+  --card: #0B231D;
+  --card-foreground: #EFEBE0;
+  --primary: #6FBF9A;
+  --primary-foreground: #071916;
+  --border: rgb(255 255 255 / 8%);
+  --input: rgb(255 255 255 / 12%);
 }
 
 @layer base {
   * { border-color: var(--color-border); }
+  html { scroll-behavior: smooth; }
   body {
     background-color: var(--color-background);
     color: var(--color-foreground);
     font-family: var(--font-sans);
+    font-feature-settings: "ss01", "cv11";
+    -webkit-font-smoothing: antialiased;
   }
   h1, h2, h3, h4 {
     font-family: var(--font-display);
-    letter-spacing: -0.02em;
+    letter-spacing: -0.022em;
   }
+  ::selection { background: color-mix(in oklab, var(--saudi) 25%, transparent); color: var(--saudi-ink); }
 }
 
 @utility pattern-bg {
@@ -105,3 +115,31 @@
   background-repeat: repeat;
 }
 
+@utility grain {
+  position: relative;
+}
+@utility grain {
+  &::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    opacity: 0.35;
+    mix-blend-mode: multiply;
+    background-image: radial-gradient(rgb(0 0 0 / 0.05) 1px, transparent 1px);
+    background-size: 3px 3px;
+  }
+}
+
+@utility hairline {
+  box-shadow: inset 0 0 0 1px color-mix(in oklab, var(--saudi-ink) 8%, transparent);
+}
+
+@keyframes float-slow {
+  0%, 100% { transform: translateY(0) rotate(0deg); }
+  50% { transform: translateY(-14px) rotate(4deg); }
+}
+@keyframes shimmer {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
