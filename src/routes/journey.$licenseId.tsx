@@ -157,7 +157,7 @@ function JourneyPage() {
       <AppShell>
         <section className="max-w-2xl mx-auto px-6 py-24 text-center">
           <h1 className="text-2xl font-bold mb-3">{tr("لم نجد هذا الترخيص", "License not found")}</h1>
-          <Button asChild className="rounded-full" style={{ background: "var(--saudi-deep)" }}>
+          <Button asChild className="rounded-full">
             <Link to="/licenses" search={{ activity }}>{tr("رجوع إلى التراخيص", "Back to licenses")}</Link>
           </Button>
         </section>
