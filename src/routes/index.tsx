@@ -1,7 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { ArrowLeft, Bot, ClipboardList, Flag, LayoutGrid, MessageCircle, Rocket, ScrollText, ShieldCheck } from "lucide-react";
 import { AppShell } from "@/components/naseer/AppShell";
-import { Ornament } from "@/components/naseer/brand";
+import { Logo, Ornament } from "@/components/naseer/brand";
 import { Button } from "@/components/ui/button";
 
 export const Route = createFileRoute("/")({
@@ -37,8 +37,11 @@ function HomePage() {
           }}
         />
 
-        <div className="max-w-6xl mx-auto px-6 pt-16 pb-20 md:pt-24 md:pb-28">
+        <div className="max-w-6xl mx-auto px-6 pt-14 pb-20 md:pt-20 md:pb-28">
           <div className="max-w-3xl">
+            <div className="mb-6 flex justify-start">
+              <Logo size={112} />
+            </div>
             <div
               className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/85 backdrop-blur border border-border text-xs font-semibold mb-7 shadow-soft"
               style={{ color: "var(--saudi-deep)" }}
