@@ -141,20 +141,6 @@ function HomePage() {
             </div>
           </div>
 
-          {/* Stats */}
-          <div className="mt-16 grid grid-cols-2 md:grid-cols-4 gap-3">
-            {STATS.map((s, i) => (
-              <div
-                key={i}
-                className="rounded-2xl bg-white/80 backdrop-blur border border-border p-5 shadow-soft"
-              >
-                <div className="font-display font-black text-3xl" style={{ color: "var(--saudi-ink)" }}>
-                  {s.k}
-                </div>
-                <div className="text-xs text-muted-foreground mt-1">{s.v}</div>
-              </div>
-            ))}
-          </div>
         </div>
       </section>
 
