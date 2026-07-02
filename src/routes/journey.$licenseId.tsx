@@ -157,7 +157,7 @@ function JourneyPage() {
       <AppShell>
         <section className="max-w-2xl mx-auto px-6 py-24 text-center">
           <h1 className="text-2xl font-bold mb-3">{tr("لم نجد هذا الترخيص", "License not found")}</h1>
-          <Button asChild className="rounded-full" style={{ background: "var(--saudi-deep)" }}>
+          <Button asChild className="rounded-full">
             <Link to="/licenses" search={{ activity }}>{tr("رجوع إلى التراخيص", "Back to licenses")}</Link>
           </Button>
         </section>
@@ -292,7 +292,6 @@ function JourneyPage() {
                   size="lg"
                   onClick={submit}
                   className="w-full rounded-full h-11"
-                  style={{ background: "var(--saudi-deep)" }}
                   disabled={readiness.score < 70}
                 >
                   <Send className={`w-4 h-4 ${dir === "rtl" ? "rotate-180" : ""}`} />
@@ -518,8 +517,8 @@ function SyncBanner({ sync, meta }: { sync: SyncSnapshot | null; meta: LicenseMe
       verified ? "bg-emerald-50/60 dark:bg-emerald-950/30 border-emerald-200 dark:border-emerald-800" : "bg-amber-50/60 dark:bg-amber-950/30 border-amber-200 dark:border-amber-800"
     }`}>
       <div className="flex items-center gap-2">
-        <div className={`w-9 h-9 rounded-full flex items-center justify-center ${verified ? "bg-emerald-100" : "bg-amber-100"}`}>
-          <RefreshCw className={`w-4 h-4 ${verified ? "text-emerald-700" : "text-amber-700"}`} />
+        <div className={`w-9 h-9 rounded-full flex items-center justify-center ${verified ? "bg-emerald-100 dark:bg-emerald-900/40" : "bg-amber-100 dark:bg-amber-900/40"}`}>
+          <RefreshCw className={`w-4 h-4 ${verified ? "text-emerald-700 dark:text-emerald-400" : "text-amber-700 dark:text-amber-400"}`} />
         </div>
         <div>
           <div className="text-sm font-bold">
@@ -583,8 +582,8 @@ function ReadinessCard({ readiness, lang }: { readiness: { score: number; parts:
       {readiness.reasons.length > 0 && (
         <ul className="mt-3 space-y-1.5 text-xs">
           {readiness.reasons.map((r, i) => (
-            <li key={i} className="flex items-start gap-1.5 text-amber-900">
-              <AlertTriangle className="w-3.5 h-3.5 mt-0.5 shrink-0 text-amber-600" />
+            <li key={i} className="flex items-start gap-1.5 text-amber-900 dark:text-amber-300">
+              <AlertTriangle className="w-3.5 h-3.5 mt-0.5 shrink-0 text-amber-600 dark:text-amber-400" />
               <span>{r}</span>
             </li>
           ))}
@@ -626,7 +625,6 @@ function AiBtn({ onClick, loading, icon: Icon, label, primary, disabled }: {
       disabled={disabled || loading}
       className="rounded-full h-9"
       variant={primary ? "default" : "outline"}
-      style={primary ? { background: "var(--saudi-deep)" } : undefined}
     >
       {loading ? <Loader2 className="w-3.5 h-3.5 animate-spin" /> : <Icon className="w-3.5 h-3.5" />}
       {label}
