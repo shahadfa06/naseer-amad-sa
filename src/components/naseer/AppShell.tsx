@@ -1,14 +1,31 @@
 import { Link, useRouterState } from "@tanstack/react-router";
 import { Bell, Bot, FileText, Globe, Heart, Home, LayoutGrid, Newspaper, ScrollText, ShieldCheck } from "lucide-react";
-import type { ReactNode } from "react";
+import { useEffect, useState, type ReactNode } from "react";
 import { Logo } from "./brand";
 import { ChatWidget } from "./ChatWidget";
 import patternUrl from "@/assets/pattern.png";
 import { useLang } from "@/lib/i18n";
+import { store } from "@/lib/naseer-data";
 
 export function AppShell({ children }: { children: ReactNode }) {
   const pathname = useRouterState({ select: (s) => s.location.pathname });
   const { lang, setLang, tr } = useLang();
+  const [unread, setUnread] = useState(0);
+
+  useEffect(() => {
+    const refresh = () => setUnread(store.getUnreadCount());
+    refresh();
+    const onStorage = () => refresh();
+    window.addEventListener("storage", onStorage);
+    window.addEventListener("naseer:updated", onStorage);
+    const t = setInterval(refresh, 4000);
+    return () => {
+      window.removeEventListener("storage", onStorage);
+      window.removeEventListener("naseer:updated", onStorage);
+      clearInterval(t);
+    };
+  }, [pathname]);
+
 
   const NAV = [
     { to: "/", label: tr("الرئيسية", "Home"), icon: Home },
