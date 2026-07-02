@@ -47,12 +47,12 @@ function HomePage() {
   const Arrow = lang === "ar" ? ArrowLeft : ArrowRight;
 
   const ACTIVITIES = [
-    { icon: Coffee, label: tr("كوفي شوب", "Coffee Shop"), tint: "#EFE9D9" },
-    { icon: UtensilsCrossed, label: tr("مطعم", "Restaurant"), tint: "#E9E3D2" },
-    { icon: Scissors, label: tr("صالون", "Salon"), tint: "#EFEBE0" },
-    { icon: Store, label: tr("بيع تجزئة", "Retail"), tint: "#E7E1D1" },
-    { icon: Stethoscope, label: tr("عيادة", "Clinic"), tint: "#EEE7D2" },
-    { icon: Building2, label: tr("مقاولات", "Contracting"), tint: "#EAE3CE" },
+    { icon: Coffee, label: tr("كوفي شوب", "Coffee Shop"), cls: "bg-[#EFE9D9] dark:bg-secondary" },
+    { icon: UtensilsCrossed, label: tr("مطعم", "Restaurant"), cls: "bg-[#E9E3D2] dark:bg-secondary" },
+    { icon: Scissors, label: tr("صالون", "Salon"), cls: "bg-[#EFEBE0] dark:bg-secondary" },
+    { icon: Store, label: tr("بيع تجزئة", "Retail"), cls: "bg-[#E7E1D1] dark:bg-secondary" },
+    { icon: Stethoscope, label: tr("عيادة", "Clinic"), cls: "bg-[#EEE7D2] dark:bg-secondary" },
+    { icon: Building2, label: tr("مقاولات", "Contracting"), cls: "bg-[#EAE3CE] dark:bg-secondary" },
   ];
 
   return (
@@ -91,7 +91,7 @@ function HomePage() {
             </div>
 
             <div
-              className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/90 backdrop-blur border border-border text-xs font-semibold mb-7 shadow-soft"
+              className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-card/90 backdrop-blur border border-border text-xs font-semibold mb-7 shadow-soft"
               style={{ color: "var(--saudi-deep)" }}
             >
               <Flag className="w-3.5 h-3.5" />
@@ -138,7 +138,7 @@ function HomePage() {
                 size="lg"
                 variant="outline"
                 asChild
-                className="text-base h-13 px-8 rounded-full bg-white/70 backdrop-blur border-border hover:bg-white"
+                className="text-base h-13 px-8 rounded-full bg-card/70 backdrop-blur border-border hover:bg-card"
               >
                 <a href="#assistant">
                   <MessageCircle className="w-4 h-4" />
@@ -272,10 +272,9 @@ function HomePage() {
                 className="group rounded-2xl border border-border p-4 flex flex-col items-center gap-2 hover:border-primary/40 hover:-translate-y-1 hover:shadow-soft transition-all bg-background/50"
               >
                 <div
-                  className="w-12 h-12 rounded-2xl flex items-center justify-center group-hover:scale-110 transition-transform"
-                  style={{ background: a.tint }}
+                  className={`w-12 h-12 rounded-2xl flex items-center justify-center group-hover:scale-110 transition-transform ${a.cls}`}
                 >
-                  <a.icon className="w-5 h-5" style={{ color: "var(--saudi-ink)" }} />
+                  <a.icon className="w-5 h-5 text-saudi-ink" />
                 </div>
                 <div className="text-sm font-semibold">{a.label}</div>
               </Link>
@@ -290,7 +289,7 @@ function HomePage() {
           className="relative overflow-hidden rounded-[2rem] p-8 md:p-14 text-white"
           style={{
             background:
-              "linear-gradient(135deg, var(--saudi-ink) 0%, var(--saudi) 60%, var(--saudi-deep) 100%)",
+              "linear-gradient(135deg, #002A14 0%, #005128 60%, #003D1E 100%)",
           }}
         >
           <div className="absolute inset-0 pattern-bg opacity-[0.10]" aria-hidden />

@@ -186,7 +186,7 @@ function JourneyPage() {
         {/* Hero */}
         <div
           className="relative rounded-3xl overflow-hidden text-white p-6 md:p-8 mb-5"
-          style={{ background: "linear-gradient(135deg, var(--saudi-ink) 0%, var(--saudi-deep) 60%, var(--saudi) 100%)" }}
+          style={{ background: "linear-gradient(135deg, #002A14 0%, #003D1E 60%, #005128 100%)" }}
         >
           <div className="absolute inset-0 pattern-bg opacity-[0.12]" aria-hidden />
           <div className="relative flex flex-col md:flex-row md:items-end md:justify-between gap-4">
@@ -241,7 +241,7 @@ function JourneyPage() {
                         </div>
                         {typeof s.compliance === "number" && (
                           <span className={`text-[11px] font-bold px-2 py-1 rounded-full ${
-                            s.compliance >= 70 ? "bg-emerald-50 text-emerald-800" : "bg-amber-50 text-amber-800"
+                            s.compliance >= 70 ? "bg-emerald-50 dark:bg-emerald-950/30 text-emerald-800 dark:text-emerald-400" : "bg-amber-50 dark:bg-amber-950/30 text-amber-800 dark:text-amber-400"
                           }`}>
                             {s.compliance}%
                           </span>
@@ -275,7 +275,7 @@ function JourneyPage() {
                 {tr("عندما تصل جاهزيتك إلى ٧٠٪ سنمكّنك من إرسال الطلب رسمياً للجهة المختصة.", "Once readiness reaches 70% you can submit officially to the authority.")}
               </div>
               {submittedId ? (
-                <div className="rounded-2xl border border-emerald-200 bg-emerald-50 p-4 text-emerald-900">
+                <div className="rounded-2xl border border-emerald-200 dark:border-emerald-800 bg-emerald-50 dark:bg-emerald-950/30 p-4 text-emerald-900 dark:text-emerald-300">
                   <div className="flex items-center gap-2 font-bold mb-1">
                     <CheckCircle2 className="w-5 h-5" />
                     {tr("تم إرسال طلبك", "Application submitted")}
@@ -401,8 +401,8 @@ function DocumentAssistant({
         <SectionTitle icon={BrainCircuit} title={doc.name} />
         <span className={`text-[11px] font-bold px-2 py-1 rounded-full ${
           doc.status === "missing" ? "bg-muted text-muted-foreground"
-            : doc.status === "validated" ? "bg-emerald-50 text-emerald-800 border border-emerald-200"
-            : "bg-blue-50 text-blue-800 border border-blue-200"
+            : doc.status === "validated" ? "bg-emerald-50 dark:bg-emerald-950/30 text-emerald-800 dark:text-emerald-400 border border-emerald-200 dark:border-emerald-800"
+            : "bg-blue-50 dark:bg-blue-950/30 text-blue-800 dark:text-blue-400 border border-blue-200 dark:border-blue-800"
         }`}>
           {statusLabel(doc.status, tr)}
         </span>
@@ -418,7 +418,7 @@ function DocumentAssistant({
       <input ref={fileRef} type="file" hidden onChange={(e) => e.target.files?.[0] && upload(e.target.files[0])} />
 
       {error && (
-        <div className="text-xs text-red-800 bg-red-50 border border-red-200 rounded-xl p-3">{error}</div>
+        <div className="text-xs text-red-800 dark:text-red-400 bg-red-50 dark:bg-red-950/30 border border-red-200 dark:border-red-800 rounded-xl p-3">{error}</div>
       )}
 
       {/* Draft */}
@@ -515,7 +515,7 @@ function SyncBanner({ sync, meta }: { sync: SyncSnapshot | null; meta: LicenseMe
   const verified = sync ? sync.verified : meta.verified && !meta.stale;
   return (
     <div className={`rounded-2xl border p-4 flex flex-col md:flex-row md:items-center gap-3 ${
-      verified ? "bg-emerald-50/60 border-emerald-200" : "bg-amber-50/60 border-amber-200"
+      verified ? "bg-emerald-50/60 dark:bg-emerald-950/30 border-emerald-200 dark:border-emerald-800" : "bg-amber-50/60 dark:bg-amber-950/30 border-amber-200 dark:border-amber-800"
     }`}>
       <div className="flex items-center gap-2">
         <div className={`w-9 h-9 rounded-full flex items-center justify-center ${verified ? "bg-emerald-100" : "bg-amber-100"}`}>
@@ -694,7 +694,7 @@ function statusLabel(s: DocStatus, tr: (a: string, e: string) => string) {
 function DetectionBadge({ ok, okLabel, badLabel }: { ok: boolean; okLabel: string; badLabel: string }) {
   return (
     <span className={`inline-flex items-center gap-1 text-[10px] font-bold px-2 py-0.5 rounded-full border ${
-      ok ? "bg-emerald-50 text-emerald-800 border-emerald-200" : "bg-red-50 text-red-800 border-red-200"
+      ok ? "bg-emerald-50 dark:bg-emerald-950/30 text-emerald-800 dark:text-emerald-400 border-emerald-200 dark:border-emerald-800" : "bg-red-50 dark:bg-red-950/30 text-red-800 dark:text-red-400 border-red-200 dark:border-red-800"
     }`}>
       {ok ? <CheckCircle2 className="w-3 h-3" /> : <XCircle className="w-3 h-3" />}
       {ok ? okLabel : badLabel}
@@ -731,7 +731,7 @@ function ReadinessRing({ value }: { value: number }) {
   return (
     <div className="relative w-24 h-24 shrink-0">
       <svg viewBox="0 0 120 120" className="w-full h-full -rotate-90">
-        <circle cx="60" cy="60" r={r} stroke="hsl(var(--border))" strokeWidth="10" fill="none" />
+        <circle cx="60" cy="60" r={r} stroke="var(--border)" strokeWidth="10" fill="none" />
         <circle cx="60" cy="60" r={r} stroke={color} strokeWidth="10" fill="none" strokeLinecap="round" strokeDasharray={c} strokeDashoffset={off} className="transition-all duration-500" />
       </svg>
       <div className="absolute inset-0 flex flex-col items-center justify-center">

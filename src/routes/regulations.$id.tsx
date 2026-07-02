@@ -102,12 +102,12 @@ function RegulationDetail() {
               {lang === "ar" ? meta.ar : meta.en}
             </span>
             {item.verified ? (
-              <span className="inline-flex items-center gap-1 text-[11px] px-2 py-1 rounded-full bg-emerald-50 text-emerald-700 border border-emerald-200">
+              <span className="inline-flex items-center gap-1 text-[11px] px-2 py-1 rounded-full bg-emerald-50 dark:bg-emerald-950/30 text-emerald-700 dark:text-emerald-400 border border-emerald-200 dark:border-emerald-800">
                 <ShieldCheck className="w-3.5 h-3.5" />
                 {tr("مصدر موثّق", "Verified source")}
               </span>
             ) : (
-              <span className="inline-flex items-center gap-1 text-[11px] px-2 py-1 rounded-full bg-amber-50 text-amber-800 border border-amber-200">
+              <span className="inline-flex items-center gap-1 text-[11px] px-2 py-1 rounded-full bg-amber-50 dark:bg-amber-950/30 text-amber-800 dark:text-amber-400 border border-amber-200 dark:border-amber-800">
                 <ShieldAlert className="w-3.5 h-3.5" />
                 {tr("قيد التحقق", "Being verified")}
               </span>
@@ -130,7 +130,7 @@ function RegulationDetail() {
               {localize(lang, item.fullAnnouncement)}
             </p>
           ) : (
-            <p className="text-sm leading-loose text-amber-800 bg-amber-50 border border-amber-200 rounded-xl p-4">
+            <p className="text-sm leading-loose text-amber-800 dark:text-amber-400 bg-amber-50 dark:bg-amber-950/30 border border-amber-200 dark:border-amber-800 rounded-xl p-4">
               {tr(
                 "المعلومات الرسمية قيد التحقق حالياً. يرجى الرجوع إلى المصدر الرسمي أدناه.",
                 "Official information is currently being verified. Please refer to the official source below.",
@@ -213,7 +213,7 @@ function RegulationDetail() {
               <ChevronDown className={`w-4 h-4 transition-transform ${affectOpen ? "rotate-180" : ""}`} />
             </Button>
             {affectOpen && (
-              <div className="mt-4 rounded-2xl border border-sky-200 bg-sky-50 p-4 text-sm leading-relaxed animate-fade-in">
+              <div className="mt-4 rounded-2xl border border-sky-200 dark:border-sky-800 bg-sky-50 dark:bg-sky-950/30 p-4 text-sm leading-relaxed animate-fade-in">
                 <p className="mb-3 text-sky-900">
                   {tr(
                     "هذه الميزة تتيح للمساعد الذكي تحليل ما إذا كان هذا التحديث الحكومي يؤثر على نشاطك التجاري.",
