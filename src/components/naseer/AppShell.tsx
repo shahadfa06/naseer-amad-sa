@@ -1,5 +1,5 @@
 import { Link, useRouterState } from "@tanstack/react-router";
-import { Bell, Bot, FileText, Globe, Heart, Home, LayoutGrid, Newspaper, ScrollText, ShieldCheck } from "lucide-react";
+import { Bell, Bot, FileText, Globe, Heart, Home, LayoutGrid, Moon, Newspaper, ScrollText, ShieldCheck, Sun } from "lucide-react";
 import { useEffect, useState, type ReactNode } from "react";
 import { Logo } from "./brand";
 import { ChatWidget } from "./ChatWidget";
@@ -11,6 +11,19 @@ export function AppShell({ children }: { children: ReactNode }) {
   const pathname = useRouterState({ select: (s) => s.location.pathname });
   const { lang, setLang, tr } = useLang();
   const [unread, setUnread] = useState(0);
+  const [theme, setTheme] = useState<"light" | "dark">("light");
+
+  useEffect(() => {
+    const saved = (localStorage.getItem("naseer:theme") as "light" | "dark" | null);
+    const initial = saved ?? (window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
+    setTheme(initial);
+  }, []);
+
+  useEffect(() => {
+    document.documentElement.classList.toggle("dark", theme === "dark");
+    localStorage.setItem("naseer:theme", theme);
+  }, [theme]);
+
 
   useEffect(() => {
     const refresh = () => setUnread(store.getUnreadCount());
@@ -138,6 +151,14 @@ export function AppShell({ children }: { children: ReactNode }) {
             <div className="hidden md:block">
               <LangSwitcher />
             </div>
+            <button
+              onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
+              className="w-10 h-10 rounded-full border border-border bg-card flex items-center justify-center hover:border-primary/40 hover:shadow-soft transition"
+              aria-label={tr("تبديل الوضع", "Toggle theme")}
+              title={theme === "dark" ? tr("الوضع النهاري", "Light mode") : tr("الوضع الليلي", "Dark mode")}
+            >
+              {theme === "dark" ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4" />}
+            </button>
             <Link
               to="/notifications"
               className="relative w-10 h-10 rounded-full border border-border bg-card flex items-center justify-center hover:border-primary/40 hover:shadow-soft transition"
@@ -150,6 +171,7 @@ export function AppShell({ children }: { children: ReactNode }) {
                 </span>
               )}
             </Link>
+
 
             <Link
               to="/register"
