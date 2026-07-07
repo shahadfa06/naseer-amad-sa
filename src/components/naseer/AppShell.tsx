@@ -11,7 +11,7 @@ export function AppShell({ children }: { children: ReactNode }) {
   const pathname = useRouterState({ select: (s) => s.location.pathname });
   const { lang, setLang, tr } = useLang();
   const [unread, setUnread] = useState(0);
-  const theme = "light" as const;
+  const theme: "light" | "dark" = "light";
   const setTheme = (_: "light" | "dark") => {};
 
   useEffect(() => {
