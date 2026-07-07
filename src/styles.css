@@ -168,3 +168,60 @@
   0% { background-position: 200% 0; }
   100% { background-position: -200% 0; }
 }
+
+@keyframes aurora-drift {
+  0%   { transform: translate3d(-8%, -6%, 0) rotate(0deg); }
+  50%  { transform: translate3d(6%, 4%, 0) rotate(6deg); }
+  100% { transform: translate3d(-8%, -6%, 0) rotate(0deg); }
+}
+@keyframes orb-float {
+  0%, 100% { transform: translate3d(0,0,0); }
+  50%      { transform: translate3d(0,-24px,0); }
+}
+@keyframes slide-up-fade {
+  0%   { opacity: 0; transform: translateY(18px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+
+@utility aurora-bg {
+  position: fixed;
+  inset: -20%;
+  z-index: -1;
+  pointer-events: none;
+  overflow: hidden;
+}
+@utility aurora-bg {
+  &::before, &::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(40% 30% at 20% 25%, color-mix(in oklab, var(--saudi) 22%, transparent), transparent 70%),
+      radial-gradient(35% 28% at 80% 30%, color-mix(in oklab, var(--gold) 22%, transparent), transparent 70%),
+      radial-gradient(38% 30% at 60% 85%, color-mix(in oklab, var(--emerald) 18%, transparent), transparent 70%);
+    filter: blur(60px);
+    animation: aurora-drift 24s ease-in-out infinite;
+    opacity: 0.7;
+  }
+  &::after {
+    animation-duration: 34s;
+    animation-direction: reverse;
+    opacity: 0.5;
+  }
+}
+
+@utility floating-orb {
+  position: absolute;
+  border-radius: 9999px;
+  filter: blur(30px);
+  opacity: 0.35;
+  animation: orb-float 10s ease-in-out infinite;
+  pointer-events: none;
+}
+
+@utility reveal-on-scroll {
+  animation: slide-up-fade 0.7s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.dark .aurora-bg { opacity: 0.35; }
+
