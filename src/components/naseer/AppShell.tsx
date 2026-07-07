@@ -14,16 +14,9 @@ export function AppShell({ children }: { children: ReactNode }) {
   const [theme, setTheme] = useState<"light" | "dark">("light");
 
   useEffect(() => {
-    const saved = (typeof window !== "undefined" && localStorage.getItem("naseer:theme")) as "light" | "dark" | null;
-    if (saved) setTheme(saved);
-    else if (typeof window !== "undefined" && window.matchMedia?.("(prefers-color-scheme: dark)").matches) setTheme("dark");
+    document.documentElement.classList.remove("dark");
+    try { localStorage.setItem("naseer:theme", "light"); } catch {}
   }, []);
-
-
-  useEffect(() => {
-    document.documentElement.classList.toggle("dark", theme === "dark");
-    try { localStorage.setItem("naseer:theme", theme); } catch {}
-  }, [theme]);
 
 
   useEffect(() => {
@@ -215,11 +208,11 @@ export function AppShell({ children }: { children: ReactNode }) {
 
       <main className="flex-1">{children}</main>
 
-      <footer className="relative border-t border-border bg-card mt-16 overflow-hidden">
-        <div className="absolute inset-0 pattern-bg opacity-[0.04]" aria-hidden />
+      <footer className="relative mt-16 overflow-hidden text-white" style={{ background: "#0F5C52" }}>
+        <div className="absolute inset-0 pattern-bg opacity-[0.06]" aria-hidden />
         <div
           className="absolute -top-24 -right-24 w-72 h-72 rounded-full blur-3xl opacity-30"
-          style={{ background: "var(--saudi)" }}
+          style={{ background: "#2FA88B" }}
           aria-hidden
         />
         <div className="relative max-w-7xl mx-auto px-6 py-12 grid gap-8 md:grid-cols-[1.4fr_1fr_1fr]">
@@ -227,13 +220,13 @@ export function AppShell({ children }: { children: ReactNode }) {
             <div className="flex items-center gap-3 mb-4">
               <Logo />
               <div>
-                <div className="font-display font-bold text-lg">{tr("نسير · Naseer", "Naseer · نسير")}</div>
-                <div className="text-xs text-muted-foreground">
+                <div className="font-display font-bold text-lg text-white">{tr("نسير · Naseer", "Naseer · نسير")}</div>
+                <div className="text-xs text-white/70">
                   {tr("مع نسير… طريقك يسير", "With Naseer… your path is smooth")}
                 </div>
               </div>
             </div>
-            <p className="text-sm text-muted-foreground max-w-sm leading-relaxed">
+            <p className="text-sm text-white/80 max-w-sm leading-relaxed">
               {tr(
                 "منصة رقمية سعودية توحّد رحلة رواد الأعمال — من اختيار النشاط لين إصدار التراخيص، بمكان واحد وبتجربة ميسّرة.",
                 "A Saudi digital platform unifying the entrepreneur's journey — from choosing an activity to issuing licenses, in one seamless experience.",
@@ -241,35 +234,35 @@ export function AppShell({ children }: { children: ReactNode }) {
             </p>
           </div>
           <div>
-            <div className="text-xs font-bold tracking-widest text-muted-foreground mb-3">
+            <div className="text-xs font-bold tracking-widest text-white/70 mb-3">
               {tr("المنصة", "PLATFORM")}
             </div>
-            <ul className="space-y-2 text-sm">
-              <li><Link to="/activities" className="hover:text-primary transition">{tr("الأنشطة", "Activities")}</Link></li>
-              <li><Link to="/licenses" className="hover:text-primary transition">{tr("التراخيص", "Licenses")}</Link></li>
-              <li><Link to="/applications" className="hover:text-primary transition">{tr("طلباتي", "My Applications")}</Link></li>
-              <li><Link to="/regulations" className="hover:text-primary transition">{tr("الأنظمة والتشريعات", "Regulations & Laws")}</Link></li>
+            <ul className="space-y-2 text-sm text-white/90">
+              <li><Link to="/activities" className="hover:text-[#D8C17A] transition">{tr("الأنشطة", "Activities")}</Link></li>
+              <li><Link to="/licenses" className="hover:text-[#D8C17A] transition">{tr("التراخيص", "Licenses")}</Link></li>
+              <li><Link to="/applications" className="hover:text-[#D8C17A] transition">{tr("طلباتي", "My Applications")}</Link></li>
+              <li><Link to="/regulations" className="hover:text-[#D8C17A] transition">{tr("الأنظمة والتشريعات", "Regulations & Laws")}</Link></li>
             </ul>
           </div>
           <div>
-            <div className="text-xs font-bold tracking-widest text-muted-foreground mb-3">
+            <div className="text-xs font-bold tracking-widest text-white/70 mb-3">
               {tr("تواصل معنا", "CONTACT US")}
             </div>
-            <ul className="space-y-2 text-sm">
-              <li className="text-muted-foreground">{tr("الدعم: 920000000", "Support: 920000000")}</li>
-              <li className="text-muted-foreground">care@naseer.sa</li>
-              <li className="text-muted-foreground">{tr("الرياض، المملكة العربية السعودية", "Riyadh, Kingdom of Saudi Arabia")}</li>
+            <ul className="space-y-2 text-sm text-white/80">
+              <li>{tr("الدعم: 920000000", "Support: 920000000")}</li>
+              <li>care@naseer.sa</li>
+              <li>{tr("الرياض، المملكة العربية السعودية", "Riyadh, Kingdom of Saudi Arabia")}</li>
             </ul>
           </div>
         </div>
-        <div className="relative border-t border-border">
-          <div className="max-w-7xl mx-auto px-6 py-4 flex flex-col md:flex-row items-center justify-between gap-2 text-xs text-muted-foreground">
+        <div className="relative border-t border-white/15">
+          <div className="max-w-7xl mx-auto px-6 py-4 flex flex-col md:flex-row items-center justify-between gap-2 text-xs text-white/70">
             <div>
               © {new Date().getFullYear()} {tr("نسير — جميع الحقوق محفوظة.", "Naseer — All rights reserved.")}
             </div>
             <div className="flex items-center gap-1.5">
               <Bot className="w-3.5 h-3.5" />
-              {tr("صنع بـ", "Made with")} <Heart className="w-3 h-3 fill-primary text-primary" /> {tr("في المملكة", "in the Kingdom")}
+              {tr("صنع بـ", "Made with")} <Heart className="w-3 h-3 fill-[#D8C17A] text-[#D8C17A]" /> {tr("في المملكة", "in the Kingdom")}
             </div>
           </div>
         </div>
