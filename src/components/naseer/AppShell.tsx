@@ -117,7 +117,8 @@ export function AppShell({ children }: { children: ReactNode }) {
       <header className="sticky top-0 z-30 backdrop-blur-xl bg-background/80 border-b border-border">
         <div className="max-w-7xl mx-auto px-5 py-3.5 flex items-center gap-4">
           <Link to="/" className="flex items-center gap-3 shrink-0 group">
-<Logo />
+<Logo size={104} />
+
             <div className="leading-tight">
               <div className="font-display font-extrabold text-lg" style={{ color: "var(--saudi-ink)" }}>
                 {tr("نسير", "Naseer")}
