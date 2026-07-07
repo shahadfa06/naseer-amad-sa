@@ -85,9 +85,11 @@ export function AppShell({ children }: { children: ReactNode }) {
 
   return (
     <div
-      className="min-h-screen bg-background flex flex-col"
+      className="min-h-screen bg-background flex flex-col relative"
       style={{ ["--pattern-url" as string]: `url(${patternUrl})` } as React.CSSProperties}
     >
+      <div className="aurora-bg" aria-hidden />
+
       {/* Trust bar */}
       <div
         className="text-[11px] tracking-wider"
