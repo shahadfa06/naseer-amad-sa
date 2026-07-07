@@ -11,19 +11,13 @@ export function AppShell({ children }: { children: ReactNode }) {
   const pathname = useRouterState({ select: (s) => s.location.pathname });
   const { lang, setLang, tr } = useLang();
   const [unread, setUnread] = useState(0);
-  const [theme, setTheme] = useState<"light" | "dark">("light");
+  const theme = "light" as const;
+  const setTheme = (_: "light" | "dark") => {};
 
   useEffect(() => {
-    const saved = (typeof window !== "undefined" && localStorage.getItem("naseer:theme")) as "light" | "dark" | null;
-    if (saved) setTheme(saved);
-    else if (typeof window !== "undefined" && window.matchMedia?.("(prefers-color-scheme: dark)").matches) setTheme("dark");
+    document.documentElement.classList.remove("dark");
+    try { localStorage.setItem("naseer:theme", "light"); } catch {}
   }, []);
-
-
-  useEffect(() => {
-    document.documentElement.classList.toggle("dark", theme === "dark");
-    try { localStorage.setItem("naseer:theme", theme); } catch {}
-  }, [theme]);
 
 
   useEffect(() => {
