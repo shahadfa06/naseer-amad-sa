@@ -11,12 +11,14 @@ export function AppShell({ children }: { children: ReactNode }) {
   const pathname = useRouterState({ select: (s) => s.location.pathname });
   const { lang, setLang, tr } = useLang();
   const [unread, setUnread] = useState(0);
-  const [theme, setTheme] = useState<"light" | "dark">(() => {
-    if (typeof window === "undefined") return "light";
-    const saved = localStorage.getItem("naseer:theme") as "light" | "dark" | null;
-    if (saved) return saved;
-    return window.matchMedia?.("(prefers-color-scheme: dark)").matches ? "dark" : "light";
-  });
+  const [theme, setTheme] = useState<"light" | "dark">("light");
+
+  useEffect(() => {
+    const saved = (typeof window !== "undefined" && localStorage.getItem("naseer:theme")) as "light" | "dark" | null;
+    if (saved) setTheme(saved);
+    else if (typeof window !== "undefined" && window.matchMedia?.("(prefers-color-scheme: dark)").matches) setTheme("dark");
+  }, []);
+
 
   useEffect(() => {
     document.documentElement.classList.toggle("dark", theme === "dark");
@@ -83,9 +85,11 @@ export function AppShell({ children }: { children: ReactNode }) {
 
   return (
     <div
-      className="min-h-screen bg-background flex flex-col"
+      className="min-h-screen bg-background flex flex-col relative"
       style={{ ["--pattern-url" as string]: `url(${patternUrl})` } as React.CSSProperties}
     >
+      <div className="aurora-bg" aria-hidden />
+
       {/* Trust bar */}
       <div
         className="text-[11px] tracking-wider"
@@ -115,7 +119,8 @@ export function AppShell({ children }: { children: ReactNode }) {
       <header className="sticky top-0 z-30 backdrop-blur-xl bg-background/80 border-b border-border">
         <div className="max-w-7xl mx-auto px-5 py-3.5 flex items-center gap-4">
           <Link to="/" className="flex items-center gap-3 shrink-0 group">
-<Logo />
+<Logo size={104} />
+
             <div className="leading-tight">
               <div className="font-display font-extrabold text-lg" style={{ color: "var(--saudi-ink)" }}>
                 {tr("نسير", "Naseer")}
