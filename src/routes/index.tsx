@@ -60,12 +60,47 @@ function HomePage() {
       {/* Hero */}
       <section className="relative overflow-hidden">
         <div className="absolute inset-0 -z-10 pattern-bg opacity-[0.10]" aria-hidden />
+
+        {/* Aurora background effect */}
+        <div className="absolute inset-0 -z-10 overflow-hidden" aria-hidden>
+          <div
+            className="absolute -top-[20%] -left-[10%] w-[70%] h-[70%] rounded-full blur-[100px] opacity-60"
+            style={{
+              background: "radial-gradient(circle, color-mix(in oklab, var(--saudi) 30%, transparent) 0%, transparent 70%)",
+              animation: "aurora-drift 18s ease-in-out infinite",
+            }}
+          />
+          <div
+            className="absolute -top-[10%] -right-[10%] w-[60%] h-[60%] rounded-full blur-[90px] opacity-50"
+            style={{
+              background: "radial-gradient(circle, color-mix(in oklab, var(--gold) 28%, transparent) 0%, transparent 70%)",
+              animation: "aurora-drift 22s ease-in-out infinite reverse",
+            }}
+          />
+          <div
+            className="absolute top-[40%] left-[30%] w-[50%] h-[50%] rounded-full blur-[110px] opacity-40"
+            style={{
+              background: "radial-gradient(circle, color-mix(in oklab, var(--emerald) 25%, transparent) 0%, transparent 70%)",
+              animation: "aurora-drift 26s ease-in-out infinite",
+              animationDelay: "-8s",
+            }}
+          />
+          <div
+            className="absolute -bottom-[20%] -left-[10%] w-[60%] h-[60%] rounded-full blur-[100px] opacity-35"
+            style={{
+              background: "radial-gradient(circle, color-mix(in oklab, var(--saudi) 20%, transparent) 0%, transparent 70%)",
+              animation: "aurora-drift 20s ease-in-out infinite reverse",
+              animationDelay: "-4s",
+            }}
+          />
+        </div>
+
         <div
           className="absolute inset-0 -z-10"
           aria-hidden
           style={{
             background:
-              "radial-gradient(ellipse 70% 55% at 85% -10%, color-mix(in oklab, var(--saudi) 22%, transparent), transparent 65%), radial-gradient(ellipse 60% 55% at 0% 110%, color-mix(in oklab, var(--gold) 22%, transparent), transparent 65%), linear-gradient(180deg, var(--cream) 0%, var(--background) 60%)",
+              "linear-gradient(180deg, var(--cream) 0%, var(--background) 60%)",
           }}
         />
 
