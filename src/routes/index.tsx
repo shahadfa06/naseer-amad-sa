@@ -60,14 +60,44 @@ function HomePage() {
       {/* Hero */}
       <section className="relative overflow-hidden">
         <div className="absolute inset-0 -z-10 pattern-bg opacity-[0.10]" aria-hidden />
-        <div
-          className="absolute inset-0 -z-10"
-          aria-hidden
-          style={{
-            background:
-              "radial-gradient(ellipse 70% 55% at 85% -10%, color-mix(in oklab, var(--saudi) 22%, transparent), transparent 65%), radial-gradient(ellipse 60% 55% at 0% 110%, color-mix(in oklab, var(--gold) 22%, transparent), transparent 65%), linear-gradient(180deg, var(--cream) 0%, var(--background) 60%)",
-          }}
-        />
+
+        {/* Aurora background effect */}
+        <div className="absolute inset-0 -z-10 overflow-hidden" aria-hidden>
+          {/* Left-side emerald blob — away from text */}
+          <div
+            className="absolute top-[5%] -left-[15%] w-[55%] h-[55%] rounded-full blur-[70px]"
+            style={{
+              background: "radial-gradient(circle, rgba(15,92,82,0.18) 0%, transparent 55%)",
+              animation: "aurora-drift 18s ease-in-out infinite",
+            }}
+          />
+          {/* Top-right gold blob */}
+          <div
+            className="absolute -top-[15%] right-[5%] w-[45%] h-[45%] rounded-full blur-[60px]"
+            style={{
+              background: "radial-gradient(circle, rgba(216,193,122,0.28) 0%, transparent 55%)",
+              animation: "aurora-drift 22s ease-in-out infinite reverse",
+            }}
+          />
+          {/* Center-right soft emerald */}
+          <div
+            className="absolute top-[35%] right-[10%] w-[40%] h-[40%] rounded-full blur-[80px]"
+            style={{
+              background: "radial-gradient(circle, rgba(47,168,139,0.14) 0%, transparent 55%)",
+              animation: "aurora-drift 26s ease-in-out infinite",
+              animationDelay: "-8s",
+            }}
+          />
+          {/* Bottom-left gold-green mix */}
+          <div
+            className="absolute -bottom-[10%] left-[5%] w-[50%] h-[50%] rounded-full blur-[70px]"
+            style={{
+              background: "radial-gradient(circle, rgba(15,92,82,0.12) 0%, transparent 55%)",
+              animation: "aurora-drift 20s ease-in-out infinite reverse",
+              animationDelay: "-4s",
+            }}
+          />
+        </div>
 
         {/* Brand watermark */}
         <div
