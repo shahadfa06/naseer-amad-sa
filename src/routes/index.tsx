@@ -63,42 +63,42 @@ function HomePage() {
 
         {/* Aurora background effect */}
         <div className="absolute inset-0 -z-10 overflow-hidden" aria-hidden>
-          {/* Large emerald sweep — left side */}
+          {/* Emerald aurora — left arc */}
           <div
-            className="absolute -top-[5%] -left-[15%] w-[65%] h-[70%] rounded-full"
+            className="absolute -top-[15%] -left-[25%] w-[75%] h-[90%] rounded-full"
             style={{
-              background: "radial-gradient(ellipse at center, rgba(15,92,82,0.42) 0%, rgba(47,168,139,0.18) 40%, transparent 70%)",
-              filter: "blur(70px)",
-              animation: "aurora-drift 22s ease-in-out infinite",
+              background: "radial-gradient(ellipse at 60% 50%, rgba(15,92,82,0.55) 0%, rgba(47,168,139,0.22) 35%, transparent 65%)",
+              filter: "blur(55px)",
+              animation: "aurora-drift 20s ease-in-out infinite",
             }}
           />
-          {/* Warm gold glow — top right */}
+          {/* Gold aurora — top right */}
           <div
-            className="absolute -top-[5%] right-[5%] w-[50%] h-[50%] rounded-full"
+            className="absolute -top-[20%] right-[0%] w-[55%] h-[60%] rounded-full"
             style={{
-              background: "radial-gradient(ellipse at center, rgba(216,193,122,0.50) 0%, rgba(216,193,122,0.12) 50%, transparent 70%)",
-              filter: "blur(75px)",
-              animation: "aurora-drift 28s ease-in-out infinite reverse",
+              background: "radial-gradient(ellipse at 40% 60%, rgba(216,193,122,0.60) 0%, rgba(216,193,122,0.14) 45%, transparent 65%)",
+              filter: "blur(50px)",
+              animation: "aurora-drift 26s ease-in-out infinite reverse",
             }}
           />
-          {/* Secondary emerald — center right */}
+          {/* Soft emerald — right mid */}
           <div
-            className="absolute top-[25%] right-[10%] w-[40%] h-[40%] rounded-full"
+            className="absolute top-[20%] right-[5%] w-[45%] h-[45%] rounded-full"
             style={{
-              background: "radial-gradient(ellipse at center, rgba(47,168,139,0.32) 0%, transparent 65%)",
-              filter: "blur(60px)",
-              animation: "aurora-drift 32s ease-in-out infinite",
-              animationDelay: "-10s",
+              background: "radial-gradient(ellipse at center, rgba(47,168,139,0.40) 0%, transparent 60%)",
+              filter: "blur(45px)",
+              animation: "aurora-drift 30s ease-in-out infinite",
+              animationDelay: "-8s",
             }}
           />
-          {/* Bottom gold wash */}
+          {/* Gold-green base wash */}
           <div
-            className="absolute -bottom-[10%] left-[5%] w-[55%] h-[50%] rounded-full"
+            className="absolute -bottom-[20%] left-[10%] w-[65%] h-[60%] rounded-full"
             style={{
-              background: "radial-gradient(ellipse at center, rgba(216,193,122,0.28) 0%, rgba(15,92,82,0.12) 45%, transparent 70%)",
-              filter: "blur(70px)",
-              animation: "aurora-drift 24s ease-in-out infinite reverse",
-              animationDelay: "-6s",
+              background: "radial-gradient(ellipse at center, rgba(216,193,122,0.35) 0%, rgba(15,92,82,0.18) 40%, transparent 65%)",
+              filter: "blur(55px)",
+              animation: "aurora-drift 22s ease-in-out infinite reverse",
+              animationDelay: "-5s",
             }}
           />
         </div>
