@@ -63,46 +63,42 @@ function HomePage() {
 
         {/* Aurora background effect */}
         <div className="absolute inset-0 -z-10 overflow-hidden" aria-hidden>
+          {/* Base wash */}
           <div
-            className="absolute -top-[20%] -left-[10%] w-[70%] h-[70%] rounded-full blur-[80px] opacity-80"
+            className="absolute inset-0"
+            style={{ background: "linear-gradient(180deg, #FBF8F2 0%, #F6F2E8 60%)" }}
+          />
+          <div
+            className="absolute -top-[20%] -left-[10%] w-[70%] h-[70%] rounded-full blur-[90px] opacity-90"
             style={{
-              background: "radial-gradient(circle, color-mix(in oklab, var(--saudi) 55%, transparent) 0%, transparent 70%)",
+              background: "radial-gradient(circle, #C8E0D8 0%, transparent 65%)",
               animation: "aurora-drift 18s ease-in-out infinite",
             }}
           />
           <div
-            className="absolute -top-[10%] -right-[10%] w-[60%] h-[60%] rounded-full blur-[70px] opacity-70"
+            className="absolute -top-[10%] -right-[10%] w-[60%] h-[60%] rounded-full blur-[80px] opacity-80"
             style={{
-              background: "radial-gradient(circle, color-mix(in oklab, var(--gold) 50%, transparent) 0%, transparent 70%)",
+              background: "radial-gradient(circle, #EDE4C5 0%, transparent 65%)",
               animation: "aurora-drift 22s ease-in-out infinite reverse",
             }}
           />
           <div
-            className="absolute top-[40%] left-[30%] w-[50%] h-[50%] rounded-full blur-[90px] opacity-60"
+            className="absolute top-[40%] left-[30%] w-[50%] h-[50%] rounded-full blur-[100px] opacity-70"
             style={{
-              background: "radial-gradient(circle, color-mix(in oklab, var(--emerald) 45%, transparent) 0%, transparent 70%)",
+              background: "radial-gradient(circle, #B8DBD0 0%, transparent 65%)",
               animation: "aurora-drift 26s ease-in-out infinite",
               animationDelay: "-8s",
             }}
           />
           <div
-            className="absolute -bottom-[20%] -left-[10%] w-[60%] h-[60%] rounded-full blur-[80px] opacity-55"
+            className="absolute -bottom-[20%] -left-[10%] w-[60%] h-[60%] rounded-full blur-[90px] opacity-65"
             style={{
-              background: "radial-gradient(circle, color-mix(in oklab, var(--saudi) 40%, transparent) 0%, transparent 70%)",
+              background: "radial-gradient(circle, #D4E8E3 0%, transparent 65%)",
               animation: "aurora-drift 20s ease-in-out infinite reverse",
               animationDelay: "-4s",
             }}
           />
         </div>
-
-        <div
-          className="absolute inset-0 -z-10"
-          aria-hidden
-          style={{
-            background:
-              "linear-gradient(180deg, var(--cream) 0%, var(--background) 60%)",
-          }}
-        />
 
         {/* Brand watermark */}
         <div
