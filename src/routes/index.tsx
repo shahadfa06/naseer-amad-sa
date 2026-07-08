@@ -63,37 +63,36 @@ function HomePage() {
 
         {/* Aurora background effect */}
         <div className="absolute inset-0 -z-10 overflow-hidden" aria-hidden>
-          {/* Base wash */}
+          {/* Left-side emerald blob — away from text */}
           <div
-            className="absolute inset-0"
-            style={{ background: "linear-gradient(180deg, #FBF8F2 0%, #F6F2E8 60%)" }}
-          />
-          <div
-            className="absolute -top-[20%] -left-[10%] w-[70%] h-[70%] rounded-full blur-[90px] opacity-90"
+            className="absolute top-[5%] -left-[15%] w-[55%] h-[55%] rounded-full blur-[70px]"
             style={{
-              background: "radial-gradient(circle, #C8E0D8 0%, transparent 65%)",
+              background: "radial-gradient(circle, rgba(15,92,82,0.18) 0%, transparent 55%)",
               animation: "aurora-drift 18s ease-in-out infinite",
             }}
           />
+          {/* Top-right gold blob */}
           <div
-            className="absolute -top-[10%] -right-[10%] w-[60%] h-[60%] rounded-full blur-[80px] opacity-80"
+            className="absolute -top-[15%] right-[5%] w-[45%] h-[45%] rounded-full blur-[60px]"
             style={{
-              background: "radial-gradient(circle, #EDE4C5 0%, transparent 65%)",
+              background: "radial-gradient(circle, rgba(216,193,122,0.28) 0%, transparent 55%)",
               animation: "aurora-drift 22s ease-in-out infinite reverse",
             }}
           />
+          {/* Center-right soft emerald */}
           <div
-            className="absolute top-[40%] left-[30%] w-[50%] h-[50%] rounded-full blur-[100px] opacity-70"
+            className="absolute top-[35%] right-[10%] w-[40%] h-[40%] rounded-full blur-[80px]"
             style={{
-              background: "radial-gradient(circle, #B8DBD0 0%, transparent 65%)",
+              background: "radial-gradient(circle, rgba(47,168,139,0.14) 0%, transparent 55%)",
               animation: "aurora-drift 26s ease-in-out infinite",
               animationDelay: "-8s",
             }}
           />
+          {/* Bottom-left gold-green mix */}
           <div
-            className="absolute -bottom-[20%] -left-[10%] w-[60%] h-[60%] rounded-full blur-[90px] opacity-65"
+            className="absolute -bottom-[10%] left-[5%] w-[50%] h-[50%] rounded-full blur-[70px]"
             style={{
-              background: "radial-gradient(circle, #D4E8E3 0%, transparent 65%)",
+              background: "radial-gradient(circle, rgba(15,92,82,0.12) 0%, transparent 55%)",
               animation: "aurora-drift 20s ease-in-out infinite reverse",
               animationDelay: "-4s",
             }}
