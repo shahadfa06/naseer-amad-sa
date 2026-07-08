@@ -63,38 +63,43 @@ function HomePage() {
 
         {/* Aurora background effect */}
         <div className="absolute inset-0 -z-10 overflow-hidden" aria-hidden>
-          {/* Left-side emerald blob — away from text */}
+          {/* Emerald aurora — left side (empty space, no text overlap) */}
           <div
-            className="absolute top-[5%] -left-[15%] w-[55%] h-[55%] rounded-full blur-[70px]"
+            className="absolute top-[5%] -left-[10%] w-[55%] h-[75%] rounded-full"
             style={{
-              background: "radial-gradient(circle, rgba(15,92,82,0.18) 0%, transparent 55%)",
-              animation: "aurora-drift 18s ease-in-out infinite",
+              background: "rgba(15,92,82,0.10)",
+              filter: "blur(70px)",
+              animation: "aurora-drift 20s ease-in-out infinite",
             }}
           />
-          {/* Top-right gold blob */}
+          {/* Secondary emerald accent — left mid */}
           <div
-            className="absolute -top-[15%] right-[5%] w-[45%] h-[45%] rounded-full blur-[60px]"
+            className="absolute top-[35%] left-[5%] w-[30%] h-[40%] rounded-full"
             style={{
-              background: "radial-gradient(circle, rgba(216,193,122,0.28) 0%, transparent 55%)",
-              animation: "aurora-drift 22s ease-in-out infinite reverse",
+              background: "rgba(47,168,139,0.08)",
+              filter: "blur(60px)",
+              animation: "aurora-drift 26s ease-in-out infinite reverse",
+              animationDelay: "-6s",
             }}
           />
-          {/* Center-right soft emerald */}
+          {/* Gold aurora — top area */}
           <div
-            className="absolute top-[35%] right-[10%] w-[40%] h-[40%] rounded-full blur-[80px]"
+            className="absolute -top-[5%] left-[30%] w-[40%] h-[35%] rounded-full"
             style={{
-              background: "radial-gradient(circle, rgba(47,168,139,0.14) 0%, transparent 55%)",
-              animation: "aurora-drift 26s ease-in-out infinite",
-              animationDelay: "-8s",
-            }}
-          />
-          {/* Bottom-left gold-green mix */}
-          <div
-            className="absolute -bottom-[10%] left-[5%] w-[50%] h-[50%] rounded-full blur-[70px]"
-            style={{
-              background: "radial-gradient(circle, rgba(15,92,82,0.12) 0%, transparent 55%)",
-              animation: "aurora-drift 20s ease-in-out infinite reverse",
+              background: "rgba(216,193,122,0.14)",
+              filter: "blur(65px)",
+              animation: "aurora-drift 24s ease-in-out infinite",
               animationDelay: "-4s",
+            }}
+          />
+          {/* Warm gold wash — bottom left */}
+          <div
+            className="absolute -bottom-[5%] left-[15%] w-[45%] h-[40%] rounded-full"
+            style={{
+              background: "rgba(216,193,122,0.10)",
+              filter: "blur(55px)",
+              animation: "aurora-drift 28s ease-in-out infinite reverse",
+              animationDelay: "-10s",
             }}
           />
         </div>
