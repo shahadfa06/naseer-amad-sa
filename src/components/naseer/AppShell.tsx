@@ -1,5 +1,5 @@
 import { Link, useRouterState } from "@tanstack/react-router";
-import { Bell, Bot, FileText, Globe, Heart, Home, LayoutGrid, Moon, Newspaper, ScrollText, ShieldCheck, Sun } from "lucide-react";
+import { Bell, Bot, FileText, Globe, Heart, Home, LayoutGrid, Moon, Newspaper, ScrollText, ShieldCheck, Sun, Wallet } from "lucide-react";
 import { useEffect, useState, type ReactNode } from "react";
 import { Logo } from "./brand";
 import { ChatWidget } from "./ChatWidget";
@@ -39,6 +39,7 @@ export function AppShell({ children }: { children: ReactNode }) {
     { to: "/activities", label: tr("الأنشطة", "Activities"), icon: LayoutGrid },
     { to: "/licenses", label: tr("التراخيص", "Licenses"), icon: ScrollText },
     { to: "/applications", label: tr("طلباتي", "My Applications"), icon: FileText },
+    { to: "/funding", label: tr("التمويل", "Funding"), icon: Wallet },
     { to: "/notifications", label: tr("الإشعارات", "Notifications"), icon: Bell },
     { to: "/regulations", label: tr("الأنظمة", "Regulations"), icon: Newspaper },
   ] as const;
