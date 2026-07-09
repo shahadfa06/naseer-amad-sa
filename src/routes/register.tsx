@@ -62,17 +62,50 @@ function RegisterPage() {
     phone: "",
   });
   const [loading, setLoading] = useState(false);
+  const [nafathOpen, setNafathOpen] = useState(false);
+  const [nafathId, setNafathId] = useState("");
+  const [nafathStage, setNafathStage] = useState<"idle" | "sending" | "waiting" | "verified">("idle");
+  const [nafathCode, setNafathCode] = useState<number | null>(null);
 
   const upd =
     (k: keyof typeof form) =>
     (e: React.ChangeEvent<HTMLInputElement>) =>
       setForm((f) => ({ ...f, [k]: e.target.value }));
 
+  const startNafath = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!/^\d{10}$/.test(nafathId)) return;
+    setNafathStage("sending");
+    const code = Math.floor(10 + Math.random() * 90);
+    setTimeout(() => {
+      setNafathCode(code);
+      setNafathStage("waiting");
+      setTimeout(() => {
+        setNafathStage("verified");
+        setForm((f) => ({ ...f, nationalId: nafathId, fullName: f.fullName || tr("مستخدم نفاذ", "Nafath User") }));
+        store.setUser({ fullName: tr("مستخدم نفاذ", "Nafath User"), nationalId: nafathId, dob: "", email: "", phone: "" });
+        store.addNotification({
+          title: tr("تم التحقق عبر نفاذ", "Verified via Nafath"),
+          body: tr("تم التحقق من هويتك بنجاح.", "Your identity has been verified successfully."),
+        });
+        setTimeout(() => navigate({ to: "/activities" }), 900);
+      }, 2200);
+    }, 900);
+  };
+
   const submit = (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
     store.setUser(form);
     store.addNotification({
+      title: tr("تم إنشاء حسابك", "Your account is ready"),
+      body: tr(
+        `أهلاً ${form.fullName || ""}، حيّاك الله في نسير.`,
+        `Welcome ${form.fullName || ""} to Naseer.`,
+      ),
+    });
+    setTimeout(() => navigate({ to: "/activities" }), 400);
+  };
       title: tr("تم إنشاء حسابك", "Your account is ready"),
       body: tr(
         `أهلاً ${form.fullName || ""}، حيّاك الله في نسير.`,
