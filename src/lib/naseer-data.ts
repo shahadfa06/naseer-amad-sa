@@ -283,6 +283,11 @@ export const store = {
   getUser: () => safeRead<NaseerUser | null>(USER_KEY, null),
   setUser: (u: NaseerUser) => safeWrite(USER_KEY, u),
 
+  getSelectedActivity: () => safeRead<string | null>(ACTIVITY_KEY, null),
+  setSelectedActivity: (id: string) => safeWrite(ACTIVITY_KEY, id),
+
+
+
   getApplications: () => safeRead<Application[]>(APPS_KEY, []),
   addApplication: (license: License) => {
     const apps = safeRead<Application[]>(APPS_KEY, []);
