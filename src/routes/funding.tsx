@@ -350,7 +350,7 @@ function ProviderCard({
         </div>
         <div className="flex-1">
           <div className="font-bold text-base leading-tight">
-            {localize(lang, provider.name)}
+            {tr(provider.name.ar, provider.name.en)}
           </div>
           <div className="mt-1 text-xs text-muted-foreground">
             {tr("جهة تمويل معتمدة", "Accredited financing provider")}
@@ -368,7 +368,7 @@ function ProviderCard({
       </div>
 
       <p className="mt-3 text-sm text-foreground/80 leading-relaxed flex-1">
-        {localize(lang, provider.terms)}
+        {tr(provider.terms.ar, provider.terms.en)}
       </p>
 
       <a
