@@ -251,6 +251,7 @@ export const CATEGORY_META: Record<
 const APPS_KEY = "naseer.applications";
 const NOTIFS_KEY = "naseer.notifications";
 const USER_KEY = "naseer.user";
+const ACTIVITY_KEY = "naseer.selectedActivity";
 
 export type NaseerUser = {
   fullName: string;
