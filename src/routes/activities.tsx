@@ -14,7 +14,7 @@ import {
   type LucideIcon,
 } from "lucide-react";
 import { AppShell } from "@/components/naseer/AppShell";
-import { ACTIVITIES } from "@/lib/naseer-data";
+import { ACTIVITIES, store } from "@/lib/naseer-data";
 import { localize, useLang } from "@/lib/i18n";
 
 export const Route = createFileRoute("/activities")({
@@ -69,6 +69,7 @@ function ActivitiesPage() {
                 key={a.id}
                 to="/licenses"
                 search={{ activity: a.id }}
+                onClick={() => store.setSelectedActivity(a.id)}
                 className="group relative p-7 rounded-3xl border border-border bg-card shadow-soft hover:shadow-card hover:-translate-y-1 hover:border-primary/30 transition-all overflow-hidden animate-fade-in"
                 style={{ animationDelay: `${i * 60}ms`, animationFillMode: "backwards" }}
               >

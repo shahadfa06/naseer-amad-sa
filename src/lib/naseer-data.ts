@@ -251,6 +251,7 @@ export const CATEGORY_META: Record<
 const APPS_KEY = "naseer.applications";
 const NOTIFS_KEY = "naseer.notifications";
 const USER_KEY = "naseer.user";
+const ACTIVITY_KEY = "naseer.selectedActivity";
 
 export type NaseerUser = {
   fullName: string;
@@ -281,6 +282,11 @@ function safeWrite(key: string, value: unknown) {
 export const store = {
   getUser: () => safeRead<NaseerUser | null>(USER_KEY, null),
   setUser: (u: NaseerUser) => safeWrite(USER_KEY, u),
+
+  getSelectedActivity: () => safeRead<string | null>(ACTIVITY_KEY, null),
+  setSelectedActivity: (id: string) => safeWrite(ACTIVITY_KEY, id),
+
+
 
   getApplications: () => safeRead<Application[]>(APPS_KEY, []),
   addApplication: (license: License) => {
