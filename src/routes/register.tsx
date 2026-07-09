@@ -1,6 +1,6 @@
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { useState } from "react";
-import { ShieldCheck, User, IdCard, Calendar, Mail, Phone } from "lucide-react";
+import { ShieldCheck, User, IdCard, Calendar, Mail, Phone, Fingerprint, Loader2, CheckCircle2 } from "lucide-react";
 import { AppShell } from "@/components/naseer/AppShell";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
