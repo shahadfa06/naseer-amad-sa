@@ -13,6 +13,7 @@ import { Route as RegulationsRouteImport } from './routes/regulations'
 import { Route as RegisterRouteImport } from './routes/register'
 import { Route as NotificationsRouteImport } from './routes/notifications'
 import { Route as LicensesRouteImport } from './routes/licenses'
+import { Route as FundingRouteImport } from './routes/funding'
 import { Route as ApplicationsRouteImport } from './routes/applications'
 import { Route as ActivitiesRouteImport } from './routes/activities'
 import { Route as IndexRouteImport } from './routes/index'
@@ -40,6 +41,11 @@ const NotificationsRoute = NotificationsRouteImport.update({
 const LicensesRoute = LicensesRouteImport.update({
   id: '/licenses',
   path: '/licenses',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const FundingRoute = FundingRouteImport.update({
+  id: '/funding',
+  path: '/funding',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ApplicationsRoute = ApplicationsRouteImport.update({
@@ -87,6 +93,7 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/activities': typeof ActivitiesRoute
   '/applications': typeof ApplicationsRoute
+  '/funding': typeof FundingRoute
   '/licenses': typeof LicensesRoute
   '/notifications': typeof NotificationsRoute
   '/register': typeof RegisterRoute
@@ -101,6 +108,7 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/activities': typeof ActivitiesRoute
   '/applications': typeof ApplicationsRoute
+  '/funding': typeof FundingRoute
   '/licenses': typeof LicensesRoute
   '/notifications': typeof NotificationsRoute
   '/register': typeof RegisterRoute
@@ -116,6 +124,7 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/activities': typeof ActivitiesRoute
   '/applications': typeof ApplicationsRoute
+  '/funding': typeof FundingRoute
   '/licenses': typeof LicensesRoute
   '/notifications': typeof NotificationsRoute
   '/register': typeof RegisterRoute
@@ -132,6 +141,7 @@ export interface FileRouteTypes {
     | '/'
     | '/activities'
     | '/applications'
+    | '/funding'
     | '/licenses'
     | '/notifications'
     | '/register'
@@ -146,6 +156,7 @@ export interface FileRouteTypes {
     | '/'
     | '/activities'
     | '/applications'
+    | '/funding'
     | '/licenses'
     | '/notifications'
     | '/register'
@@ -160,6 +171,7 @@ export interface FileRouteTypes {
     | '/'
     | '/activities'
     | '/applications'
+    | '/funding'
     | '/licenses'
     | '/notifications'
     | '/register'
@@ -175,6 +187,7 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   ActivitiesRoute: typeof ActivitiesRoute
   ApplicationsRoute: typeof ApplicationsRoute
+  FundingRoute: typeof FundingRoute
   LicensesRoute: typeof LicensesRoute
   NotificationsRoute: typeof NotificationsRoute
   RegisterRoute: typeof RegisterRoute
@@ -213,6 +226,13 @@ declare module '@tanstack/react-router' {
       path: '/licenses'
       fullPath: '/licenses'
       preLoaderRoute: typeof LicensesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/funding': {
+      id: '/funding'
+      path: '/funding'
+      fullPath: '/funding'
+      preLoaderRoute: typeof FundingRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/applications': {
@@ -290,6 +310,7 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   ActivitiesRoute: ActivitiesRoute,
   ApplicationsRoute: ApplicationsRoute,
+  FundingRoute: FundingRoute,
   LicensesRoute: LicensesRoute,
   NotificationsRoute: NotificationsRoute,
   RegisterRoute: RegisterRoute,
