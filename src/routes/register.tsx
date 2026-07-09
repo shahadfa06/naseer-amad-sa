@@ -1,6 +1,6 @@
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { useState } from "react";
-import { ShieldCheck, User, IdCard, Calendar, Mail, Phone } from "lucide-react";
+import { ShieldCheck, User, IdCard, Calendar, Mail, Phone, Fingerprint, Loader2, CheckCircle2 } from "lucide-react";
 import { AppShell } from "@/components/naseer/AppShell";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -62,11 +62,36 @@ function RegisterPage() {
     phone: "",
   });
   const [loading, setLoading] = useState(false);
+  const [nafathOpen, setNafathOpen] = useState(false);
+  const [nafathId, setNafathId] = useState("");
+  const [nafathStage, setNafathStage] = useState<"idle" | "sending" | "waiting" | "verified">("idle");
+  const [nafathCode, setNafathCode] = useState<number | null>(null);
 
   const upd =
     (k: keyof typeof form) =>
     (e: React.ChangeEvent<HTMLInputElement>) =>
       setForm((f) => ({ ...f, [k]: e.target.value }));
+
+  const startNafath = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!/^\d{10}$/.test(nafathId)) return;
+    setNafathStage("sending");
+    const code = Math.floor(10 + Math.random() * 90);
+    setTimeout(() => {
+      setNafathCode(code);
+      setNafathStage("waiting");
+      setTimeout(() => {
+        setNafathStage("verified");
+        setForm((f) => ({ ...f, nationalId: nafathId, fullName: f.fullName || tr("مستخدم نفاذ", "Nafath User") }));
+        store.setUser({ fullName: tr("مستخدم نفاذ", "Nafath User"), nationalId: nafathId, dob: "", email: "", phone: "" });
+        store.addNotification({
+          title: tr("تم التحقق عبر نفاذ", "Verified via Nafath"),
+          body: tr("تم التحقق من هويتك بنجاح.", "Your identity has been verified successfully."),
+        });
+        setTimeout(() => navigate({ to: "/activities" }), 900);
+      }, 2200);
+    }, 900);
+  };
 
   const submit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -119,6 +144,75 @@ function RegisterPage() {
               </CardTitle>
             </CardHeader>
             <CardContent className="pt-4 pb-7">
+              <div className="mb-6 rounded-2xl border border-border bg-[color-mix(in_oklab,var(--beige)_50%,white)] p-4">
+                {!nafathOpen && (
+                  <button
+                    type="button"
+                    onClick={() => setNafathOpen(true)}
+                    className="w-full flex items-center justify-center gap-2.5 h-12 rounded-xl bg-primary text-primary-foreground font-semibold hover:opacity-90 hover:shadow-soft transition"
+                  >
+                    <Fingerprint className="w-5 h-5" />
+                    {tr("الدخول عبر نفاذ", "Sign in with Nafath")}
+                  </button>
+                )}
+                {nafathOpen && nafathStage !== "verified" && (
+                  <form onSubmit={startNafath} className="space-y-3">
+                    <div className="flex items-center gap-2 text-sm font-semibold text-primary">
+                      <Fingerprint className="w-4 h-4" />
+                      {tr("التحقق عبر نفاذ", "Verify with Nafath")}
+                    </div>
+                    <Field
+                      id="nafath-nid"
+                      label={tr("رقم الهوية الوطنية / الإقامة", "National ID / Iqama")}
+                      icon={IdCard}
+                      inputMode="numeric"
+                      maxLength={10}
+                      value={nafathId}
+                      onChange={(e) => setNafathId(e.target.value.replace(/\D/g, ""))}
+                      placeholder="10xxxxxxxx"
+                      dir="ltr"
+                      disabled={nafathStage !== "idle"}
+                    />
+                    {nafathStage === "idle" && (
+                      <Button type="submit" className="w-full h-11 rounded-xl" disabled={!/^\d{10}$/.test(nafathId)}>
+                        {tr("إرسال طلب التحقق", "Send verification request")}
+                      </Button>
+                    )}
+                    {nafathStage === "sending" && (
+                      <div className="flex items-center justify-center gap-2 text-sm text-muted-foreground py-2">
+                        <Loader2 className="w-4 h-4 animate-spin" />
+                        {tr("جاري الإرسال إلى تطبيق نفاذ...", "Sending to Nafath app...")}
+                      </div>
+                    )}
+                    {nafathStage === "waiting" && nafathCode !== null && (
+                      <div className="text-center space-y-2 py-2">
+                        <div className="text-xs text-muted-foreground">
+                          {tr("افتح تطبيق نفاذ واختر الرقم", "Open the Nafath app and select the number")}
+                        </div>
+                        <div className="mx-auto w-16 h-16 rounded-2xl bg-primary text-primary-foreground flex items-center justify-center text-2xl font-bold shadow-soft">
+                          {nafathCode}
+                        </div>
+                        <div className="flex items-center justify-center gap-2 text-xs text-muted-foreground">
+                          <Loader2 className="w-3 h-3 animate-spin" />
+                          {tr("بانتظار التأكيد...", "Waiting for confirmation...")}
+                        </div>
+                      </div>
+                    )}
+                  </form>
+                )}
+                {nafathStage === "verified" && (
+                  <div className="flex items-center justify-center gap-2 text-primary font-semibold py-2">
+                    <CheckCircle2 className="w-5 h-5" />
+                    {tr("تم التحقق بنجاح", "Successfully verified")}
+                  </div>
+                )}
+              </div>
+              <div className="relative mb-6 text-center">
+                <div className="absolute inset-0 flex items-center"><div className="w-full border-t border-border" /></div>
+                <span className="relative bg-card px-3 text-xs text-muted-foreground">
+                  {tr("أو أكمل بالبيانات", "or continue with details")}
+                </span>
+              </div>
               <form onSubmit={submit} className="grid md:grid-cols-2 gap-5">
                 <div className="md:col-span-2">
                   <Field
