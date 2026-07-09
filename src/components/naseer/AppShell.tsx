@@ -1,5 +1,5 @@
 import { Link, useRouterState } from "@tanstack/react-router";
-import { Bell, Bot, FileText, Globe, Heart, Home, LayoutGrid, Moon, Newspaper, ScrollText, ShieldCheck, Sun } from "lucide-react";
+import { Bell, Bot, FileText, Globe, Heart, Home, LayoutGrid, Moon, Newspaper, ScrollText, ShieldCheck, Sun, Wallet } from "lucide-react";
 import { useEffect, useState, type ReactNode } from "react";
 import { Logo } from "./brand";
 import { ChatWidget } from "./ChatWidget";
