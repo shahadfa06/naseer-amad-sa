@@ -102,6 +102,15 @@ function HomePage() {
               animationDelay: "-10s",
             }}
           />
+          {/* Olive green ambient glow — left side */}
+          <div
+            className="absolute top-0 -left-[10%] w-[55%] h-full"
+            style={{
+              background:
+                "radial-gradient(ellipse 100% 90% at 20% 50%, rgba(163,177,138,0.18) 0%, rgba(107,142,90,0.13) 35%, rgba(79,111,82,0.10) 65%, transparent 100%)",
+              filter: "blur(60px)",
+            }}
+          />
         </div>
 
         {/* Brand watermark */}
