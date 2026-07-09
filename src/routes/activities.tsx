@@ -14,7 +14,7 @@ import {
   type LucideIcon,
 } from "lucide-react";
 import { AppShell } from "@/components/naseer/AppShell";
-import { ACTIVITIES } from "@/lib/naseer-data";
+import { ACTIVITIES, store } from "@/lib/naseer-data";
 import { localize, useLang } from "@/lib/i18n";
 
 export const Route = createFileRoute("/activities")({
