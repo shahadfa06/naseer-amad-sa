@@ -106,14 +106,6 @@ function RegisterPage() {
     });
     setTimeout(() => navigate({ to: "/activities" }), 400);
   };
-      title: tr("تم إنشاء حسابك", "Your account is ready"),
-      body: tr(
-        `أهلاً ${form.fullName || ""}، حيّاك الله في نسير.`,
-        `Welcome ${form.fullName || ""} to Naseer.`,
-      ),
-    });
-    setTimeout(() => navigate({ to: "/activities" }), 400);
-  };
 
   return (
     <AppShell>
